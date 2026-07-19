@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AzmxLogo, Button, Chevron, Eyebrow, Hairline } from "@/components/brand";
+import { AzmxLogo, Button, Eyebrow, Hairline } from "@/components/brand";
 
 /**
  * Landing — a simple branded entry that points into the flow.
@@ -10,12 +10,6 @@ export default function Home() {
   return (
     <main className="surface-event relative flex min-h-svh flex-col overflow-hidden">
       {/* The one big gesture — a ghost chevron bleeding off the inline-end edge. */}
-      <Chevron
-        variant="ghost"
-        color="white"
-        size={880}
-        className="pointer-events-none absolute -end-40 top-1/2 -translate-y-1/2"
-      />
 
       <div className="relative z-10 flex flex-1 flex-col justify-between px-6 py-10 sm:px-12 lg:px-20 lg:py-16">
         {/* Top: wordmark */}

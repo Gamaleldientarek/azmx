@@ -11,7 +11,7 @@ import {
 } from "@/components/brand";
 import { logoutFacilitator } from "@/app/actions/auth";
 import { runDraw } from "@/app/actions/draw";
-import { closeRoom } from "@/app/actions/rooms";
+import { closeRoom, getRoomRealNames } from "@/app/actions/rooms";
 import {
   useRoomRealtime,
   type RosterParticipant,
@@ -90,6 +90,28 @@ export function ControlPanel({
   const effectiveStatus = status ?? initialStatus;
   const closed = effectiveStatus === "closed";
   const hasDraw = latestDraw !== null;
+
+  // Real names, visible to the facilitator only. Seeded from the server
+  // fetch; live joiners arrive sanitized over Realtime, so any id without a
+  // name triggers a gated re-fetch. Names stop resolving once closed (purged).
+  const [realNames, setRealNames] = useState<Record<string, string>>(() => {
+    const seed: Record<string, string> = {};
+    for (const p of initialRoster) if (p.real_name) seed[p.id] = p.real_name;
+    return seed;
+  });
+  const fetchingNamesRef = useRef(false);
+  useEffect(() => {
+    if (closed || fetchingNamesRef.current) return;
+    if (!roster.some((p) => !realNames[p.id])) return;
+    fetchingNamesRef.current = true;
+    getRoomRealNames(roomId)
+      .then((res) => {
+        if (res.ok) setRealNames((prev) => ({ ...res.names, ...prev }));
+      })
+      .finally(() => {
+        fetchingNamesRef.current = false;
+      });
+  }, [roster, realNames, closed, roomId]);
 
   const rosterById = useMemo(() => {
     const map = new Map<string, RosterParticipant>();
@@ -173,7 +195,7 @@ export function ControlPanel({
             <BrandNumeral value={roster.length} color="electric" scale="sm" />
           </div>
           <p className="az-caption mt-2 uppercase text-neutral-500">
-            Order = join order · real names hidden on screen
+            Order = join order · real names visible only to you
           </p>
 
           {roster.length === 0 ? (
@@ -193,8 +215,15 @@ export function ControlPanel({
                       scale="sm"
                       className="w-14 shrink-0"
                     />
-                    <span className="font-display text-2xl text-navy">
-                      {p.display_name}
+                    <span className="min-w-0">
+                      <span className="block font-display text-2xl text-navy">
+                        {p.display_name}
+                      </span>
+                      {(realNames[p.id] ?? p.real_name) && (
+                        <span className="az-caption mt-0.5 block text-neutral-500">
+                          {realNames[p.id] ?? p.real_name}
+                        </span>
+                      )}
                     </span>
                     {latestDraw &&
                       p.id === latestDraw.starter_participant_id && (
@@ -224,12 +253,6 @@ export function ControlPanel({
           <div className="lg:sticky lg:top-9">
             {/* The primary action — the moment. Navy panel, one electric CTA. */}
             <div className="surface-navy relative overflow-hidden p-8 sm:p-10">
-              <Chevron
-                variant="ghost"
-                color="white"
-                size={340}
-                className="pointer-events-none absolute -end-16 -top-10"
-              />
               <div className="relative z-10">
                 {closed ? (
                   <>

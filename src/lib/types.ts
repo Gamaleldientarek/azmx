@@ -88,6 +88,8 @@ export type JoinRoomResult =
         id: string;
         display_name: string;
         join_number: number;
+        /** The joiner's own name, echoed back for their welcome screen. */
+        real_name: string;
       };
       roomId: string;
       /** Scoped Supabase JWT for reads + Realtime on this room only. */

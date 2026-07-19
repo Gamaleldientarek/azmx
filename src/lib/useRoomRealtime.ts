@@ -34,6 +34,9 @@ export interface RosterParticipant {
   room_id: string;
   display_name: string;
   join_number: number;
+  /** Present only on facilitator surfaces (server-fetched); realtime
+   *  updates arrive sanitized and never carry it. */
+  real_name?: string | null;
 }
 
 const ROSTER_COLUMNS = "id, room_id, display_name, join_number";

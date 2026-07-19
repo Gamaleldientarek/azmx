@@ -89,6 +89,7 @@ export async function joinRoom(
         id: data.id,
         display_name: data.display_name,
         join_number: data.join_number,
+        real_name: data.real_name ?? trimmedName,
       },
       roomId: data.room_id,
       roomToken,

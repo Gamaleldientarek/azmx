@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AzmxLogo, Chevron, Eyebrow, Hairline } from "@/components/brand";
+import { AzmxLogo, Eyebrow, Hairline } from "@/components/brand";
 import { LoginForm } from "./LoginForm";
 
 /**
@@ -11,12 +11,6 @@ import { LoginForm } from "./LoginForm";
 export default function FacilitatorLoginPage() {
   return (
     <main className="surface-navy relative flex min-h-svh flex-col overflow-hidden px-6 py-10 sm:px-12">
-      <Chevron
-        variant="ghost"
-        color="white"
-        size={620}
-        className="pointer-events-none absolute -start-32 bottom-[-10%]"
-      />
 
       <header className="relative z-10 flex items-center gap-3">
         <Link href="/" className="inline-flex items-center">

@@ -86,3 +86,39 @@ export async function closeRoom(roomId: string): Promise<CloseRoomResult> {
     };
   }
 }
+
+/**
+ * Real names for a room's roster (facilitator only). The realtime channel is
+ * sanitized by design, so the control panel calls this to label live joiners.
+ */
+export async function getRoomRealNames(
+  roomId: string
+): Promise<
+  | { ok: true; names: Record<string, string> }
+  | { ok: false; error: "unauthorized" | "server_error"; message: string }
+> {
+  const gate = await requireFacilitator();
+  if (!gate.ok) return gate;
+
+  try {
+    const supabase = createServiceClient();
+    const { data, error } = await supabase
+      .from("participants")
+      .select("id, real_name")
+      .eq("room_id", roomId);
+    if (error) throw new Error(error.message);
+
+    const names: Record<string, string> = {};
+    for (const row of data ?? []) {
+      if (row.real_name) names[row.id] = row.real_name;
+    }
+    return { ok: true, names };
+  } catch (err) {
+    console.error("getRoomRealNames failed:", err);
+    return {
+      ok: false,
+      error: "server_error",
+      message: "Could not load real names.",
+    };
+  }
+}

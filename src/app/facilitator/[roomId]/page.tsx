@@ -39,7 +39,7 @@ export default async function FacilitatorRoomPage({
   const [rosterRes, drawRes] = await Promise.all([
     supabase
       .from("participants")
-      .select("id, room_id, display_name, join_number")
+      .select("id, room_id, display_name, join_number, real_name")
       .eq("room_id", roomId)
       .order("join_number")
       .returns<RosterParticipant[]>(),

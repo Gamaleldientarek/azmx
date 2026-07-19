@@ -79,12 +79,6 @@ export function RoomClient({ roomId }: { roomId: string }) {
     const rejoinHref = session?.roomCode ? `/join/${session.roomCode}` : "/join";
     return (
       <main className="surface-navy relative flex min-h-svh flex-col overflow-hidden px-6 py-12 sm:px-10">
-        <Chevron
-          variant="ghost"
-          color="white"
-          size={520}
-          className="pointer-events-none absolute -end-24 -top-10"
-        />
         <div className="relative z-10 flex flex-1 flex-col">
           <Eyebrow surface="dark" tick>
             Sharing Tuesday
@@ -135,18 +129,18 @@ export function RoomClient({ roomId }: { roomId: string }) {
     <main className="flex min-h-svh flex-col">
       {/* Identity hero — navy "premium dark" moment. */}
       <section className="surface-navy relative overflow-hidden px-6 py-12 sm:px-10">
-        <Chevron
-          variant="ghost"
-          color="white"
-          size={520}
-          className="pointer-events-none absolute -end-24 -top-10"
-        />
         <div className="relative z-10">
           <Eyebrow surface="dark" tick>
-            Your name for today
+            Welcome
           </Eyebrow>
+          {me.real_name && (
+            <p className="az-sublabel mt-3 text-blue-100">{me.real_name}</p>
+          )}
+          <p className="az-caption mt-8 uppercase text-blue-200">
+            Your name for today
+          </p>
 
-          <div className="mt-8 flex items-start gap-5">
+          <div className="mt-3 flex items-start gap-5">
             {/* Serif fun name = the hero personality. */}
             <h1 className="font-display text-5xl leading-[0.98] text-white sm:text-6xl">
               {me.display_name}

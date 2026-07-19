@@ -93,12 +93,6 @@ export function ScreenLive({
     return (
       <main className="flex min-h-svh flex-col justify-center bg-navy">
         <section className="surface-navy relative flex aspect-video w-full flex-col items-center justify-center overflow-hidden px-[4vw] py-[3.2vh]">
-          <Chevron
-            variant="ghost"
-            color="white"
-            size={640}
-            className="pointer-events-none absolute -end-24 top-[18%]"
-          />
           <div className="relative z-10 flex flex-col items-center text-center">
             <Eyebrow surface="dark" tick>
               Sharing Tuesday
@@ -135,12 +129,6 @@ export function ScreenLive({
     return (
       <main className="flex min-h-svh flex-col justify-center bg-navy">
         <section className="surface-navy relative flex aspect-video w-full flex-col items-center justify-center overflow-hidden px-[4vw] py-[3.2vh]">
-          <Chevron
-            variant="ghost"
-            color="white"
-            size={640}
-            className="pointer-events-none absolute -end-24 top-[18%]"
-          />
           <div className="relative z-10 flex flex-col items-center text-center">
             <Eyebrow surface="dark" tick>
               Joining is locked
@@ -167,12 +155,6 @@ export function ScreenLive({
   return (
     <main className="flex min-h-svh flex-col justify-center bg-navy">
       <section className="surface-navy relative flex aspect-video w-full flex-col justify-between overflow-hidden px-[4vw] py-[3.2vh]">
-        <Chevron
-          variant="ghost"
-          color="white"
-          size={640}
-          className="pointer-events-none absolute -end-24 top-[18%]"
-        />
 
         <header className="relative z-10 flex items-center gap-[1.5vw]">
           <span className="font-display text-[clamp(1.25rem,2vw,2rem)] text-white">

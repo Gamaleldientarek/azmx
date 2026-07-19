@@ -14,6 +14,8 @@ export interface StoredParticipant {
   id: string;
   display_name: string;
   join_number: number;
+  /** Optional: sessions saved before this field existed won't have it. */
+  real_name?: string;
 }
 
 export interface ParticipantSession {
