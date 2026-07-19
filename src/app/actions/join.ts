@@ -1,6 +1,10 @@
 "use server";
 
 import { mintRoomToken } from "@/lib/roomToken";
+import {
+  readParticipantCookie,
+  setParticipantCookie,
+} from "@/lib/participantCookie";
 import { createServiceClient } from "@/lib/supabase/server";
 import type { JoinRoomResult, Participant } from "@/lib/types";
 
@@ -42,6 +46,45 @@ export async function joinRoom(
 
   try {
     const supabase = createServiceClient();
+
+    // Duplicate-join guard: if this browser already holds a signed seat
+    // cookie for this room, hand back the SAME identity (fresh token) instead
+    // of inserting a new participant. Works even after the draw locked the
+    // room, so people can always recover their seat while it's open.
+    const { data: roomRow } = await supabase
+      .from("rooms")
+      .select("id, status")
+      .eq("code", trimmedCode)
+      .maybeSingle<{ id: string; status: string }>();
+
+    if (roomRow && roomRow.status !== "closed") {
+      const existingId = await readParticipantCookie(roomRow.id);
+      if (existingId) {
+        const { data: existing } = await supabase
+          .from("participants")
+          .select("id, room_id, display_name, join_number, real_name")
+          .eq("id", existingId)
+          .eq("room_id", roomRow.id)
+          .maybeSingle<Participant>();
+        if (existing) {
+          const roomToken = await mintRoomToken(existing.room_id);
+          return {
+            ok: true,
+            participant: {
+              id: existing.id,
+              display_name: existing.display_name,
+              join_number: existing.join_number,
+              real_name: existing.real_name ?? trimmedName,
+            },
+            roomId: existing.room_id,
+            roomToken,
+          };
+        }
+        // Cookie points at a purged/removed participant — fall through to a
+        // normal join.
+      }
+    }
+
     const { data, error } = await supabase
       .rpc("join_room", {
         p_room_code: trimmedCode,
@@ -82,6 +125,7 @@ export async function joinRoom(
     }
 
     const roomToken = await mintRoomToken(data.room_id);
+    await setParticipantCookie(data.room_id, data.id);
 
     return {
       ok: true,

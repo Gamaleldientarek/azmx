@@ -92,7 +92,7 @@ export default async function JoinPage({
             <h1 className="az-title max-w-sm text-balance text-ink">
               What&rsquo;s your name?
             </h1>
-            <JoinForm code={roomCode} />
+            <JoinForm code={roomCode} roomId={room!.id} />
           </>
         )}
       </div>

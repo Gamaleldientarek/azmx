@@ -4,7 +4,10 @@ import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/brand";
 import { joinRoom } from "@/app/actions/join";
-import { saveParticipantSession } from "@/lib/participantSession";
+import {
+  loadParticipantSession,
+  saveParticipantSession,
+} from "@/lib/participantSession";
 import type { JoinRoomResult } from "@/lib/types";
 
 /**
@@ -15,8 +18,15 @@ import type { JoinRoomResult } from "@/lib/types";
  * The page already verified the room exists, so a `room_not_joinable` error
  * at submit time means one thing: the draw has started.
  */
-export function JoinForm({ code }: { code: string }) {
+export function JoinForm({ code, roomId }: { code: string; roomId: string }) {
   const router = useRouter();
+
+  // Already joined on this phone? Skip the form — back to your seat.
+  useEffect(() => {
+    if (roomId && loadParticipantSession(roomId)) {
+      router.replace(`/room/${roomId}`);
+    }
+  }, [roomId, router]);
 
   const [state, formAction, pending] = useActionState(
     async (
