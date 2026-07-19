@@ -61,9 +61,9 @@ export function JoinForm({ code }: { code: string }) {
         placeholder="e.g. Sara"
         aria-invalid={errorMessage ? true : undefined}
         aria-describedby={errorMessage ? "join-error" : undefined}
-        className="mt-3 w-full appearance-none border-0 border-b-2 border-hairline-light bg-transparent
+        className="mt-3 w-full appearance-none border-0 border-b-2 border-neutral-500/70 bg-transparent
                    pb-3 font-display text-3xl text-navy outline-none
-                   placeholder:text-neutral-500/50 focus:border-electric"
+                   placeholder:text-neutral-500 focus:border-electric"
       />
       <p className="az-caption mt-3 text-neutral-500">
         Shown only to the facilitator. You&rsquo;ll get a fun name for the

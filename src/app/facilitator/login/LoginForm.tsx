@@ -32,9 +32,9 @@ export function LoginForm() {
         placeholder="••••••••"
         aria-invalid={errorMessage ? true : undefined}
         aria-describedby={errorMessage ? "login-error" : undefined}
-        className="mt-3 w-full appearance-none border-0 border-b-2 border-hairline-dark bg-transparent
+        className="mt-3 w-full appearance-none border-0 border-b-2 border-blue-200/60 bg-transparent
                    pb-3 font-body text-2xl text-white outline-none
-                   placeholder:text-blue-200/40 focus:border-light-blue"
+                   placeholder:text-blue-200/80 focus:border-light-blue"
       />
       <p className="az-caption mt-3 text-blue-200/70">
         Verified server-side. Never stored in the browser.

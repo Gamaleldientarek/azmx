@@ -174,7 +174,7 @@ export function RoomClient({ roomId }: { roomId: string }) {
             >
               {!closed && (
                 <span className="relative flex h-2.5 w-2.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-light-blue opacity-60" />
+                  <span className="absolute inline-flex h-full w-full animate-ping motion-reduce:animate-none rounded-full bg-light-blue opacity-60" />
                   <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-light-blue" />
                 </span>
               )}
@@ -193,6 +193,12 @@ export function RoomClient({ roomId }: { roomId: string }) {
             </Eyebrow>
             <h2 className="az-h2 mt-3 text-navy">Who goes when</h2>
 
+            {/* Announce the participant's own slot once the order settles. */}
+            <p className="sr-only" aria-live="polite">
+              {`You are number ${
+                order.findIndex((p) => p.id === me.id) + 1
+              } of ${order.length}. ${order[0].displayName} speaks first.`}
+            </p>
             <ol className="mt-8">
               {order.map((p, i) => {
                 const mine = p.id === me.id;
@@ -207,7 +213,7 @@ export function RoomClient({ roomId }: { roomId: string }) {
                     style={{ animationDelay: `${i * 50}ms` }}
                   >
                     <div
-                      className={`flex items-center gap-5 py-4 ${
+                      className={`flex flex-wrap items-center gap-x-5 gap-y-1 py-4 ${
                         mine ? "ps-4 border-s-2 border-electric" : ""
                       }`}
                     >

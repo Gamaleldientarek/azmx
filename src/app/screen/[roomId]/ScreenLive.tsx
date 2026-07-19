@@ -144,7 +144,7 @@ export function ScreenLive({
             </p>
             <div className="mt-[3vh] flex items-center gap-3">
               <span className="relative flex h-3 w-3">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-light-blue opacity-60" />
+                <span className="absolute inline-flex h-full w-full animate-ping motion-reduce:animate-none rounded-full bg-light-blue opacity-60" />
                 <span className="relative inline-flex h-3 w-3 rounded-full bg-light-blue" />
               </span>
               <span className="az-proj-label text-blue-200">
@@ -175,7 +175,7 @@ export function ScreenLive({
           <span className="h-[1.4em] w-px bg-hairline-dark" aria-hidden />
           <span className="az-proj-label flex items-center gap-2 text-light-blue">
             <span className="relative flex h-3 w-3">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-light-blue opacity-60" />
+              <span className="absolute inline-flex h-full w-full animate-ping motion-reduce:animate-none rounded-full bg-light-blue opacity-60" />
               <span className="relative inline-flex h-3 w-3 rounded-full bg-light-blue" />
             </span>
             Live

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import Link from "next/link";
 import {
   BrandNumeral,
@@ -67,6 +67,26 @@ export function ControlPanel({
   const [confirming, setConfirming] = useState<"redraw" | "close" | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
 
+  // Focus management for the confirm steps: entering a confirm swap moves
+  // focus to the confirm button (autoFocus); leaving it returns focus to the
+  // trigger that opened it instead of dropping to <body>.
+  const restoreFocusRef = useRef<HTMLElement | null>(null);
+  const openConfirm = (which: "redraw" | "close") => {
+    restoreFocusRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    setConfirming(which);
+  };
+  useEffect(() => {
+    const el = restoreFocusRef.current;
+    if (confirming === null && el) {
+      el.focus();
+      // A trigger disabled mid-action refuses focus — retry when pending ends.
+      if (document.activeElement === el) restoreFocusRef.current = null;
+    }
+  }, [confirming, drawPending, closePending]);
+
   const effectiveStatus = status ?? initialStatus;
   const closed = effectiveStatus === "closed";
   const hasDraw = latestDraw !== null;
@@ -111,6 +131,14 @@ export function ControlPanel({
 
   return (
     <main className="surface-white flex min-h-svh flex-col px-6 py-9 sm:px-12 lg:px-20">
+      {/* Announce draw results to assistive tech (visual result is realtime-driven). */}
+      <p className="sr-only" aria-live="polite">
+        {closed
+          ? "Room closed. Real names purged."
+          : starterName
+            ? `Order drawn. Speaking first: ${starterName}.`
+            : ""}
+      </p>
       {/* Header: room identity + live status. */}
       <header>
         <div className="flex flex-wrap items-baseline justify-between gap-4">
@@ -123,7 +151,7 @@ export function ControlPanel({
           <div className="flex items-center gap-3">
             {!closed && (
               <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-electric opacity-50" />
+                <span className="absolute inline-flex h-full w-full animate-ping motion-reduce:animate-none rounded-full bg-electric opacity-50" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-electric" />
               </span>
             )}
@@ -248,6 +276,7 @@ export function ControlPanel({
                             surface="dark"
                             chevron
                             fullWidth
+                            autoFocus
                             onClick={executeDraw}
                             disabled={drawPending}
                           >
@@ -269,7 +298,7 @@ export function ControlPanel({
                           chevron
                           fullWidth
                           onClick={() =>
-                            hasDraw ? setConfirming("redraw") : executeDraw()
+                            hasDraw ? openConfirm("redraw") : executeDraw()
                           }
                           disabled={drawPending || closePending}
                         >
@@ -300,6 +329,7 @@ export function ControlPanel({
                         variant="primary"
                         surface="light"
                         fullWidth
+                        autoFocus
                         onClick={executeClose}
                         disabled={closePending}
                       >
@@ -319,7 +349,7 @@ export function ControlPanel({
                       variant="secondary"
                       surface="light"
                       fullWidth
-                      onClick={() => setConfirming("close")}
+                      onClick={() => openConfirm("close")}
                       disabled={closePending || drawPending}
                     >
                       Close room &amp; purge names

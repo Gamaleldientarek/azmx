@@ -108,10 +108,11 @@ export function WheelReveal({ order, resolved = false }: WheelRevealProps) {
             spinning ? "" : "az-rise"
           }`}
         >
-          <BrandNumeral value={1} pad={2} color="light-blue" scale="md" />
+          {/* White on the gradient — Light Blue fails contrast near the Electric end. */}
+          <BrandNumeral value={1} pad={2} color="white" scale="md" />
           <Chevron
             variant="filled"
-            color="light-blue"
+            color="white"
             size={52}
             direction="right"
           />
@@ -144,7 +145,7 @@ export function WheelReveal({ order, resolved = false }: WheelRevealProps) {
               <BrandNumeral
                 value={i + 2}
                 pad={2}
-                color="light-blue"
+                color="white"
                 scale="sm"
                 className="shrink-0"
               />
