@@ -193,6 +193,24 @@ body {
   letter-spacing: -0.015em;
 }
 
+/* Split-panel display (landing hero) — the az-display voice, sized so each
+ * sentence of the two-line lockup keeps to one line inside the start panel
+ * column (full-width below lg; minmax(30rem, 40%) from lg up). */
+.az-display-split {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(2.25rem, 11vw - 0.5rem, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+@media (min-width: 1024px) {
+  .az-display-split {
+    /* The sentence lines run ~9.8em; panel content is ~40vw minus padding,
+     * capped at max-w-xl — this keeps each sentence to one line throughout. */
+    font-size: clamp(2.25rem, 4vw - 0.75rem, 3.5rem);
+  }
+}
+
 /* Slide title / page H1 (64px). */
 .az-title {
   font-family: var(--font-display), Georgia, serif;

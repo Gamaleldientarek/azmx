@@ -3,6 +3,9 @@ import { thmanyah, azmx } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  // Public host (the Worker proxies into basePath) — makes the og:image URL
+  // absolute so shared links preview the cover art.
+  metadataBase: new URL("https://games.gamaleldien.com"),
   title: "Sharing Tuesday",
   description: "Join the session, get your name, and let the wheel decide who shares first.",
 };
