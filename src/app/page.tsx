@@ -1,65 +1,65 @@
-import Image from "next/image";
+import { Button, Chevron, Eyebrow, Hairline } from "@/components/brand";
 
+/**
+ * Landing — a simple branded entry that points into the flow.
+ * Gradient is permitted here (event surface: the hero moment). Left-aligned,
+ * top-weighted, asymmetric; one big ghost-chevron gesture bleeding off the end.
+ */
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="surface-event relative flex min-h-svh flex-col overflow-hidden">
+      {/* The one big gesture — a ghost chevron bleeding off the inline-end edge. */}
+      <Chevron
+        variant="ghost"
+        color="white"
+        size={880}
+        className="pointer-events-none absolute -end-40 top-1/2 -translate-y-1/2"
+      />
+
+      <div className="relative z-10 flex flex-1 flex-col justify-between px-6 py-10 sm:px-12 lg:px-20 lg:py-16">
+        {/* Top: wordmark */}
+        <header className="flex items-center gap-3">
+          <span className="font-display text-xl text-white">AZMX</span>
+          <span className="h-4 w-px bg-hairline-dark" aria-hidden />
+          <span className="az-caption uppercase text-blue-200">Games</span>
+        </header>
+
+        {/* Middle: the hero, kept to ~7 columns, top-weighted. */}
+        <div className="max-w-[52rem] py-16">
+          <Eyebrow surface="dark" tick>
+            Sharing Tuesday
+          </Eyebrow>
+          <h1 className="az-hero mt-6 text-balance text-white">
+            Everyone shares. The order is fair.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="az-lead mt-8 max-w-xl text-blue-100/90">
+            Join on your phone, get a name and a number, and let the selector
+            decide who speaks first. A new room every week.
           </p>
+
+          <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <Button href="/join" surface="dark" variant="primary" chevron>
+              Join a room
+            </Button>
+            <Button href="/facilitator/login" surface="dark" variant="secondary">
+              I&rsquo;m the facilitator
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        {/* Bottom: hairline footer + a quiet meta row. */}
+        <footer className="max-w-[52rem]">
+          <Hairline surface="dark" />
+          <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
+            <span className="az-caption uppercase text-blue-200">
+              Forward · Human always
+            </span>
+            <span className="az-caption text-blue-200/70">
+              games.gamaleldien.com / random-selector
+            </span>
+          </div>
+        </footer>
+      </div>
+    </main>
   );
 }
