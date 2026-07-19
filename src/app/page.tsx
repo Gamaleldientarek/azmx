@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AzmxLogo, Button, Chevron, Eyebrow, Hairline } from "@/components/brand";
 
 /**
@@ -19,7 +20,10 @@ export default function Home() {
       <div className="relative z-10 flex flex-1 flex-col justify-between px-6 py-10 sm:px-12 lg:px-20 lg:py-16">
         {/* Top: wordmark */}
         <header className="flex items-center gap-3">
-          <span className="font-display text-xl text-white">AZMX</span>
+          <Link href="/" className="inline-flex items-center">
+            <AzmxLogo variant="white" height={26} />
+            <span className="sr-only">AZMX — home</span>
+          </Link>
           <span className="h-4 w-px bg-hairline-dark" aria-hidden />
           <span className="az-caption uppercase text-blue-200">Games</span>
         </header>

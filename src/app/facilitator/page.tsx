@@ -1,4 +1,5 @@
-import { Chevron, Eyebrow, Hairline } from "@/components/brand";
+import Link from "next/link";
+import { AzmxLogo, Chevron, Eyebrow, Hairline } from "@/components/brand";
 import { CreateRoomForm } from "./CreateRoomForm";
 
 /**
@@ -10,7 +11,10 @@ export default function FacilitatorCreatePage() {
   return (
     <main className="surface-white flex min-h-svh flex-col px-6 py-10 sm:px-12 lg:px-20">
       <header className="flex items-center gap-3">
-        <span className="font-display text-xl text-navy">AZMX</span>
+        <Link href="/" className="inline-flex items-center">
+          <AzmxLogo variant="color" height={24} />
+          <span className="sr-only">AZMX — home</span>
+        </Link>
         <span className="h-4 w-px bg-hairline-light" aria-hidden />
         <span className="az-caption uppercase text-neutral-500">Facilitator</span>
       </header>
