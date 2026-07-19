@@ -1,7 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { BrandNumeral, Chevron, Eyebrow, Hairline } from "@/components/brand";
+import {
+  AzmxLogo,
+  BrandNumeral,
+  Chevron,
+  Eyebrow,
+  Hairline,
+} from "@/components/brand";
 import { WheelReveal } from "@/components/screen/WheelReveal";
 import {
   useRoomRealtime,
@@ -220,6 +226,7 @@ export function ScreenLive({
             <span className="az-proj-label text-blue-200" aria-live="polite">
               In the room · {roster.length}
             </span>
+            <AzmxLogo variant="white" height={22} className="ms-auto opacity-90" />
           </div>
           <div className="mt-[1.2vh]">
             <Hairline surface="dark" />

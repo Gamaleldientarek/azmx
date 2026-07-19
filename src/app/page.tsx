@@ -1,4 +1,4 @@
-import { Button, Chevron, Eyebrow, Hairline } from "@/components/brand";
+import { AzmxLogo, Button, Chevron, Eyebrow, Hairline } from "@/components/brand";
 
 /**
  * Landing — a simple branded entry that points into the flow.
@@ -51,6 +51,7 @@ export default function Home() {
         <footer className="max-w-[52rem]">
           <Hairline surface="dark" />
           <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
+            <AzmxLogo variant="white" height={24} />
             <span className="az-caption uppercase text-blue-200">
               Forward · Human always
             </span>
