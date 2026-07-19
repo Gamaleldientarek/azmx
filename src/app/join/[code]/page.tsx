@@ -1,4 +1,6 @@
+import Link from "next/link";
 import {
+  AzmxLogo,
   Button,
   Chevron,
   Eyebrow,
@@ -60,7 +62,20 @@ export default async function JoinPage({
     <main className="surface-white flex min-h-svh flex-col px-6 py-9 sm:px-10">
       {/* Header: which room you're joining. Top-weighted. */}
       <header>
-        <Eyebrow surface="light" tick>
+        <div className="flex items-center gap-3">
+          <Link href="/" className="inline-flex items-center">
+            <span className="inline-flex dark:hidden">
+              <AzmxLogo variant="color" height={24} />
+            </span>
+            <span className="hidden dark:inline-flex">
+              <AzmxLogo variant="white" height={24} />
+            </span>
+            <span className="sr-only">AZMX — home</span>
+          </Link>
+          <span className="h-4 w-px bg-hairline" aria-hidden />
+          <span className="az-caption uppercase text-ink-meta">Games</span>
+        </div>
+        <Eyebrow surface="light" tick className="mt-10">
           You&rsquo;re joining
         </Eyebrow>
         <div className="mt-3 flex items-baseline gap-3">
