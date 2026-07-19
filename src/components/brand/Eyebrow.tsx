@@ -21,13 +21,15 @@ export function Eyebrow({
   tick = false,
   className = "",
 }: EyebrowProps) {
-  const color = surface === "dark" ? "text-light-blue" : "text-electric";
+  // "light" = the themed surface: Electric in light theme, Light Blue in dark
+  // (two-blues rule — Electric small text never sits on a dark surface).
+  const color = surface === "dark" ? "text-light-blue" : "text-accent";
   return (
     <p className={`eyebrow ${color} flex items-center gap-2 text-start ${className}`.trim()}>
       {tick && (
         <Chevron
           variant="filled"
-          color={surface === "dark" ? "light-blue" : "electric"}
+          color={surface === "dark" ? "light-blue" : "accent"}
           size={10}
         />
       )}

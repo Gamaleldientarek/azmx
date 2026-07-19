@@ -46,6 +46,8 @@ function classesFor(variant: Variant, surface: Surface, fullWidth: boolean) {
 
   const width = fullWidth ? "w-full" : "";
 
+  // surface="light" = the themed surface (ink/accent/hairline resolve per
+  // data-theme); surface="dark" = the fixed navy/gradient surfaces.
   let skin = "";
   if (variant === "primary") {
     // Electric block on any surface; white label.
@@ -53,14 +55,14 @@ function classesFor(variant: Variant, surface: Surface, fullWidth: boolean) {
       "bg-electric text-white hover:bg-blue-700 " +
       (surface === "dark"
         ? "focus-visible:ring-light-blue focus-visible:ring-offset-navy"
-        : "focus-visible:ring-electric focus-visible:ring-offset-white");
+        : "focus-visible:ring-accent focus-visible:ring-offset-surface");
   } else {
     skin =
       surface === "dark"
         ? "bg-transparent text-white border border-hairline-dark hover:border-light-blue " +
           "focus-visible:ring-light-blue focus-visible:ring-offset-navy"
-        : "bg-transparent text-navy border border-hairline-light hover:border-electric " +
-          "focus-visible:ring-electric focus-visible:ring-offset-white";
+        : "bg-transparent text-ink border border-hairline hover:border-accent " +
+          "focus-visible:ring-accent focus-visible:ring-offset-surface";
   }
 
   return `${base} ${skin} ${width}`.trim();
@@ -81,7 +83,7 @@ export function Button(props: BrandButtonProps) {
   const cls = `${classesFor(variant, surface, fullWidth)} ${className}`.trim();
 
   const chevronColor =
-    variant === "primary" ? "white" : surface === "dark" ? "light-blue" : "electric";
+    variant === "primary" ? "white" : surface === "dark" ? "light-blue" : "accent";
 
   const inner = (
     <>

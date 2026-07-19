@@ -7,6 +7,7 @@ import {
   Chevron,
   Eyebrow,
   Hairline,
+  ThemeToggle,
 } from "@/components/brand";
 import { useParticipantSession } from "@/lib/participantSession";
 import { useRoomRealtime } from "@/lib/useRoomRealtime";
@@ -179,13 +180,14 @@ export function RoomClient({ roomId }: { roomId: string }) {
       </section>
 
       {/* Status-driven lower surface. */}
-      <section className="surface-white flex-1 px-6 py-12 sm:px-10">
+      <section className="surface-white flex flex-1 flex-col px-6 py-12 sm:px-10">
+        <div className="flex-1">
         {revealed ? (
           <>
             <Eyebrow surface="light" tick>
               Speaking order
             </Eyebrow>
-            <h2 className="az-h2 mt-3 text-navy">Who goes when</h2>
+            <h2 className="az-h2 mt-3 text-ink">Who goes when</h2>
 
             {/* Announce the participant's own slot once the order settles. */}
             <p className="sr-only" aria-live="polite">
@@ -208,19 +210,19 @@ export function RoomClient({ roomId }: { roomId: string }) {
                   >
                     <div
                       className={`flex flex-wrap items-center gap-x-5 gap-y-1 py-4 ${
-                        mine ? "ps-4 border-s-2 border-electric" : ""
+                        mine ? "ps-4 border-s-2 border-accent" : ""
                       }`}
                     >
                       <BrandNumeral
                         value={i + 1}
                         pad={2}
-                        color={mine ? "electric" : "navy"}
+                        color={mine ? "accent" : "ink"}
                         scale="sm"
                         className="w-14 shrink-0"
                       />
                       <span
                         className={`font-display text-2xl ${
-                          mine ? "text-electric" : "text-navy"
+                          mine ? "text-accent" : "text-ink"
                         }`}
                       >
                         {p.displayName}
@@ -228,7 +230,7 @@ export function RoomClient({ roomId }: { roomId: string }) {
                       {marks.length > 0 && (
                         <span
                           className={`az-caption ms-auto uppercase ${
-                            mine ? "text-electric" : "text-neutral-500"
+                            mine ? "text-accent" : "text-ink-meta"
                           }`}
                         >
                           {marks.join(" · ")}
@@ -242,8 +244,8 @@ export function RoomClient({ roomId }: { roomId: string }) {
             </ol>
 
             <div className="mt-10 flex items-center gap-2">
-              <Chevron variant="filled" color="electric" size={10} />
-              <span className="az-caption uppercase text-neutral-500">
+              <Chevron variant="filled" color="accent" size={10} />
+              <span className="az-caption uppercase text-ink-meta">
                 {roomName ? `${roomName} · ` : ""}Room {session.roomCode} ·
                 order is final
               </span>
@@ -254,11 +256,11 @@ export function RoomClient({ roomId }: { roomId: string }) {
             <Eyebrow surface="light" tick>
               Session over
             </Eyebrow>
-            <h2 className="az-h2 mt-3 text-navy">This room has closed</h2>
-            <p className="az-body mt-4 max-w-sm text-neutral-900/70">
+            <h2 className="az-h2 mt-3 text-ink">This room has closed</h2>
+            <p className="az-body mt-4 max-w-sm text-ink-body/70">
               See you next Tuesday — a new room opens each week.
             </p>
-            <p className="az-caption mt-8 uppercase text-neutral-500">
+            <p className="az-caption mt-8 uppercase text-ink-meta">
               Real names are purged when the room closes
             </p>
           </>
@@ -267,8 +269,8 @@ export function RoomClient({ roomId }: { roomId: string }) {
             <Eyebrow surface="light" tick>
               Any moment now
             </Eyebrow>
-            <h2 className="az-h2 mt-3 text-navy">Drawing the order</h2>
-            <p className="az-body mt-4 max-w-sm text-neutral-900/70">
+            <h2 className="az-h2 mt-3 text-ink">Drawing the order</h2>
+            <p className="az-body mt-4 max-w-sm text-ink-body/70">
               The selector is spinning on the big screen. Your place is about
               to land here.
             </p>
@@ -279,17 +281,26 @@ export function RoomClient({ roomId }: { roomId: string }) {
               The room
             </Eyebrow>
             <div className="mt-6 flex items-baseline gap-4">
-              <BrandNumeral value={roster.length} color="electric" scale="md" />
-              <span className="az-body text-neutral-900/70">
+              <BrandNumeral value={roster.length} color="accent" scale="md" />
+              <span className="az-body text-ink-body/70">
                 {roster.length === 1 ? "person" : "people"} in the room so far
               </span>
             </div>
-            <p className="az-caption mt-8 uppercase text-neutral-500">
+            <p className="az-caption mt-8 uppercase text-ink-meta">
               {roomName ? `${roomName} · ` : ""}Room {session.roomCode} ·
               joining locks when the selector runs
             </p>
           </>
         )}
+        </div>
+
+        {/* Quiet theme control, tucked into the footer area. */}
+        <footer className="mt-14">
+          <Hairline surface="light" />
+          <div className="mt-3 flex justify-end">
+            <ThemeToggle surface="light" />
+          </div>
+        </footer>
       </section>
     </main>
   );

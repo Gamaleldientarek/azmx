@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { AzmxLogo, Button, Eyebrow, Hairline } from "@/components/brand";
+import {
+  AzmxLogo,
+  Button,
+  Eyebrow,
+  Hairline,
+  ThemeToggle,
+} from "@/components/brand";
 
 /**
  * Landing — a simple branded entry that points into the flow.
@@ -56,6 +62,9 @@ export default function Home() {
             <span className="az-caption text-blue-200/70">
               games.gamaleldien.com / random-selector
             </span>
+            {/* The landing stays on the event gradient in both themes; the
+                toggle here sets the theme for the light in-flow pages. */}
+            <ThemeToggle surface="dark" className="ms-auto" />
           </div>
         </footer>
       </div>

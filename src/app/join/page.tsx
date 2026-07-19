@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button, Chevron, Eyebrow, Hairline } from "@/components/brand";
+import {
+  Button,
+  Chevron,
+  Eyebrow,
+  Hairline,
+  ThemeToggle,
+} from "@/components/brand";
 
 /**
  * /join — manual code entry for participants without the QR/link (the landing
@@ -26,19 +32,19 @@ export default function JoinCodePage() {
           Join a room
         </Eyebrow>
         <div className="mt-3 flex items-baseline gap-3">
-          <span className="font-display text-2xl text-navy">
+          <span className="font-display text-2xl text-ink">
             Sharing Tuesday
           </span>
         </div>
       </header>
 
       <div className="mt-16 flex-1">
-        <h1 className="az-title max-w-sm text-balance text-navy">
+        <h1 className="az-title max-w-sm text-balance text-ink">
           Enter the room code
         </h1>
 
         <form onSubmit={submit} className="mt-12 block">
-          <label htmlFor="roomCode" className="az-caption uppercase text-neutral-500">
+          <label htmlFor="roomCode" className="az-caption uppercase text-ink-meta">
             Room code
           </label>
           <input
@@ -52,11 +58,11 @@ export default function JoinCodePage() {
             placeholder="TUES-4821"
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            className="mt-3 w-full appearance-none border-0 border-b-2 border-hairline-light bg-transparent
-                       pb-3 font-display text-3xl uppercase text-navy outline-none
-                       placeholder:text-neutral-500/40 focus:border-electric"
+            className="mt-3 w-full appearance-none border-0 border-b-2 border-hairline bg-transparent
+                       pb-3 font-display text-3xl uppercase text-ink outline-none
+                       placeholder:text-ink-meta/40 focus:border-accent"
           />
-          <p className="az-caption mt-3 text-neutral-500">
+          <p className="az-caption mt-3 text-ink-meta">
             It&rsquo;s on the screen — or scan the QR instead.
           </p>
 
@@ -70,11 +76,14 @@ export default function JoinCodePage() {
 
       <footer className="mt-10">
         <Hairline surface="light" />
-        <div className="mt-4 flex items-center gap-2">
-          <Chevron variant="filled" color="electric" size={10} />
-          <span className="az-caption uppercase text-neutral-500">
-            Joining locks when the selector runs
-          </span>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+          <div className="flex items-center gap-2">
+            <Chevron variant="filled" color="accent" size={10} />
+            <span className="az-caption uppercase text-ink-meta">
+              Joining locks when the selector runs
+            </span>
+          </div>
+          <ThemeToggle surface="light" />
         </div>
       </footer>
     </main>

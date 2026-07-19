@@ -19,14 +19,14 @@ export function Hairline({
   vertical = false,
   className = "",
 }: HairlineProps) {
+  // "light" = the themed surface: resolves per data-theme. "dark" = the fixed
+  // navy/gradient surfaces, which are identical in both themes.
   let color: string;
   if (weight === "active") {
-    color = surface === "dark" ? "var(--color-light-blue)" : "var(--color-electric)";
+    color = surface === "dark" ? "var(--color-light-blue)" : "var(--accent)";
   } else {
     color =
-      surface === "dark"
-        ? "var(--color-hairline-dark)"
-        : "var(--color-hairline-light)";
+      surface === "dark" ? "var(--color-hairline-dark)" : "var(--hairline)";
   }
   const thickness = weight === "active" ? 2 : 1;
 

@@ -3,11 +3,13 @@
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import Link from "next/link";
 import {
+  AzmxLogo,
   BrandNumeral,
   Button,
   Chevron,
   Eyebrow,
   Hairline,
+  ThemeToggle,
 } from "@/components/brand";
 import { logoutFacilitator } from "@/app/actions/auth";
 import { runDraw } from "@/app/actions/draw";
@@ -42,6 +44,42 @@ const STATUS_LABEL: Record<RoomStatus, string> = {
   revealed: "Order revealed",
   closed: "Closed · names purged",
 };
+
+/**
+ * One-click copy affordance — quiet caption text, accent color, text-swap
+ * confirmation (no toast). Information-level, so it never competes with the
+ * single Electric CTA.
+ */
+function CopyAction({ label, value }: { label: string; value: string }) {
+  const [copied, setCopied] = useState(false);
+  const timerRef = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (timerRef.current) window.clearTimeout(timerRef.current);
+    },
+    []
+  );
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      if (timerRef.current) window.clearTimeout(timerRef.current);
+      timerRef.current = window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard unavailable (permissions / non-secure context) — the code
+      // is on screen, selectable by hand.
+    }
+  };
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      className="az-caption cursor-pointer uppercase text-accent underline-offset-4 transition-colors hover:underline"
+    >
+      <span aria-live="polite">{copied ? "Copied" : label}</span>
+    </button>
+  );
+}
 
 export function ControlPanel({
   roomId,
@@ -161,28 +199,82 @@ export function ControlPanel({
             ? `Order drawn. Speaking first: ${starterName}.`
             : ""}
       </p>
-      {/* Header: room identity + live status. */}
+      {/* Top nav: wordmark home link + live status, theme, log out. */}
       <header>
-        <div className="flex flex-wrap items-baseline justify-between gap-4">
+        <nav
+          aria-label="Facilitator"
+          className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3"
+        >
+          <div className="flex items-center gap-3">
+            <Link href="/" className="inline-flex items-center">
+              <span className="inline-flex dark:hidden">
+                <AzmxLogo variant="color" height={24} />
+              </span>
+              <span className="hidden dark:inline-flex">
+                <AzmxLogo variant="white" height={24} />
+              </span>
+              <span className="sr-only">AZMX — home</span>
+            </Link>
+            <span className="h-4 w-px bg-hairline" aria-hidden />
+            <span className="az-caption uppercase text-ink-meta">
+              Facilitator
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+            <span className="flex items-center gap-3">
+              {!closed && (
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping motion-reduce:animate-none rounded-full bg-accent opacity-50" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent" />
+                </span>
+              )}
+              <span className="az-caption uppercase text-ink-meta">
+                {STATUS_LABEL[effectiveStatus]}
+              </span>
+            </span>
+            <span className="h-4 w-px bg-hairline" aria-hidden />
+            <ThemeToggle surface="light" />
+            <span className="h-4 w-px bg-hairline" aria-hidden />
+            <form action={logoutFacilitator}>
+              <button
+                type="submit"
+                className="az-caption cursor-pointer uppercase text-ink-meta transition-colors hover:text-ink py-2"
+              >
+                Log out
+              </button>
+            </form>
+          </div>
+        </nav>
+        <div className="mt-4">
+          <Hairline surface="light" />
+        </div>
+
+        {/* Page head: room identity + the big room code (first eye-landing). */}
+        <div className="mt-10 flex flex-wrap items-end justify-between gap-x-10 gap-y-8">
           <div>
             <Eyebrow surface="light" tick>
               Control panel
             </Eyebrow>
-            <h1 className="az-title mt-3 text-navy">{roomName}</h1>
+            <h1 className="az-title mt-3 text-ink">{roomName}</h1>
           </div>
-          <div className="flex items-center gap-3">
-            {!closed && (
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping motion-reduce:animate-none rounded-full bg-electric opacity-50" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-electric" />
-              </span>
-            )}
-            <span className="az-caption uppercase text-neutral-500">
-              {STATUS_LABEL[effectiveStatus]} · code {code}
+          <div>
+            <span className="az-caption uppercase text-ink-meta">
+              Room code
             </span>
+            <div className="mt-2 flex flex-wrap items-baseline gap-x-6 gap-y-2">
+              <span className="az-code text-ink">{code}</span>
+              <span className="flex items-baseline gap-4">
+                <CopyAction label="Copy code" value={code} />
+                <span
+                  className="h-3.5 w-px self-center bg-hairline"
+                  aria-hidden
+                />
+                <CopyAction label="Copy join link" value={joinUrl} />
+              </span>
+            </div>
           </div>
         </div>
-        <div className="mt-6">
+        <div className="mt-8">
           <Hairline surface="light" />
         </div>
       </header>
@@ -191,15 +283,15 @@ export function ControlPanel({
         {/* Roster (7 cols) — fun names only, live. */}
         <section className="lg:col-span-7">
           <div className="flex items-baseline justify-between">
-            <h2 className="az-h2 text-navy">In the room</h2>
-            <BrandNumeral value={roster.length} color="electric" scale="sm" />
+            <h2 className="az-h2 text-ink">In the room</h2>
+            <BrandNumeral value={roster.length} color="accent" scale="sm" />
           </div>
-          <p className="az-caption mt-2 uppercase text-neutral-500">
+          <p className="az-caption mt-2 uppercase text-ink-meta">
             Order = join order · real names visible only to you
           </p>
 
           {roster.length === 0 ? (
-            <p className="az-body mt-8 max-w-sm text-neutral-900/70">
+            <p className="az-body mt-8 max-w-sm text-ink-body/70">
               No one has joined yet. Put the projection on the big screen —
               people appear here the moment they scan.
             </p>
@@ -211,23 +303,23 @@ export function ControlPanel({
                     <BrandNumeral
                       value={p.join_number}
                       pad={2}
-                      color="navy"
+                      color="ink"
                       scale="sm"
                       className="w-14 shrink-0"
                     />
                     <span className="min-w-0">
-                      <span className="block font-display text-2xl text-navy">
+                      <span className="block font-display text-2xl text-ink">
                         {p.display_name}
                       </span>
                       {(realNames[p.id] ?? p.real_name) && (
-                        <span className="az-caption mt-0.5 block text-neutral-500">
+                        <span className="az-caption mt-0.5 block text-ink-meta">
                           {realNames[p.id] ?? p.real_name}
                         </span>
                       )}
                     </span>
                     {latestDraw &&
                       p.id === latestDraw.starter_participant_id && (
-                        <span className="az-caption ms-auto uppercase text-electric">
+                        <span className="az-caption ms-auto uppercase text-accent">
                           Starts
                         </span>
                       )}
@@ -235,7 +327,7 @@ export function ControlPanel({
                       p.id !== latestDraw.starter_participant_id) && (
                       <Chevron
                         variant="filled"
-                        color="electric"
+                        color="accent"
                         size={10}
                         className="ms-auto opacity-40"
                       />
@@ -251,8 +343,9 @@ export function ControlPanel({
         {/* Control rail (5 cols). */}
         <aside className="lg:col-span-5 lg:col-start-8">
           <div className="lg:sticky lg:top-9">
-            {/* The primary action — the moment. Navy panel, one electric CTA. */}
-            <div className="surface-navy relative overflow-hidden p-8 sm:p-10">
+            {/* The primary action — the moment. Navy panel, one electric CTA.
+                In dark the page is near-navy, so a hairline keeps the panel edge. */}
+            <div className="surface-navy relative overflow-hidden p-8 sm:p-10 dark:border dark:border-hairline-dark">
               <div className="relative z-10">
                 {closed ? (
                   <>
@@ -342,7 +435,7 @@ export function ControlPanel({
             {/* Secondary action — close. Hairline-separated, no cards. */}
             {!closed && (
               <div className="mt-8">
-                <span className="az-caption uppercase text-neutral-500">
+                <span className="az-caption uppercase text-ink-meta">
                   {hasDraw ? "After the draw" : "When you're done"}
                 </span>
                 <div className="mt-4 flex flex-col gap-3">
@@ -387,10 +480,10 @@ export function ControlPanel({
               <Hairline surface="light" />
               <dl className="mt-5 space-y-3">
                 <div className="flex items-baseline justify-between gap-4">
-                  <dt className="az-caption uppercase text-neutral-500">
+                  <dt className="az-caption uppercase text-ink-meta">
                     Projection
                   </dt>
-                  <dd className="az-body text-electric">
+                  <dd className="az-body text-accent">
                     <Link
                       href={`/screen/${roomId}`}
                       target="_blank"
@@ -402,16 +495,17 @@ export function ControlPanel({
                   </dd>
                 </div>
                 <div className="flex items-baseline justify-between gap-4">
-                  <dt className="az-caption uppercase text-neutral-500">
+                  <dt className="az-caption uppercase text-ink-meta">
                     Join link
                   </dt>
-                  <dd className="truncate az-body text-neutral-900/70">
+                  <dd className="truncate az-body text-ink-body/70">
                     {joinUrl.replace(/^https?:\/\//, "")}
                   </dd>
                 </div>
               </dl>
               <div className="mt-6 flex items-start gap-5">
-                <div className="w-32 shrink-0 border border-hairline-light bg-white p-2">
+                {/* QR stays navy-on-white in both themes — scan reliability. */}
+                <div className="w-32 shrink-0 border border-hairline bg-white p-2">
                   {/* Server-generated PNG data URL. */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -420,20 +514,10 @@ export function ControlPanel({
                     className="w-full"
                   />
                 </div>
-                <p className="az-caption max-w-[16rem] uppercase text-neutral-500">
+                <p className="az-caption max-w-[16rem] uppercase text-ink-meta">
                   Same QR as the projection — handy for phones nearby
                 </p>
               </div>
-            </div>
-
-            {/* Logout. */}
-            <div className="mt-8">
-              <Hairline surface="light" />
-              <form action={logoutFacilitator} className="mt-5">
-                <Button variant="secondary" surface="light" type="submit">
-                  Log out
-                </Button>
-              </form>
             </div>
           </div>
         </aside>

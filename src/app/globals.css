@@ -5,6 +5,10 @@
  * "Restraint is the luxury." Navy + two blues + white. Chevron is the only motif.
  */
 
+/* `dark:` utilities key off the resolved theme attribute, never the media
+ * query directly — the inline head script resolves auto/light/dark first. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   /* Brand color tokens */
   --color-navy: #040038; /* Dark Navy — premium dark surface */
@@ -41,9 +45,61 @@
   --spacing-az-8: 160px;
 }
 
+/* =========================================================================
+ * THEME ROLES — the light surfaces are theme-driven; the navy/gradient
+ * surfaces ARE the dark aesthetic and never change. Brand tokens above stay
+ * immutable; only these role variables flip under [data-theme="dark"].
+ * ========================================================================= */
 :root {
-  --background: var(--color-white);
-  --foreground: var(--color-neutral-900);
+  color-scheme: light;
+
+  /* Surfaces */
+  --surface: var(--color-white); /* .surface-white */
+  --surface-raised: var(--color-blue-50); /* .surface-blue-50 */
+
+  /* Ink */
+  --ink: var(--color-navy); /* headings, strong text */
+  --ink-body: var(--color-neutral-900); /* body copy */
+  --ink-meta: var(--color-neutral-500); /* captions, meta */
+
+  /* Accent (two-blues rule): Electric punctuates light; Light Blue on dark. */
+  --accent: var(--color-electric);
+
+  /* Hairline on the themed surface */
+  --hairline: var(--color-hairline-light);
+
+  --background: var(--surface);
+  --foreground: var(--ink-body);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Deep navy-tinted dark, one step apart from brand Navy #040038 so the
+   * navy CTA panel still reads as a panel (with a hairline outline). */
+  --surface: #0a0a2e;
+  --surface-raised: #12123f; /* the "quiet panel" step of the dark ramp */
+
+  --ink: var(--color-white);
+  --ink-body: var(--color-blue-100);
+  --ink-meta: #8a9bc9; /* navy-tinted meta — AA at caption size on --surface */
+
+  --accent: var(--color-light-blue); /* never Electric small text on dark */
+
+  --hairline: var(--color-hairline-dark);
+}
+
+/* Themed utility tokens (`inline` so utilities emit var() and follow the
+ * data-theme swap at runtime): text-ink, text-ink-body, text-ink-meta,
+ * text-accent, bg-surface, bg-surface-raised, border-hairline, bg-hairline. */
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-ink: var(--ink);
+  --color-ink-body: var(--ink-body);
+  --color-ink-meta: var(--ink-meta);
+  --color-accent: var(--accent);
+  --color-hairline: var(--hairline);
 }
 
 html {
@@ -83,14 +139,22 @@ body {
   color: var(--color-white);
 }
 
+/* Theme-driven: white in light, deep navy-tinted dark under [data-theme="dark"]. */
 .surface-white {
-  background-color: var(--color-white);
-  color: var(--color-neutral-900);
+  background-color: var(--surface);
+  color: var(--ink-body);
 }
 
 .surface-blue-50 {
-  background-color: var(--color-blue-50);
-  color: var(--color-neutral-900);
+  background-color: var(--surface-raised);
+  color: var(--ink-body);
+}
+
+/* In dark the raised/navy panels sit close to the page value — a hairline
+ * (a rule, not a shadow) restores the panel edge. Scoped so full-bleed navy
+ * pages (login, projection, identity hero) are untouched. */
+[data-theme="dark"] .surface-blue-50 {
+  border: 1px solid var(--color-hairline-dark);
 }
 
 /* =========================================================================
@@ -199,6 +263,18 @@ body {
   font-family: var(--font-body), sans-serif;
   font-weight: 600;
   font-size: clamp(2.5rem, 6.5vw, 6.5rem);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Panel-scale room code — same tabular-sans identity as .az-proj-code (code
+ * = information, sans per rules), sized to lead the control panel without
+ * fighting the serif page title or the single Electric CTA. */
+.az-code {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
   line-height: 1;
   letter-spacing: 0.06em;
   font-variant-numeric: tabular-nums;

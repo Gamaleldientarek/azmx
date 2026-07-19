@@ -32,7 +32,7 @@ export function CreateRoomForm() {
 
   return (
     <form action={formAction} className="mt-12 block max-w-md">
-      <label htmlFor="label" className="az-caption uppercase text-neutral-500">
+      <label htmlFor="label" className="az-caption uppercase text-ink-meta">
         Room label (optional)
       </label>
       <input
@@ -41,13 +41,13 @@ export function CreateRoomForm() {
         type="text"
         maxLength={120}
         placeholder="Sharing Tuesday · 22 Jul"
-        className="mt-3 w-full appearance-none border-0 border-b-2 border-hairline-light bg-transparent
-                   pb-3 font-display text-2xl text-navy outline-none
-                   placeholder:text-neutral-500/40 focus:border-electric"
+        className="mt-3 w-full appearance-none border-0 border-b-2 border-hairline bg-transparent
+                   pb-3 font-display text-2xl text-ink outline-none
+                   placeholder:text-ink-meta/40 focus:border-accent"
       />
 
       {errorMessage && (
-        <p role="alert" className="az-caption mt-4 text-electric">
+        <p role="alert" className="az-caption mt-4 text-accent">
           {errorMessage}
         </p>
       )}

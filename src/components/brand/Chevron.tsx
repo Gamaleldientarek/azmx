@@ -11,7 +11,13 @@ import type { CSSProperties } from "react";
  */
 
 type ChevronVariant = "filled" | "stroked" | "ghost";
-type ChevronColor = "electric" | "light-blue" | "white" | "navy" | "current";
+type ChevronColor =
+  | "electric"
+  | "light-blue"
+  | "white"
+  | "navy"
+  | "current"
+  | "accent"; // themed: Electric in light theme, Light Blue in dark
 type ChevronSize = "xs" | "sm" | "md" | "lg" | "xl" | "hero";
 type ChevronDirection = "auto" | "right" | "left" | "up" | "down";
 
@@ -30,6 +36,7 @@ const COLOR_VAR: Record<ChevronColor, string> = {
   white: "var(--color-white)",
   navy: "var(--color-navy)",
   current: "currentColor",
+  accent: "var(--accent)",
 };
 
 const ROTATION: Record<Exclude<ChevronDirection, "auto">, number> = {

@@ -48,7 +48,7 @@ export function JoinForm({ code }: { code: string }) {
 
   return (
     <form action={formAction} className="mt-12 block">
-      <label htmlFor="realName" className="az-caption uppercase text-neutral-500">
+      <label htmlFor="realName" className="az-caption uppercase text-ink-meta">
         Your real name
       </label>
       <input
@@ -61,17 +61,17 @@ export function JoinForm({ code }: { code: string }) {
         placeholder="e.g. Sara"
         aria-invalid={errorMessage ? true : undefined}
         aria-describedby={errorMessage ? "join-error" : undefined}
-        className="mt-3 w-full appearance-none border-0 border-b-2 border-neutral-500/70 bg-transparent
-                   pb-3 font-display text-3xl text-navy outline-none
-                   placeholder:text-neutral-500 focus:border-electric"
+        className="mt-3 w-full appearance-none border-0 border-b-2 border-ink-meta/70 bg-transparent
+                   pb-3 font-display text-3xl text-ink outline-none
+                   placeholder:text-ink-meta focus:border-accent"
       />
-      <p className="az-caption mt-3 text-neutral-500">
+      <p className="az-caption mt-3 text-ink-meta">
         Shown only to the facilitator. You&rsquo;ll get a fun name for the
         screen.
       </p>
 
       {errorMessage && (
-        <p id="join-error" role="alert" className="az-caption mt-4 text-electric">
+        <p id="join-error" role="alert" className="az-caption mt-4 text-accent">
           {errorMessage}
         </p>
       )}

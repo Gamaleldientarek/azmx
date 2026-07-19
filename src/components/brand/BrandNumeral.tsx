@@ -6,7 +6,13 @@ import type { CSSProperties } from "react";
  * an AI tell; this is the styled serif figure. Figure-aligned, tabular.
  */
 
-type NumeralColor = "electric" | "light-blue" | "white" | "navy";
+type NumeralColor =
+  | "electric"
+  | "light-blue"
+  | "white"
+  | "navy"
+  | "accent" // themed: Electric in light theme, Light Blue in dark
+  | "ink"; // themed: Navy in light theme, White in dark
 type NumeralScale = "sm" | "md" | "lg" | "xl";
 
 const COLOR: Record<NumeralColor, string> = {
@@ -14,6 +20,8 @@ const COLOR: Record<NumeralColor, string> = {
   "light-blue": "var(--color-light-blue)",
   white: "var(--color-white)",
   navy: "var(--color-navy)",
+  accent: "var(--accent)",
+  ink: "var(--ink)",
 };
 
 const SCALE: Record<NumeralScale, string> = {

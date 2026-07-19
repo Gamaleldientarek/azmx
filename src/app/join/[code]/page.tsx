@@ -1,4 +1,10 @@
-import { Button, Chevron, Eyebrow, Hairline } from "@/components/brand";
+import {
+  Button,
+  Chevron,
+  Eyebrow,
+  Hairline,
+  ThemeToggle,
+} from "@/components/brand";
 import { createServiceClient } from "@/lib/supabase/server";
 import type { RoomStatus } from "@/lib/types";
 import { JoinForm } from "./JoinForm";
@@ -58,9 +64,9 @@ export default async function JoinPage({
           You&rsquo;re joining
         </Eyebrow>
         <div className="mt-3 flex items-baseline gap-3">
-          <span className="font-display text-2xl text-navy">{roomName}</span>
+          <span className="font-display text-2xl text-ink">{roomName}</span>
         </div>
-        <p className="az-caption mt-2 uppercase text-neutral-500">
+        <p className="az-caption mt-2 uppercase text-ink-meta">
           Room {roomCode || "—"}
         </p>
       </header>
@@ -68,10 +74,10 @@ export default async function JoinPage({
       <div className="mt-16 flex-1">
         {blockedTitle ? (
           <>
-            <h1 className="az-title max-w-sm text-balance text-navy">
+            <h1 className="az-title max-w-sm text-balance text-ink">
               {blockedTitle}
             </h1>
-            <p className="az-body mt-6 max-w-sm text-neutral-900/70">
+            <p className="az-body mt-6 max-w-sm text-ink-body/70">
               {blockedBody}
             </p>
             <div className="mt-12 max-w-sm">
@@ -83,7 +89,7 @@ export default async function JoinPage({
         ) : (
           <>
             {/* The ask — serif for personality. */}
-            <h1 className="az-title max-w-sm text-balance text-navy">
+            <h1 className="az-title max-w-sm text-balance text-ink">
               What&rsquo;s your name?
             </h1>
             <JoinForm code={roomCode} />
@@ -91,14 +97,17 @@ export default async function JoinPage({
         )}
       </div>
 
-      {/* Footer flow-tick. */}
+      {/* Footer flow-tick + theme. */}
       <footer className="mt-10">
         <Hairline surface="light" />
-        <div className="mt-4 flex items-center gap-2">
-          <Chevron variant="filled" color="electric" size={10} />
-          <span className="az-caption uppercase text-neutral-500">
-            Joining locks when the selector runs
-          </span>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+          <div className="flex items-center gap-2">
+            <Chevron variant="filled" color="accent" size={10} />
+            <span className="az-caption uppercase text-ink-meta">
+              Joining locks when the selector runs
+            </span>
+          </div>
+          <ThemeToggle surface="light" />
         </div>
       </footer>
     </main>

@@ -12,11 +12,16 @@ export default function FacilitatorCreatePage() {
     <main className="surface-white flex min-h-svh flex-col px-6 py-10 sm:px-12 lg:px-20">
       <header className="flex items-center gap-3">
         <Link href="/" className="inline-flex items-center">
-          <AzmxLogo variant="color" height={24} />
+          <span className="inline-flex dark:hidden">
+            <AzmxLogo variant="color" height={24} />
+          </span>
+          <span className="hidden dark:inline-flex">
+            <AzmxLogo variant="white" height={24} />
+          </span>
           <span className="sr-only">AZMX — home</span>
         </Link>
-        <span className="h-4 w-px bg-hairline-light" aria-hidden />
-        <span className="az-caption uppercase text-neutral-500">Facilitator</span>
+        <span className="h-4 w-px bg-hairline" aria-hidden />
+        <span className="az-caption uppercase text-ink-meta">Facilitator</span>
       </header>
 
       <div className="mt-16 grid flex-1 grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-24">
@@ -25,10 +30,10 @@ export default function FacilitatorCreatePage() {
           <Eyebrow surface="light" tick>
             New session
           </Eyebrow>
-          <h1 className="az-title mt-4 max-w-md text-balance text-navy">
+          <h1 className="az-title mt-4 max-w-md text-balance text-ink">
             Create this week&rsquo;s room
           </h1>
-          <p className="az-lead mt-6 max-w-md text-neutral-900/80">
+          <p className="az-lead mt-6 max-w-md text-ink-body/80">
             You&rsquo;ll get a join link, a QR code, and a short code to put on
             the screen. Participants join on their phones.
           </p>
@@ -39,7 +44,7 @@ export default function FacilitatorCreatePage() {
         {/* Right: what you'll get (info panel on blue-50, hairline, no shadow). */}
         <aside className="lg:col-span-5 lg:col-start-8">
           <div className="surface-blue-50 p-8 sm:p-10">
-            <span className="az-caption uppercase text-electric">You&rsquo;ll receive</span>
+            <span className="az-caption uppercase text-accent">You&rsquo;ll receive</span>
             <ul className="mt-6 space-y-5">
               {[
                 ["A join link", "Unguessable room URL to share or QR-encode"],
@@ -47,10 +52,10 @@ export default function FacilitatorCreatePage() {
                 ["A projection view", "QR + live roster for the room display"],
               ].map(([title, body]) => (
                 <li key={title} className="flex gap-4">
-                  <Chevron variant="filled" color="electric" size={12} className="mt-1.5 shrink-0" />
+                  <Chevron variant="filled" color="accent" size={12} className="mt-1.5 shrink-0" />
                   <div>
-                    <p className="az-sublabel text-navy">{title}</p>
-                    <p className="az-body mt-1 text-neutral-900/70">{body}</p>
+                    <p className="az-sublabel text-ink">{title}</p>
+                    <p className="az-body mt-1 text-ink-body/70">{body}</p>
                   </div>
                 </li>
               ))}
@@ -61,7 +66,7 @@ export default function FacilitatorCreatePage() {
 
       <footer className="mt-16">
         <Hairline surface="light" />
-        <p className="az-caption mt-4 uppercase text-neutral-500">
+        <p className="az-caption mt-4 uppercase text-ink-meta">
           Real names are purged when the room closes
         </p>
       </footer>
