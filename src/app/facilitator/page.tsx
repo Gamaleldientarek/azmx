@@ -1,13 +1,45 @@
 import Link from "next/link";
-import { AzmxLogo, Chevron, Eyebrow, Hairline } from "@/components/brand";
+import {
+  AzmxLogo,
+  BrandNumeral,
+  Chevron,
+  Eyebrow,
+  Hairline,
+  ThemeToggle,
+} from "@/components/brand";
+import { createServiceClient } from "@/lib/supabase/server";
 import { CreateRoomForm } from "./CreateRoomForm";
+import { RoomsList, type RoomListItem } from "./RoomsList";
+
+export const dynamic = "force-dynamic";
 
 /**
- * /facilitator — create a room (gated by the proxy; cookie-authed). A new
- * room is created each week; the facilitator gets a join link + QR + short
- * human code and lands on the control panel.
+ * /facilitator — create a room (gated by the proxy; cookie-authed), plus the
+ * room manager: every existing room with Open / Close / Delete so the
+ * facilitator can clean up after themselves.
  */
-export default function FacilitatorCreatePage() {
+export default async function FacilitatorCreatePage() {
+  let rooms: RoomListItem[] = [];
+  try {
+    const supabase = createServiceClient();
+    const { data } = await supabase
+      .from("rooms")
+      .select("id, code, name, status, created_at, participants(count)")
+      .order("created_at", { ascending: false })
+      .limit(30);
+    rooms = (data ?? []).map((r) => ({
+      id: r.id as string,
+      code: r.code as string,
+      name: r.name as string | null,
+      status: r.status as RoomListItem["status"],
+      created_at: r.created_at as string,
+      participants:
+        (r.participants as unknown as { count: number }[])?.[0]?.count ?? 0,
+    }));
+  } catch (err) {
+    console.error("facilitator rooms list failed:", err);
+  }
+
   return (
     <main className="surface-white flex min-h-svh flex-col px-6 py-10 sm:px-12 lg:px-20">
       <header className="flex items-center gap-3">
@@ -64,11 +96,27 @@ export default function FacilitatorCreatePage() {
         </aside>
       </div>
 
+      {/* Room manager — every room, newest first: Open / Close / Delete. */}
+      <section className="mt-16">
+        <div className="flex items-baseline justify-between">
+          <h2 className="az-h2 text-ink">Your rooms</h2>
+          <BrandNumeral value={rooms.length} color="accent" scale="sm" />
+        </div>
+        <p className="az-caption mt-2 uppercase text-ink-meta">
+          Close ends a session and purges real names · delete removes it
+          entirely
+        </p>
+        <RoomsList rooms={rooms} />
+      </section>
+
       <footer className="mt-16">
         <Hairline surface="light" />
-        <p className="az-caption mt-4 uppercase text-ink-meta">
-          Real names are purged when the room closes
-        </p>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+          <p className="az-caption uppercase text-ink-meta">
+            Real names are purged when the room closes
+          </p>
+          <ThemeToggle />
+        </div>
       </footer>
     </main>
   );

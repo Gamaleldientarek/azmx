@@ -122,3 +122,30 @@ export async function getRoomRealNames(
     };
   }
 }
+
+export type DeleteRoomResult =
+  | { ok: true }
+  | { ok: false; error: "unauthorized" | "server_error"; message: string };
+
+/**
+ * Hard-delete a room (facilitator only). FK cascade removes participants and
+ * draws with it. For a soft end that keeps the row, use closeRoom instead.
+ */
+export async function deleteRoom(roomId: string): Promise<DeleteRoomResult> {
+  const gate = await requireFacilitator();
+  if (!gate.ok) return gate;
+
+  try {
+    const supabase = createServiceClient();
+    const { error } = await supabase.from("rooms").delete().eq("id", roomId);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  } catch (err) {
+    console.error("deleteRoom failed:", err);
+    return {
+      ok: false,
+      error: "server_error",
+      message: "Could not delete the room. Please try again.",
+    };
+  }
+}
