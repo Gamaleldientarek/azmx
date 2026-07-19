@@ -38,16 +38,24 @@ export default {
       redirect: "manual",
     });
 
-    // Rewrite any absolute redirects the origin issues back to the public host.
+    // Rewrite redirects the origin issues: absolute ones back to the public
+    // host, and no-JS server-action redirects that miss the basePath (Next
+    // quirk: MPA 303s return e.g. "/facilitator" without "/random-selector").
     const location = response.headers.get("Location");
-    if (location && location.includes(origin)) {
-      const fixed = new Headers(response.headers);
-      fixed.set("Location", location.replaceAll(origin, url.hostname));
-      return new Response(response.body, {
-        status: response.status,
-        statusText: response.statusText,
-        headers: fixed,
-      });
+    if (location) {
+      let fixed = location.replaceAll(origin, url.hostname);
+      if (fixed.startsWith("/") && !fixed.startsWith("/random-selector")) {
+        fixed = `/random-selector${fixed}`;
+      }
+      if (fixed !== location) {
+        const headers2 = new Headers(response.headers);
+        headers2.set("Location", fixed);
+        return new Response(response.body, {
+          status: response.status,
+          statusText: response.statusText,
+          headers: headers2,
+        });
+      }
     }
 
     return response;
