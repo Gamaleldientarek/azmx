@@ -24,7 +24,7 @@ export function RoomClient({ roomId }: { roomId: string }) {
   // undefined = SSR/hydration shell, null = no valid session on this phone.
   const session = useParticipantSession(roomId);
 
-  const { status, roster, latestDraw, authError } = useRoomRealtime({
+  const { status, roster, latestDraw, authError, roomName } = useRoomRealtime({
     roomId,
     roomToken: session?.roomToken ?? null,
   });
@@ -244,7 +244,8 @@ export function RoomClient({ roomId }: { roomId: string }) {
             <div className="mt-10 flex items-center gap-2">
               <Chevron variant="filled" color="electric" size={10} />
               <span className="az-caption uppercase text-neutral-500">
-                Room {session.roomCode} · order is final
+                {roomName ? `${roomName} · ` : ""}Room {session.roomCode} ·
+                order is final
               </span>
             </div>
           </>
@@ -284,7 +285,8 @@ export function RoomClient({ roomId }: { roomId: string }) {
               </span>
             </div>
             <p className="az-caption mt-8 uppercase text-neutral-500">
-              Room {session.roomCode} · joining locks when the selector runs
+              {roomName ? `${roomName} · ` : ""}Room {session.roomCode} ·
+              joining locks when the selector runs
             </p>
           </>
         )}

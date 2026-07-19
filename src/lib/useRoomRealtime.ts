@@ -58,6 +58,8 @@ export interface RoomRealtimeState {
   ready: boolean;
   /** True when reads are rejected — the scoped token is invalid/expired. */
   authError: boolean;
+  /** Room display name, fetched with the scoped client (null until loaded). */
+  roomName: string | null;
 }
 
 function isAuthError(
@@ -87,6 +89,7 @@ export function useRoomRealtime({
   const [latestDraw, setLatestDraw] = useState<Draw | null>(initialDraw);
   const [ready, setReady] = useState(initialStatus !== null);
   const [authError, setAuthError] = useState(false);
+  const [roomName, setRoomName] = useState<string | null>(null);
 
   // Shared between the subscription effect and the lobby poll effect.
   const clientRef = useRef<SupabaseClient | null>(null);
@@ -102,9 +105,9 @@ export function useRoomRealtime({
       const [roomRes, rosterRes, drawRes] = await Promise.all([
         client
           .from("rooms")
-          .select("status")
+          .select("status, name")
           .eq("id", roomId)
-          .maybeSingle<{ status: RoomStatus }>(),
+          .maybeSingle<{ status: RoomStatus; name: string | null }>(),
         client
           .from("participants")
           .select(ROSTER_COLUMNS)
@@ -132,7 +135,10 @@ export function useRoomRealtime({
         return;
       }
 
-      if (roomRes.data) setStatus(roomRes.data.status);
+      if (roomRes.data) {
+        setStatus(roomRes.data.status);
+        setRoomName(roomRes.data.name ?? null);
+      }
       setRoster(sortRoster(rosterRes.data ?? []));
       const draw = drawRes.data?.[0] ?? null;
       if (draw) {
@@ -252,5 +258,5 @@ export function useRoomRealtime({
     return () => window.clearInterval(intervalId);
   }, [roomId, roomToken, status]);
 
-  return { status, roster, latestDraw, ready, authError };
+  return { status, roster, latestDraw, ready, authError, roomName };
 }
