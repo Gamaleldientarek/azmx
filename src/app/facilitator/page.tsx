@@ -24,7 +24,9 @@ export default async function FacilitatorCreatePage() {
     const supabase = createServiceClient();
     const { data } = await supabase
       .from("rooms")
-      .select("id, code, name, status, created_at, participants(count)")
+      // participants!room_id: two FKs link these tables (room_id and
+      // starter_participant_id), so the embed must name the join column.
+      .select("id, code, name, status, created_at, participants!room_id(count)")
       .order("created_at", { ascending: false })
       .limit(30);
     rooms = (data ?? []).map((r) => ({
