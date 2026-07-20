@@ -78,12 +78,13 @@ export default function JoinCodePage() {
                        placeholder:text-ink-meta/40 focus:border-accent"
           />
           <p className="az-caption mt-3 text-ink-meta">
-            It&rsquo;s on the screen. Or scan the QR instead.
+            Six characters, like TUES-4821. It&rsquo;s on the big screen, or
+            scan the QR there instead.
           </p>
 
           <div className="mt-12">
             <Button variant="primary" surface="light" chevron fullWidth type="submit">
-              Continue
+              Find my room
             </Button>
           </div>
         </form>

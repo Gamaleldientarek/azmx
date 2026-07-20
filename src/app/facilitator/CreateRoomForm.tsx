@@ -40,7 +40,7 @@ export function CreateRoomForm() {
         name="label"
         type="text"
         maxLength={120}
-        placeholder="Team retro · 22 Jul"
+        placeholder="Monday retro · 22 Jul"
         className="mt-3 w-full appearance-none border-0 border-b-2 border-hairline bg-transparent
                    pb-3 font-display text-2xl text-ink outline-none
                    placeholder:text-ink-meta/40 focus:border-accent"
@@ -60,7 +60,7 @@ export function CreateRoomForm() {
           type="submit"
           disabled={pending || Boolean(state?.ok)}
         >
-          {pending || state?.ok ? "Creating…" : "Create room"}
+          {pending || state?.ok ? "Opening the room…" : "Open the room"}
         </Button>
       </div>
     </form>

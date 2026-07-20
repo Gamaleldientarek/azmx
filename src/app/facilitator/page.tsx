@@ -68,8 +68,8 @@ export default async function FacilitatorCreatePage() {
             Create a room for this session
           </h1>
           <p className="az-lead mt-6 max-w-md text-ink-body/80">
-            You&rsquo;ll get a join link, a QR code, and a short code to put on
-            the screen. Participants join on their phones.
+            One room per session. Put the QR on the screen, everyone joins
+            from their phone, and the selector settles the order for you.
           </p>
 
           <CreateRoomForm />
@@ -78,12 +78,12 @@ export default async function FacilitatorCreatePage() {
         {/* Right: what you'll get (info panel on blue-50, hairline, no shadow). */}
         <aside className="lg:col-span-5 lg:col-start-8">
           <div className="surface-blue-50 p-8 sm:p-10">
-            <span className="az-caption uppercase text-accent">You&rsquo;ll receive</span>
+            <span className="az-caption uppercase text-accent">What you get</span>
             <ul className="mt-6 space-y-5">
               {[
-                ["A join link", "Unguessable room URL to share or QR-encode"],
-                ["A short code", "Human-friendly, e.g. TUES-4821, shown on screen"],
-                ["A projection view", "QR + live roster for the room display"],
+                ["A join link", "Private to this room. Share it or let people scan"],
+                ["A short code", "Short enough to read out loud across a room"],
+                ["A projection view", "The QR and the live list, sized for the big screen"],
               ].map(([title, body]) => (
                 <li key={title} className="flex gap-4">
                   <Chevron variant="filled" color="accent" size={12} className="mt-1.5 shrink-0" />
