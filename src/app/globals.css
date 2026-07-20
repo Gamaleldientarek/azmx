@@ -178,37 +178,43 @@ body {
   z-index: 0;
   pointer-events: none;
   border-radius: 50%;
+  /* Promote to a compositor layer. Without this the browser re-rasterizes a
+   * multi-megapixel radial gradient every frame, which presents as flicker
+   * rather than as slowness. */
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* Top-right pool. */
 .surface-navy-ambient::before {
-  top: -24vmax;
-  right: -14vmax;
-  width: 80vmax;
-  height: 80vmax;
+  top: -18vmax;
+  right: -10vmax;
+  width: 52vmax;
+  height: 52vmax;
   background: radial-gradient(
     circle at center,
     rgba(2, 0, 168, 0.62) 0%,
     rgba(1, 0, 110, 0.4) 40%,
     rgba(1, 0, 110, 0) 72%
   );
-  animation: az-ambient-a 13s var(--az-ease-inout) infinite alternate;
+  animation: az-ambient-a 13s linear infinite alternate;
 }
 
 /* Bottom-left pool — a touch of Light Blue at the shoulder, very low alpha,
  * so the two pools aren't the same note twice. */
 .surface-navy-ambient::after {
-  bottom: -28vmax;
-  left: -18vmax;
-  width: 88vmax;
-  height: 88vmax;
+  bottom: -20vmax;
+  left: -12vmax;
+  width: 58vmax;
+  height: 58vmax;
   background: radial-gradient(
     circle at center,
     rgba(1, 0, 110, 0.58) 0%,
     rgba(93, 143, 255, 0.14) 44%,
     rgba(1, 0, 110, 0) 74%
   );
-  animation: az-ambient-b 17s var(--az-ease-inout) infinite alternate;
+  animation: az-ambient-b 17s linear infinite alternate;
 }
 
 /* Theme-driven: white in light, deep navy-tinted dark under [data-theme="dark"]. */
@@ -525,23 +531,23 @@ body {
  * falloff, so the edge of a pool never sweeps past a line of text. */
 @keyframes az-ambient-a {
   from {
-    opacity: 0.45;
-    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.5;
+    transform: translate3d(0, 0, 0);
   }
   to {
     opacity: 1;
-    transform: translate3d(-16vmax, 10vmax, 0) scale(1.24);
+    transform: translate3d(-14vmax, 9vmax, 0);
   }
 }
 
 @keyframes az-ambient-b {
   from {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1.1);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    opacity: 0.45;
-    transform: translate3d(13vmax, -12vmax, 0) scale(1);
+    opacity: 0.5;
+    transform: translate3d(12vmax, -11vmax, 0);
   }
 }
 
@@ -598,6 +604,7 @@ body {
   .surface-navy-ambient::before,
   .surface-navy-ambient::after {
     animation: none !important;
+    will-change: auto !important;
     opacity: 1 !important;
     transform: none !important;
   }
