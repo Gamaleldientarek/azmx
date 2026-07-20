@@ -6,7 +6,12 @@
  */
 
 /** Lifecycle of a room: lobby -> drawing -> revealed -> closed. */
-export type RoomStatus = "lobby" | "drawing" | "revealed" | "closed";
+export type RoomStatus =
+  | "lobby"
+  | "locked"
+  | "drawing"
+  | "revealed"
+  | "closed";
 
 /** Row of `public.rooms`. */
 export interface Room {

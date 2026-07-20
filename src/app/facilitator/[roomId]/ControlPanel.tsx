@@ -13,7 +13,11 @@ import {
 } from "@/components/brand";
 import { logoutFacilitator } from "@/app/actions/auth";
 import { runDraw } from "@/app/actions/draw";
-import { closeRoom, getRoomRealNames } from "@/app/actions/rooms";
+import {
+  closeRoom,
+  getRoomRealNames,
+  setJoining,
+} from "@/app/actions/rooms";
 import {
   useRoomRealtime,
   type RosterParticipant,
@@ -40,6 +44,7 @@ export interface ControlPanelProps {
 
 const STATUS_LABEL: Record<RoomStatus, string> = {
   lobby: "Open",
+  locked: "Joining closed",
   drawing: "Locked · drawing",
   revealed: "Order revealed",
   closed: "Closed · names purged",
@@ -172,6 +177,17 @@ export function ControlPanel({
     });
   };
 
+  const [joiningPending, startJoiningTransition] = useTransition();
+  const toggleJoining = () => {
+    setActionError(null);
+    const open = effectiveStatus !== "lobby";
+    startJoiningTransition(async () => {
+      const result = await setJoining(roomId, open);
+      if (!result.ok) setActionError(result.message);
+      // Status flips arrive over Realtime like every other surface.
+    });
+  };
+
   const executeClose = () => {
     setConfirming(null);
     setActionError(null);
@@ -286,9 +302,27 @@ export function ControlPanel({
             <h2 className="az-h2 text-ink">In the room</h2>
             <BrandNumeral value={roster.length} color="accent" scale="sm" />
           </div>
-          <p className="az-caption mt-2 uppercase text-ink-meta">
-            Order = join order · real names visible only to you
-          </p>
+          <div className="mt-2 flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+            <p className="az-caption uppercase text-ink-meta">
+              Order = join order · real names visible only to you
+            </p>
+            {/* Door control: close joining without drawing, reopen any time
+                (incl. after a draw — a redraw then includes latecomers). */}
+            {!closed && (
+              <button
+                type="button"
+                disabled={joiningPending}
+                onClick={toggleJoining}
+                className="az-caption cursor-pointer uppercase text-accent underline-offset-4 transition-colors hover:underline disabled:opacity-50"
+              >
+                {joiningPending
+                  ? "Updating…"
+                  : effectiveStatus === "lobby"
+                    ? "Close joining"
+                    : "Reopen joining"}
+              </button>
+            )}
+          </div>
 
           {roster.length === 0 ? (
             <p className="az-body mt-8 max-w-sm text-ink-body/70">

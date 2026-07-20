@@ -149,3 +149,39 @@ export async function deleteRoom(roomId: string): Promise<DeleteRoomResult> {
     };
   }
 }
+
+export type SetJoiningResult =
+  | { ok: true; status: "lobby" | "locked" }
+  | { ok: false; error: "unauthorized" | "server_error"; message: string };
+
+/**
+ * Facilitator door control: close joining without drawing (lobby -> locked),
+ * reopen it (locked -> lobby), or reopen after a draw (drawing/revealed ->
+ * lobby, so latecomers can join before a redraw). Serialized in the DB on
+ * the same row lock join_room takes.
+ */
+export async function setJoining(
+  roomId: string,
+  open: boolean
+): Promise<SetJoiningResult> {
+  const gate = await requireFacilitator();
+  if (!gate.ok) return gate;
+
+  try {
+    const supabase = createServiceClient();
+    const { data, error } = await supabase
+      .rpc("set_joining", { p_room_id: roomId, p_open: open })
+      .single<Room>();
+    if (error || !data) {
+      throw new Error(error?.message ?? "set_joining returned nothing");
+    }
+    return { ok: true, status: data.status as "lobby" | "locked" };
+  } catch (err) {
+    console.error("setJoining failed:", err);
+    return {
+      ok: false,
+      error: "server_error",
+      message: "Could not update joining. Please try again.",
+    };
+  }
+}

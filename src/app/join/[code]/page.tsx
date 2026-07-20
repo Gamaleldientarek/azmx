@@ -63,6 +63,10 @@ export default async function JoinPage({
   } else if (room.status === "closed") {
     blockedTitle = "This room has ended";
     blockedBody = "The session is over. A new room opens next Tuesday.";
+  } else if (room.status === "locked") {
+    blockedTitle = "Joining is closed right now";
+    blockedBody =
+      "The facilitator has closed joining for the moment — ask them to reopen it.";
   } else if (room.status !== "lobby") {
     blockedTitle = "The draw has started";
     blockedBody =

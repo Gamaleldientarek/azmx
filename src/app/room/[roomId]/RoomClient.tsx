@@ -157,7 +157,9 @@ export function RoomClient({ roomId }: { roomId: string }) {
       ? "The selector is running…"
       : revealed
         ? "The order is set"
-        : "Waiting in the lobby · watch the screen";
+        : status === "locked"
+          ? "Joining is closed · waiting for the draw"
+          : "Waiting in the lobby · watch the screen";
 
   return (
     <main className="flex min-h-svh flex-col">

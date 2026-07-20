@@ -170,36 +170,55 @@ export function ScreenLive({
           </span>
         </header>
 
-        <div className="relative z-10 grid grid-cols-12 items-center gap-[3vw]">
-          {/* Join instruction + big human code (7 cols). The code is the hero. */}
-          <div className="col-span-7">
+        {effectiveStatus === "locked" ? (
+          /* Joining manually closed — no QR, no code; the roster is the show. */
+          <div className="relative z-10">
             <Eyebrow surface="dark" tick>
-              Scan to join on your phone
+              Joining is closed
             </Eyebrow>
-            <p className="az-display mt-[1.6vh] text-white">Scan to join</p>
-            <div className="mt-[2.4vh]">
-              <span className="az-proj-label text-blue-200">Or enter code</span>
-              <p className="az-proj-code mt-[0.8vh] text-light-blue">{code}</p>
-            </div>
-            <p className="az-caption mt-[2vh] normal-case tracking-normal text-blue-200/80">
-              {joinUrlDisplay}
+            <p className="az-display mt-[1.6vh] text-white">
+              Everyone&rsquo;s in
+            </p>
+            <p className="az-proj-label mt-[1.6vh] text-blue-200">
+              The selector runs shortly
             </p>
           </div>
+        ) : (
+          <div className="relative z-10 grid grid-cols-12 items-center gap-[3vw]">
+            {/* Join instruction + big human code (7 cols). The code is the hero. */}
+            <div className="col-span-7">
+              <Eyebrow surface="dark" tick>
+                Scan to join on your phone
+              </Eyebrow>
+              <p className="az-display mt-[1.6vh] text-white">Scan to join</p>
+              <div className="mt-[2.4vh]">
+                <span className="az-proj-label text-blue-200">
+                  Or enter code
+                </span>
+                <p className="az-proj-code mt-[0.8vh] text-light-blue">
+                  {code}
+                </p>
+              </div>
+              <p className="az-caption mt-[2vh] normal-case tracking-normal text-blue-200/80">
+                {joinUrlDisplay}
+              </p>
+            </div>
 
-          {/* QR panel (5 cols) — white block so it scans. */}
-          <div className="col-span-5 flex justify-end">
-            <div className="w-[22vw] max-w-[360px] bg-white p-[1.4vw]">
-              {/* Server-generated PNG data URL — next/image adds nothing here. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={qrDataUrl}
-                alt={`QR code — scan to join room ${code}`}
-                className="w-full"
-                data-slot="qr"
-              />
+            {/* QR panel (5 cols) — white block so it scans. */}
+            <div className="col-span-5 flex justify-end">
+              <div className="w-[22vw] max-w-[360px] bg-white p-[1.4vw]">
+                {/* Server-generated PNG data URL — next/image adds nothing here. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={qrDataUrl}
+                  alt={`QR code — scan to join room ${code}`}
+                  className="w-full"
+                  data-slot="qr"
+                />
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Roster that fills live as people join. */}
         <div className="relative z-10">

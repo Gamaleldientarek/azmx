@@ -17,13 +17,14 @@ export interface RoomListItem {
   id: string;
   code: string;
   name: string | null;
-  status: "lobby" | "drawing" | "revealed" | "closed";
+  status: "lobby" | "locked" | "drawing" | "revealed" | "closed";
   created_at: string;
   participants: number;
 }
 
 const STATUS_LABEL: Record<RoomListItem["status"], string> = {
   lobby: "Open · joining",
+  locked: "Joining closed",
   drawing: "Locked · drawing",
   revealed: "Order revealed",
   closed: "Closed",
