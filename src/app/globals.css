@@ -143,6 +143,74 @@ body {
   color: var(--color-white);
 }
 
+/* Opt-in depth for the navy screens that carry no background element (the
+ * login gate, the room's three no-session states, the 404). Deliberately NOT
+ * .surface-event: no Electric, no diagonal hero sweep — the event gradient
+ * stays reserved for the landing and the reveal. This is Navy with two
+ * off-canvas pools of Blue-900 drifting underneath on a ~26s/34s traverse:
+ * alive, never something you watch move. It is the sanctioned replacement for
+ * the retired background chevron art (2026-07-20) — do not reintroduce those.
+ *
+ * Cost: two composited pseudo-elements animating transform/opacity only.
+ * No filter: blur() (the falloff is in the gradient), no background-position
+ * animation (that repaints the whole surface every frame), no will-change
+ * (a running transform animation self-promotes; forcing it would pin two
+ * large layers in memory for the whole session on a projector). */
+.surface-navy-ambient {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--color-navy);
+  /* The still base — a whisper between two neighbouring darks. Carries the
+   * surface on its own when motion is off. */
+  background-image: linear-gradient(
+    168deg,
+    var(--color-blue-950) 0%,
+    var(--color-navy) 55%,
+    var(--color-blue-950) 100%
+  );
+  color: var(--color-white);
+}
+
+.surface-navy-ambient::before,
+.surface-navy-ambient::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+/* Top-right pool. */
+.surface-navy-ambient::before {
+  top: -34vmax;
+  right: -22vmax;
+  width: 76vmax;
+  height: 76vmax;
+  background: radial-gradient(
+    circle at center,
+    rgba(1, 0, 110, 0.55) 0%,
+    rgba(1, 0, 110, 0.28) 42%,
+    rgba(1, 0, 110, 0) 70%
+  );
+  animation: az-ambient-a 26s var(--az-ease-inout) infinite alternate;
+}
+
+/* Bottom-left pool — a touch of Light Blue at the shoulder, very low alpha,
+ * so the two pools aren't the same note twice. */
+.surface-navy-ambient::after {
+  bottom: -40vmax;
+  left: -26vmax;
+  width: 84vmax;
+  height: 84vmax;
+  background: radial-gradient(
+    circle at center,
+    rgba(1, 0, 110, 0.42) 0%,
+    rgba(93, 143, 255, 0.05) 45%,
+    rgba(1, 0, 110, 0) 72%
+  );
+  animation: az-ambient-b 34s var(--az-ease-inout) infinite alternate;
+}
+
 /* Theme-driven: white in light, deep navy-tinted dark under [data-theme="dark"]. */
 .surface-white {
   background-color: var(--surface);
@@ -451,6 +519,32 @@ body {
   animation: az-breathe 1800ms var(--az-ease-inout) infinite;
 }
 
+/* Ambient drift — the slowest thing in the system. Paired with `alternate` so
+ * each pool ping-pongs (26s and 34s one-way: no shared beat, nothing to catch
+ * the eye on a loop). Amplitude is deliberately smaller than the pools' own
+ * falloff, so the edge of a pool never sweeps past a line of text. */
+@keyframes az-ambient-a {
+  from {
+    opacity: 0.7;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(-9vmax, 6vmax, 0) scale(1.14);
+  }
+}
+
+@keyframes az-ambient-b {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1.06);
+  }
+  to {
+    opacity: 0.7;
+    transform: translate3d(7vmax, -7vmax, 0) scale(1);
+  }
+}
+
 /* Press response — anticipation on the primary action. Transform only, so it
  * costs nothing and never nudges neighbours. */
 .az-press {
@@ -496,5 +590,15 @@ body {
 
   .az-press:active:not(:disabled) {
     transform: none;
+  }
+
+  /* The ambient pools stop where they sit — no transform, full opacity. The
+   * static base gradient plus two settled pools is the intended still
+   * composition, not a fallback: the surface still has depth with motion off. */
+  .surface-navy-ambient::before,
+  .surface-navy-ambient::after {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

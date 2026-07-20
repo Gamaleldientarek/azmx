@@ -225,8 +225,8 @@ export function RoomClient({
   // indistinguishable from a crash.
   if (session === undefined || recoveryPending) {
     return (
-      <main className="surface-navy flex min-h-svh flex-col justify-center px-6 py-12 sm:px-10">
-        <div role="status">
+      <main className="surface-navy surface-navy-ambient relative flex min-h-svh flex-col justify-center overflow-hidden px-6 py-12 sm:px-10">
+        <div className="relative z-10" role="status">
           <Eyebrow surface="dark" tick>
             Getting your seat
           </Eyebrow>
@@ -246,8 +246,8 @@ export function RoomClient({
   // people into a /join <-> /room bounce on ordinary conference wifi).
   if (session === null && recovery === "unavailable") {
     return (
-      <main className="surface-navy flex min-h-svh flex-col px-6 py-12 sm:px-10">
-        <div className="flex flex-1 flex-col">
+      <main className="surface-navy surface-navy-ambient relative flex min-h-svh flex-col overflow-hidden px-6 py-12 sm:px-10">
+        <div className="relative z-10 flex flex-1 flex-col">
           <Eyebrow surface="dark" tick>
             Connection trouble
           </Eyebrow>
@@ -273,7 +273,7 @@ export function RoomClient({
             </Button>
           </div>
         </div>
-        <footer className="mt-10">
+        <footer className="relative z-10 mt-10">
           <Hairline surface="dark" />
           <p className="az-caption mt-4 uppercase text-blue-200/70">
             Room {roomCodeHint ?? "—"}
@@ -286,7 +286,7 @@ export function RoomClient({
   // No identity on this phone (or the token expired) — gentle rejoin prompt.
   if (session === null || authError) {
     return (
-      <main className="surface-navy relative flex min-h-svh flex-col overflow-hidden px-6 py-12 sm:px-10">
+      <main className="surface-navy surface-navy-ambient relative flex min-h-svh flex-col overflow-hidden px-6 py-12 sm:px-10">
         <div className="relative z-10 flex flex-1 flex-col">
           <Eyebrow surface="dark" tick>
             Random Selector

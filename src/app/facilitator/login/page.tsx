@@ -10,7 +10,7 @@ import { LoginForm } from "./LoginForm";
  */
 export default function FacilitatorLoginPage() {
   return (
-    <main className="surface-navy relative flex min-h-svh flex-col overflow-hidden px-6 py-10 sm:px-12">
+    <main className="surface-navy surface-navy-ambient relative flex min-h-svh flex-col overflow-hidden px-6 py-10 sm:px-12">
 
       <header className="relative z-10 flex items-center gap-3">
         <Link href="/" className="inline-flex items-center">

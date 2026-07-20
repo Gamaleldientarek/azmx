@@ -8,7 +8,7 @@ import { AzmxLogo, Button, Eyebrow, Hairline } from "@/components/brand";
  */
 export default function NotFound() {
   return (
-    <main className="surface-navy relative flex min-h-svh flex-col overflow-hidden px-6 py-10 sm:px-12">
+    <main className="surface-navy surface-navy-ambient relative flex min-h-svh flex-col overflow-hidden px-6 py-10 sm:px-12">
       <header className="relative z-10 flex items-center gap-3">
         <Link href="/" className="inline-flex items-center">
           <AzmxLogo variant="white" height={24} />
