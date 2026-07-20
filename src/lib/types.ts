@@ -89,12 +89,17 @@ export type JoinRoomErrorCode =
 export type JoinRoomResult =
   | {
       ok: true;
+      /**
+       * Deliberately WITHOUT `real_name`. The result of a join is reachable
+       * via the cookie-recovery branch, where the seat belongs to the browser
+       * rather than to the submitter — so returning a real name there would
+       * hand it to whoever holds a shared phone next. Omitting it from the
+       * type makes that a compile error rather than a convention.
+       */
       participant: {
         id: string;
         display_name: string;
         join_number: number;
-        /** The joiner's own name, echoed back for their welcome screen. */
-        real_name: string;
       };
       roomId: string;
       /** Scoped Supabase JWT for reads + Realtime on this room only. */
@@ -139,4 +144,4 @@ export type RunDrawResult =
 
 export type LoginResult =
   | { ok: true }
-  | ActionError<"invalid_password" | "server_error">;
+  | ActionError<"invalid_password" | "rate_limited" | "server_error">;

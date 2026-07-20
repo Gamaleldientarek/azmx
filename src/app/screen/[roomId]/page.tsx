@@ -12,10 +12,27 @@ export const dynamic = "force-dynamic";
 /**
  * /screen/[roomId] — PROJECTION view (16:9, legible at 3-5m).
  *
- * No login friction on the room display: the unguessable roomId uuid is the
- * capability. The server fetches the initial room + sanitized roster (safe
- * columns only — never real_name), mints the scoped room JWT, and renders
- * the real join QR; the client component takes over with Realtime.
+ * No login friction on the room display. The server fetches the initial room
+ * + sanitized roster (safe columns only — never real_name), mints the scoped
+ * room JWT, and renders the real join QR; the client component takes over
+ * with Realtime.
+ *
+ * THE roomId IS NOT A CAPABILITY — do not build on the assumption that it is.
+ * This comment used to claim "the unguessable roomId uuid is the capability",
+ * and that is false in practice: /join/[code] is unauthenticated and embeds
+ * room.id in the rendered page, so anyone who guesses or reads a room CODE is
+ * one request away from the uuid. This route is effectively public, and it
+ * mints the caller a 4h room-scoped JWT granting direct PostgREST and
+ * Realtime reads.
+ *
+ * What that exposes is the SANITIZED roster — display names, join numbers,
+ * draw order. NOT real names: the column-scoped grant in 0003_rls.sql keeps
+ * `real_name` away from anon entirely, in Postgres rather than in TypeScript.
+ * So the exposure here is session metadata, not PII, and that is a deliberate
+ * accepted trade for a projection screen nobody should have to log into.
+ *
+ * If that trade ever stops being acceptable, add a real gate here — do not
+ * reach for the uuid's unguessability, because it does not hold.
  */
 export default async function ScreenPage({
   params,

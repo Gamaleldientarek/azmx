@@ -8,6 +8,7 @@ import {
   mintFacilitatorSessionToken,
   verifyFacilitatorSessionToken,
 } from "@/lib/facilitatorToken";
+import { BASE_PATH } from "@/lib/basePath";
 import { requireEnv } from "@/lib/env";
 
 /**
@@ -34,15 +35,24 @@ export async function createFacilitatorSession(): Promise<void> {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
-    path: "/",
+    // Scoped to the app's mount point, not "/" — see basePath.ts.
+    path: BASE_PATH,
     maxAge: FACILITATOR_SESSION_TTL_SECONDS,
   });
 }
 
-/** Clear the facilitator session cookie. */
+/**
+ * Clear the facilitator session cookie.
+ *
+ * Deletes at BOTH paths deliberately. Sessions issued before the cookie was
+ * scoped live at "/" and still match every request under the basePath; a
+ * delete at only the new path would leave that legacy cookie in place, shadow
+ * the new one, and make "Log out" look like it did nothing for up to 12h.
+ */
 export async function destroyFacilitatorSession(): Promise<void> {
   const cookieStore = await cookies();
-  cookieStore.delete(FACILITATOR_COOKIE_NAME);
+  cookieStore.delete({ name: FACILITATOR_COOKIE_NAME, path: BASE_PATH });
+  cookieStore.delete({ name: FACILITATOR_COOKIE_NAME, path: "/" });
 }
 
 /** True iff the current request carries a valid facilitator session. */

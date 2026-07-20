@@ -75,9 +75,11 @@ export function JoinForm({ code, roomId }: { code: string; roomId: string }) {
                    pb-3 font-display text-3xl text-ink outline-none
                    placeholder:text-ink-meta focus:border-accent"
       />
+      {/* The retention window here must match public.real_name_retention()
+          in supabase/migrations/0006_retention_purge.sql. */}
       <p className="az-caption mt-3 text-ink-meta">
         Shown only to the facilitator. You&rsquo;ll get a fun name for the
-        screen.
+        screen, and your real name is deleted within 24 hours.
       </p>
 
       {errorMessage && (

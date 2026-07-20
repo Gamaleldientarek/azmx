@@ -9,6 +9,7 @@
  */
 
 import { NextResponse, type NextRequest } from "next/server";
+import { BASE_PATH } from "@/lib/basePath";
 import {
   FACILITATOR_COOKIE_NAME,
   verifyFacilitatorSessionToken,
@@ -32,7 +33,10 @@ export default async function proxy(request: NextRequest) {
     const response = NextResponse.redirect(loginUrl);
     if (token) {
       // Expired/tampered cookie: clear it so the browser stops resending it.
-      response.cookies.delete(FACILITATOR_COOKIE_NAME);
+      // Both paths — the cookie is now scoped to the basePath, but sessions
+      // issued before that change live at "/" and would otherwise persist.
+      response.cookies.delete({ name: FACILITATOR_COOKIE_NAME, path: BASE_PATH });
+      response.cookies.delete({ name: FACILITATOR_COOKIE_NAME, path: "/" });
     }
     return response;
   }

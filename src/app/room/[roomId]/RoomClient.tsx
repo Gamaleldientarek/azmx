@@ -535,7 +535,8 @@ export function RoomClient({
               That&rsquo;s a wrap. A new room opens whenever you need one.
             </p>
             <p className="az-caption mt-8 uppercase text-ink-meta">
-              Real names are purged when the room closes
+              Real names are purged when the room closes, and within 24 hours
+              either way
             </p>
           </>
         ) : drawing ? (

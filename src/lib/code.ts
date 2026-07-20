@@ -3,11 +3,31 @@ import "server-only";
 import { randomInt } from "node:crypto";
 import { createServiceClient } from "@/lib/supabase/server";
 
-/** Human room code: ROOM- + 4 digits, e.g. ROOM-4821. */
+/**
+ * Human room code: ROOM- + 6 digits, e.g. ROOM-482113.
+ *
+ * WIDENED FROM 4 DIGITS. The old space was randomInt(1000, 10000) = 9,000
+ * values, which was a problem twice over:
+ *
+ *  1. ENUMERATION. /join/[code] is public and force-dynamic, and confirms a
+ *     room's existence, name and status per code. 9,000 codes is seconds of
+ *     scripted requests to find every live room in the system.
+ *  2. AVAILABILITY. `rooms.code` carries a GLOBAL unique constraint across
+ *     every room ever created, not just open ones, so each room permanently
+ *     consumes one of the 9,000 codes. With generateUniqueRoomCode giving up
+ *     after 20 attempts, room creation degrades and eventually fails as the
+ *     space fills — a slow-burn outage with no obvious cause.
+ *
+ * 6 digits = 900,000 values: 100x the enumeration cost, and the exhaustion
+ * problem moves out of reach. Still readable aloud across a room, which is
+ * the whole point of a human code.
+ *
+ * Codes are compared as opaque strings, so existing 4-digit rooms keep
+ * working unchanged.
+ */
 export function generateRoomCode(): string {
-  // crypto-random 1000..9999 — no leading zero, unguessable enough for a
-  // short-lived, projection-displayed code.
-  return `ROOM-${randomInt(1000, 10000)}`;
+  // crypto-random 100000..999999 — no leading zero.
+  return `ROOM-${randomInt(100000, 1000000)}`;
 }
 
 const MAX_CODE_ATTEMPTS = 20;
@@ -41,6 +61,6 @@ export async function generateUniqueRoomCode(): Promise<string> {
 
   throw new Error(
     `Could not find a free room code after ${MAX_CODE_ATTEMPTS} attempts — ` +
-      `the ROOM-#### space may be nearly exhausted; close old rooms.`
+      `the ROOM-###### space may be nearly exhausted; close old rooms.`
   );
 }

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { resolveBaseUrl } from "@/lib/baseUrl";
+import { requireFacilitator } from "@/lib/facilitatorSession";
 import { joinQrDataUrl } from "@/lib/qr";
 import { mintRoomToken } from "@/lib/roomToken";
 import { createServiceClient } from "@/lib/supabase/server";
@@ -10,17 +11,26 @@ import { ControlPanel } from "./ControlPanel";
 export const dynamic = "force-dynamic";
 
 /**
- * /facilitator/[roomId] — control panel (cookie-gated by the proxy).
+ * /facilitator/[roomId] — control panel.
  *
- * Server component: fetches the room + sanitized roster (fun names only —
- * the facilitator sees the same view as everyone), the latest draw, the
- * real join QR, and mints the scoped room token for client Realtime.
+ * Server component: fetches the room + roster (this is the ONE surface that
+ * reads `real_name`), the latest draw, the real join QR, and mints the scoped
+ * room token for client Realtime.
+ *
+ * Authorization is defence-in-depth: the proxy matcher (`src/proxy.ts`) gates
+ * the route, AND this page re-asserts the session before any query runs. The
+ * roster below embeds real names in the RSC payload, so it must not depend on
+ * a routing config alone. `notFound()` rather than a redirect so an
+ * unauthenticated probe cannot distinguish a real room id from a fake one.
  */
 export default async function FacilitatorRoomPage({
   params,
 }: {
   params: Promise<{ roomId: string }>;
 }) {
+  const gate = await requireFacilitator();
+  if (!gate.ok) notFound();
+
   const { roomId } = await params;
   const supabase = createServiceClient();
 

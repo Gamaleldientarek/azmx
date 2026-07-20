@@ -6,11 +6,13 @@ import {
   readParticipantCookie,
   setParticipantCookie,
 } from "@/lib/participantCookie";
+import {
+  REAL_NAME_MAX,
+  isValidRealName,
+  sanitizeRealName,
+} from "@/lib/realName";
 import { createServiceClient } from "@/lib/supabase/server";
 import type { JoinRoomResult, Participant } from "@/lib/types";
-
-const NAME_MIN = 1;
-const NAME_MAX = 60;
 
 /**
  * Participant joins a room (PUBLIC — the one un-gated mutating action).
@@ -36,12 +38,14 @@ export async function joinRoom(
     };
   }
 
-  const trimmedName = typeof realName === "string" ? realName.trim() : "";
-  if (trimmedName.length < NAME_MIN || trimmedName.length > NAME_MAX) {
+  // Sanitize BEFORE validating: 60 characters of U+202E is a valid *length*
+  // but sanitizes to empty, and must be rejected rather than stored blank.
+  const trimmedName = sanitizeRealName(realName);
+  if (!isValidRealName(trimmedName)) {
     return {
       ok: false,
       error: "invalid_name",
-      message: `Please enter your name (1–${NAME_MAX} characters).`,
+      message: `Please enter your name (1–${REAL_NAME_MAX} characters).`,
     };
   }
 
@@ -61,9 +65,14 @@ export async function joinRoom(
     if (roomRow && roomRow.status !== "closed") {
       const existingId = await readParticipantCookie(roomRow.id);
       if (existingId) {
+        // Safe columns only. The seat belongs to whoever holds the COOKIE,
+        // not to whoever just submitted this form — echoing the stored
+        // real_name back would hand the previous joiner's name to the next
+        // person on a shared phone. Same invariant `recoverSeat` honors
+        // (see its doc comment below); it applies here too.
         const { data: existing } = await supabase
           .from("participants")
-          .select("id, room_id, display_name, join_number, real_name")
+          .select("id, room_id, display_name, join_number")
           .eq("id", existingId)
           .eq("room_id", roomRow.id)
           .maybeSingle<Participant>();
@@ -75,7 +84,6 @@ export async function joinRoom(
               id: existing.id,
               display_name: existing.display_name,
               join_number: existing.join_number,
-              real_name: existing.real_name ?? trimmedName,
             },
             roomId: existing.room_id,
             roomToken,
@@ -104,11 +112,22 @@ export async function joinRoom(
             "already started, or the code is wrong.",
         };
       }
+      // A room that hit its own cap is a normal, explainable state.
+      if (msg.includes("room_at_capacity")) {
+        return {
+          ok: false,
+          error: "room_full",
+          message: "This room is full. Ask the host to make space or open another.",
+        };
+      }
+      // Distinct from the above on purpose: with the cap in place this should
+      // be unreachable, so it means the name pool is smaller than the cap —
+      // an operational fault, not a full room.
       if (msg.includes("name_pool_exhausted")) {
         return {
           ok: false,
           error: "room_full",
-          message: "This room is full — no fun names are left. Ask the facilitator.",
+          message: "Something went wrong assigning your name. Tell the host.",
         };
       }
       if (msg.includes("invalid_real_name")) {
@@ -134,7 +153,6 @@ export async function joinRoom(
         id: data.id,
         display_name: data.display_name,
         join_number: data.join_number,
-        real_name: data.real_name ?? trimmedName,
       },
       roomId: data.room_id,
       roomToken,

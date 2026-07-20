@@ -14,7 +14,14 @@ export type ServerEnvKey =
   | "SUPABASE_SERVICE_ROLE_KEY"
   | "SUPABASE_JWT_SECRET"
   | "FACILITATOR_PASSWORD"
-  | "SESSION_SECRET";
+  /**
+   * Legacy shared signing secret. Still honoured as a fallback for both
+   * token types, but new code should go through `lib/tokenSecrets.ts` rather
+   * than reading this directly — see D3 in the security brief.
+   */
+  | "SESSION_SECRET"
+  | "FACILITATOR_SESSION_SECRET"
+  | "PARTICIPANT_COOKIE_SECRET";
 
 export function requireEnv(key: ServerEnvKey): string {
   const value = process.env[key];

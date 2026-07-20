@@ -32,6 +32,10 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# ...but the templates carry no secrets and MUST be committed, or nobody can
+# discover the required variables. `.env.local` / `.env.test` stay ignored.
+!.env.example
+!.env.test.example
 
 # vercel
 .vercel

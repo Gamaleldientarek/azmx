@@ -12,17 +12,22 @@
 
 import { randomInt } from "node:crypto";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { loadLiveEnv } from "./liveEnv";
+import { assertNotProduction, loadLiveEnv } from "./liveEnv";
 
 export const AUTOTEST_MARKER = "[AUTOTEST]";
 
 export function createServiceClient(): SupabaseClient {
   loadLiveEnv();
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  // Last line of defence: this is the ONLY factory for a write-capable client
+  // in the live suites, so guarding here covers `npx vitest run tests/live`
+  // invoked directly, bypassing the runner script. Throws on production.
+  assertNotProduction();
+  const url = process.env.TEST_SUPABASE_URL;
+  const key = process.env.TEST_SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) {
     throw new Error(
-      "Live env missing (NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY)"
+      "Live env missing (TEST_SUPABASE_URL / TEST_SUPABASE_SERVICE_ROLE_KEY). " +
+        "See .env.test.example — live tests never read .env.local."
     );
   }
   return createClient(url, key, {

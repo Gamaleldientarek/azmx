@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import {
   AzmxLogo,
   BrandNumeral,
@@ -7,6 +8,7 @@ import {
   Hairline,
   ThemeToggle,
 } from "@/components/brand";
+import { requireFacilitator } from "@/lib/facilitatorSession";
 import { createServiceClient } from "@/lib/supabase/server";
 import { CreateRoomForm } from "./CreateRoomForm";
 import { RoomsList, type RoomListItem } from "./RoomsList";
@@ -14,11 +16,19 @@ import { RoomsList, type RoomListItem } from "./RoomsList";
 export const dynamic = "force-dynamic";
 
 /**
- * /facilitator — create a room (gated by the proxy; cookie-authed), plus the
- * room manager: every existing room with Open / Close / Delete so the
- * facilitator can clean up after themselves.
+ * /facilitator — create a room, plus the room manager: every existing room
+ * with Open / Close / Delete so the facilitator can clean up after themselves.
+ *
+ * Authorization is defence-in-depth: the proxy matcher (`src/proxy.ts`) gates
+ * the route, AND this page re-asserts the session itself. The proxy alone is a
+ * routing config — a matcher edit or a basePath change would otherwise turn a
+ * routing tweak into a bulk disclosure. `notFound()` rather than a redirect so
+ * an unauthenticated probe learns nothing.
  */
 export default async function FacilitatorCreatePage() {
+  const gate = await requireFacilitator();
+  if (!gate.ok) notFound();
+
   let rooms: RoomListItem[] = [];
   try {
     const supabase = createServiceClient();
@@ -115,7 +125,8 @@ export default async function FacilitatorCreatePage() {
         <Hairline surface="light" />
         <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
           <p className="az-caption uppercase text-ink-meta">
-            Real names are purged when the room closes
+            Real names are purged when the room closes, and automatically
+            within 24 hours
           </p>
           <ThemeToggle />
         </div>

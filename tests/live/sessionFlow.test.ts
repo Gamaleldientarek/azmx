@@ -103,7 +103,7 @@ describe.skipIf(!LIVE)("LIVE: full session flow over HTTP", () => {
   it("logs in with FACILITATOR_PASSWORD and receives the session cookie", async () => {
     const { response } = await submitActionForm(
       `${app.baseUrl}/facilitator/login`,
-      { password: process.env.FACILITATOR_PASSWORD! }
+      { password: process.env.TEST_FACILITATOR_PASSWORD! }
     );
     expect(response.status).toBe(303); // redirect(…) after success
     expect(response.headers.get("location")).toMatch(/\/facilitator$/);

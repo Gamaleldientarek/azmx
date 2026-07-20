@@ -3,6 +3,7 @@
 import { resolveBaseUrl } from "@/lib/baseUrl";
 import { generateUniqueRoomCode } from "@/lib/code";
 import { requireFacilitator } from "@/lib/facilitatorSession";
+import { isValidRealName, sanitizeRealName } from "@/lib/realName";
 import { createServiceClient } from "@/lib/supabase/server";
 import type { CloseRoomResult, CreateRoomResult, Room } from "@/lib/types";
 
@@ -210,8 +211,10 @@ export async function addParticipant(
   const gate = await requireFacilitator();
   if (!gate.ok) return gate;
 
-  const name = typeof realName === "string" ? realName.trim() : "";
-  if (name.length < 1 || name.length > 60) {
+  // Same sanitizer as the public join path — this writes the identical
+  // `real_name` column and renders into the identical roster.
+  const name = sanitizeRealName(realName);
+  if (!isValidRealName(name)) {
     return {
       ok: false,
       error: "invalid_name",
@@ -237,11 +240,19 @@ export async function addParticipant(
           message: "Joining is closed. Reopen it to add someone.",
         };
       }
+      if (msg.includes("room_at_capacity")) {
+        return {
+          ok: false,
+          error: "room_full",
+          message: "The room is at its participant limit.",
+        };
+      }
+      // Should be unreachable once the cap is in place — see 0007.
       if (msg.includes("name_pool_exhausted")) {
         return {
           ok: false,
           error: "room_full",
-          message: "The room is full — every fun name is taken.",
+          message: "No fun names are left to assign. The name pool needs topping up.",
         };
       }
       throw new Error(msg);
