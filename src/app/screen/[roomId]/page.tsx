@@ -27,14 +27,16 @@ export default async function ScreenPage({
 
   const { data: room, error: roomError } = await supabase
     .from("rooms")
-    .select("id, code, name, status")
+    .select("id, code, name, status, created_at, closed_at")
     .eq("id", roomId)
     .maybeSingle<{
-      id: string;
-      code: string;
-      name: string | null;
-      status: RoomStatus;
-    }>();
+        id: string;
+        code: string;
+        name: string | null;
+        status: RoomStatus;
+        created_at: string;
+        closed_at: string | null;
+      }>();
   // Bad uuid or unknown room — both are a 404 (the id is the capability).
   if (roomError || !room) notFound();
 
@@ -62,6 +64,9 @@ export default async function ScreenPage({
   return (
     <ScreenLive
       roomId={room.id}
+      createdAt={room.created_at}
+      closedAt={room.closed_at}
+      serverNow={new Date().toISOString()}
       roomToken={roomToken}
       roomName={room.name?.trim() || "Random Selector"}
       code={room.code}

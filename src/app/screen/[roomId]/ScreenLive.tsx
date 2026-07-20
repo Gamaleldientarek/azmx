@@ -9,6 +9,7 @@ import {
   Hairline,
 } from "@/components/brand";
 import { WheelReveal } from "@/components/screen/WheelReveal";
+import { RoomClock } from "@/components/RoomClock";
 import {
   useRoomRealtime,
   type RosterParticipant,
@@ -27,6 +28,9 @@ import type { Draw, RoomStatus } from "@/lib/types";
  */
 export interface ScreenLiveProps {
   roomId: string;
+  createdAt: string;
+  closedAt: string | null;
+  serverNow: string;
   roomToken: string;
   roomName: string;
   code: string;
@@ -39,6 +43,9 @@ export interface ScreenLiveProps {
 
 export function ScreenLive({
   roomId,
+  createdAt,
+  closedAt,
+  serverNow,
   roomToken,
   roomName,
   code,
@@ -167,6 +174,15 @@ export function ScreenLive({
               <span className="relative inline-flex h-3 w-3 rounded-full bg-light-blue" />
             </span>
             Live
+          </span>
+          <span className="az-proj-label ms-auto flex items-baseline gap-3 text-blue-200">
+            <span>Elapsed</span>
+            <RoomClock
+              createdAt={createdAt}
+              serverNow={serverNow}
+              closedAt={closedAt}
+              className="font-display text-[clamp(1.1rem,1.8vw,1.8rem)] text-white"
+            />
           </span>
         </header>
 

@@ -26,14 +26,16 @@ export default async function FacilitatorRoomPage({
 
   const { data: room, error: roomError } = await supabase
     .from("rooms")
-    .select("id, code, name, status")
+    .select("id, code, name, status, created_at, closed_at")
     .eq("id", roomId)
     .maybeSingle<{
-      id: string;
-      code: string;
-      name: string | null;
-      status: RoomStatus;
-    }>();
+        id: string;
+        code: string;
+        name: string | null;
+        status: RoomStatus;
+        created_at: string;
+        closed_at: string | null;
+      }>();
   if (roomError || !room) notFound();
 
   const [rosterRes, drawRes] = await Promise.all([
@@ -60,6 +62,9 @@ export default async function FacilitatorRoomPage({
   return (
     <ControlPanel
       roomId={room.id}
+      createdAt={room.created_at}
+      closedAt={room.closed_at}
+      serverNow={new Date().toISOString()}
       roomToken={roomToken}
       code={room.code}
       roomName={room.name?.trim() || "Random Selector"}

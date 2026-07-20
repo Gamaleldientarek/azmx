@@ -14,10 +14,12 @@ import {
 import { logoutFacilitator } from "@/app/actions/auth";
 import { runDraw } from "@/app/actions/draw";
 import {
+  addParticipant,
   closeRoom,
   getRoomRealNames,
   setJoining,
 } from "@/app/actions/rooms";
+import { RoomClock } from "@/components/RoomClock";
 import {
   useRoomRealtime,
   type RosterParticipant,
@@ -37,6 +39,9 @@ import type { Draw, RoomStatus } from "@/lib/types";
  */
 export interface ControlPanelProps {
   roomId: string;
+  createdAt: string;
+  closedAt: string | null;
+  serverNow: string;
   roomToken: string;
   code: string;
   roomName: string;
@@ -93,6 +98,9 @@ function CopyAction({ label, value }: { label: string; value: string }) {
 
 export function ControlPanel({
   roomId,
+  createdAt,
+  closedAt,
+  serverNow,
   roomToken,
   code,
   roomName,
@@ -264,6 +272,31 @@ export function ControlPanel({
     });
   };
 
+  // Facilitator adds someone by name — themselves when they're taking part,
+  // or anyone whose phone won't cooperate. Same RPC as a phone join.
+  const [addPending, startAddTransition] = useTransition();
+  const [addName, setAddName] = useState("");
+  const [addedNotice, setAddedNotice] = useState<string | null>(null);
+  const submitAdd = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const name = addName.trim();
+    if (!name) return;
+    setActionError(null);
+    setAddedNotice(null);
+    startAddTransition(async () => {
+      const result = await addParticipant(code, name);
+      if (result.ok) {
+        setAddName("");
+        setAddedNotice(
+          `${name} joined as ${result.participant.display_name}`
+        );
+      } else {
+        setActionError(result.message);
+      }
+      // The roster itself arrives over Realtime, like a phone join.
+    });
+  };
+
   const [joiningPending, startJoiningTransition] = useTransition();
   const toggleJoining = () => {
     setActionError(null);
@@ -339,6 +372,17 @@ export function ControlPanel({
                     chip follows what the facilitator can see. */}
                 {inFlight ? STATUS_LABEL.drawing : STATUS_LABEL[effectiveStatus]}
               </span>
+            </span>
+            <span className="h-4 w-px bg-hairline" aria-hidden />
+            {/* Session stopwatch — runs from room creation, freezes on close. */}
+            <span className="az-caption flex items-baseline gap-2 uppercase text-ink-meta">
+              {closed ? "Ran for" : "Elapsed"}
+              <RoomClock
+                createdAt={createdAt}
+                serverNow={serverNow}
+                closedAt={closedAt}
+                className="font-display text-base normal-case text-ink"
+              />
             </span>
             <span className="h-4 w-px bg-hairline" aria-hidden />
             <ThemeToggle surface="light" />
@@ -428,6 +472,46 @@ export function ControlPanel({
               </button>
             )}
           </div>
+
+          {/* Add someone by name — the facilitator taking part, or a phone
+              that won't cooperate. Only while joining is open. */}
+          {effectiveStatus === "lobby" && (
+            <form onSubmit={submitAdd} className="mt-6 flex flex-wrap items-end gap-4">
+              <div className="min-w-0 flex-1">
+                <label
+                  htmlFor="addName"
+                  className="az-caption uppercase text-ink-meta"
+                >
+                  Add someone to the draw
+                </label>
+                <input
+                  id="addName"
+                  name="addName"
+                  type="text"
+                  maxLength={60}
+                  value={addName}
+                  onChange={(e) => setAddName(e.target.value)}
+                  placeholder="Your name, if you're taking part"
+                  className="mt-2 w-full appearance-none border-0 border-b-2 border-ink-meta/70 bg-transparent
+                             pb-2 font-display text-xl text-ink outline-none
+                             placeholder:text-ink-meta focus:border-accent"
+                />
+              </div>
+              <Button
+                variant="secondary"
+                surface="light"
+                type="submit"
+                disabled={addPending || !addName.trim()}
+              >
+                {addPending ? "Adding…" : "Add"}
+              </Button>
+            </form>
+          )}
+          {addedNotice && (
+            <p className="az-caption mt-3 text-accent" role="status">
+              {addedNotice}
+            </p>
+          )}
 
           {roster.length === 0 ? (
             <p className="az-body mt-8 max-w-sm text-ink-body/70">

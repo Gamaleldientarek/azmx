@@ -185,3 +185,83 @@ export async function setJoining(
     };
   }
 }
+
+export type AddParticipantResult =
+  | {
+      ok: true;
+      participant: { id: string; display_name: string; join_number: number };
+    }
+  | {
+      ok: false;
+      error: "unauthorized" | "room_not_joinable" | "room_full" | "invalid_name" | "server_error";
+      message: string;
+    };
+
+/**
+ * Facilitator adds a person to the draw by name — for themselves when they
+ * are taking part, or for someone whose phone won't cooperate. Goes through
+ * the same race-safe `join_room` RPC as a phone join, so numbering, name
+ * uniqueness and the lobby-only rule are identical.
+ */
+export async function addParticipant(
+  roomCode: string,
+  realName: string
+): Promise<AddParticipantResult> {
+  const gate = await requireFacilitator();
+  if (!gate.ok) return gate;
+
+  const name = typeof realName === "string" ? realName.trim() : "";
+  if (name.length < 1 || name.length > 60) {
+    return {
+      ok: false,
+      error: "invalid_name",
+      message: "Enter a name (1–60 characters).",
+    };
+  }
+
+  try {
+    const supabase = createServiceClient();
+    const { data, error } = await supabase
+      .rpc("join_room", {
+        p_room_code: roomCode.trim().toUpperCase(),
+        p_real_name: name,
+      })
+      .single<{ id: string; display_name: string; join_number: number }>();
+
+    if (error) {
+      const msg = error.message ?? "";
+      if (msg.includes("room_not_joinable")) {
+        return {
+          ok: false,
+          error: "room_not_joinable",
+          message: "Joining is closed. Reopen it to add someone.",
+        };
+      }
+      if (msg.includes("name_pool_exhausted")) {
+        return {
+          ok: false,
+          error: "room_full",
+          message: "The room is full — every fun name is taken.",
+        };
+      }
+      throw new Error(msg);
+    }
+    if (!data) throw new Error("join_room returned no row");
+
+    return {
+      ok: true,
+      participant: {
+        id: data.id,
+        display_name: data.display_name,
+        join_number: data.join_number,
+      },
+    };
+  } catch (err) {
+    console.error("addParticipant failed:", err);
+    return {
+      ok: false,
+      error: "server_error",
+      message: "Could not add them. Please try again.",
+    };
+  }
+}
