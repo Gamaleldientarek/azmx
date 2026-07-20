@@ -34,12 +34,9 @@ export default function FacilitatorLoginPage() {
 
       <footer className="relative z-10">
         <Hairline surface="dark" />
-        <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
-          <AzmxLogo variant="white" height={20} />
-          <p className="az-caption uppercase text-blue-200/70">
-            Sharing Tuesday · new room each week
-          </p>
-        </div>
+        <p className="az-caption mt-4 uppercase text-blue-200/70">
+          Sharing Tuesday · new room each week
+        </p>
       </footer>
     </main>
   );
