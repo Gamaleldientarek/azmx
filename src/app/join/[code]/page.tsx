@@ -7,6 +7,8 @@ import {
   Hairline,
   ThemeToggle,
 } from "@/components/brand";
+import { redirect } from "next/navigation";
+import { readParticipantCookie } from "@/lib/participantCookie";
 import { createServiceClient } from "@/lib/supabase/server";
 import type { RoomStatus } from "@/lib/types";
 import { JoinForm } from "./JoinForm";
@@ -39,6 +41,15 @@ export default async function JoinPage({
     room = data;
   } catch (err) {
     console.error("join page room lookup failed:", err);
+  }
+
+  // Already seated on this phone (signed seat cookie)? Straight back to the
+  // room — the room page recovers the identity itself. Covers the locked
+  // "draw has started" state too, so returning participants never hit the
+  // blocked wall.
+  if (room && room.status !== "closed") {
+    const seated = await readParticipantCookie(room.id);
+    if (seated) redirect(`/room/${room.id}`);
   }
 
   const roomName = room?.name?.trim() || "Sharing Tuesday";

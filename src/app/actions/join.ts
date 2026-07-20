@@ -147,3 +147,66 @@ export async function joinRoom(
     };
   }
 }
+
+export type RecoverSeatResult =
+  | {
+      ok: true;
+      participant: {
+        id: string;
+        display_name: string;
+        join_number: number;
+        real_name: string;
+      };
+      roomId: string;
+      roomCode: string;
+      roomToken: string;
+    }
+  | { ok: false; error: "no_seat" };
+
+/**
+ * Recover an existing seat from the signed per-room cookie — no name entry.
+ * Lets a participant who lost sessionStorage (new tab, restart) get back to
+ * their identity even after the draw locked the room. Closed rooms never
+ * recover (names are purged).
+ */
+export async function recoverSeat(roomId: string): Promise<RecoverSeatResult> {
+  try {
+    const participantId = await readParticipantCookie(roomId);
+    if (!participantId) return { ok: false, error: "no_seat" };
+
+    const supabase = createServiceClient();
+    const [{ data: room }, { data: participant }] = await Promise.all([
+      supabase
+        .from("rooms")
+        .select("id, code, status")
+        .eq("id", roomId)
+        .maybeSingle<{ id: string; code: string; status: string }>(),
+      supabase
+        .from("participants")
+        .select("id, room_id, display_name, join_number, real_name")
+        .eq("id", participantId)
+        .eq("room_id", roomId)
+        .maybeSingle<Participant>(),
+    ]);
+    if (!room || room.status === "closed" || !participant) {
+      return { ok: false, error: "no_seat" };
+    }
+
+    const roomToken = await mintRoomToken(roomId);
+    return {
+      ok: true,
+      participant: {
+        id: participant.id,
+        display_name: participant.display_name,
+        join_number: participant.join_number,
+        real_name: participant.real_name ?? "",
+      },
+      roomId,
+      roomCode: room.code,
+      roomToken,
+    };
+  } catch (err) {
+    console.error("recoverSeat failed:", err);
+    return { ok: false, error: "no_seat" };
+  }
+}

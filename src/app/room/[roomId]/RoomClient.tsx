@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   BrandNumeral,
   Button,
@@ -9,7 +9,11 @@ import {
   Hairline,
   ThemeToggle,
 } from "@/components/brand";
-import { useParticipantSession } from "@/lib/participantSession";
+import { recoverSeat } from "@/app/actions/join";
+import {
+  saveParticipantSession,
+  useParticipantSession,
+} from "@/lib/participantSession";
 import { useRoomRealtime } from "@/lib/useRoomRealtime";
 
 /**
@@ -24,6 +28,35 @@ import { useRoomRealtime } from "@/lib/useRoomRealtime";
 export function RoomClient({ roomId }: { roomId: string }) {
   // undefined = SSR/hydration shell, null = no valid session on this phone.
   const session = useParticipantSession(roomId);
+
+  // Seat recovery: sessionStorage gone (new tab, restart) but the signed
+  // seat cookie may still know this phone. Try once before showing the
+  // rejoin prompt; success re-saves the session and re-renders into it.
+  const [recovering, setRecovering] = useState<"pending" | "done" | "failed">(
+    "pending"
+  );
+  const recoveryTriedRef = useRef(false);
+  useEffect(() => {
+    if (session !== null || recoveryTriedRef.current) return;
+    recoveryTriedRef.current = true;
+    recoverSeat(roomId).then((res) => {
+      if (res.ok) {
+        saveParticipantSession({
+          roomId: res.roomId,
+          roomCode: res.roomCode,
+          roomToken: res.roomToken,
+          participant: res.participant,
+        });
+        // "done" (terminal): the re-render reads the saved session; if
+        // storage was unavailable it falls through to the rejoin prompt
+        // instead of retrying forever.
+        setRecovering("done");
+      } else {
+        setRecovering("failed");
+      }
+    });
+  }, [session, roomId]);
+  const recoveryPending = session === null && recovering === "pending";
 
   const { status, roster, latestDraw, authError, roomName } = useRoomRealtime({
     roomId,
@@ -71,7 +104,7 @@ export function RoomClient({ roomId }: { roomId: string }) {
   }, [latestDraw, rosterById]);
 
   // Storage still loading — quiet navy shell, no flash of the wrong state.
-  if (session === undefined) {
+  if (session === undefined || recoveryPending) {
     return <main className="surface-navy min-h-svh" aria-busy="true" />;
   }
 
