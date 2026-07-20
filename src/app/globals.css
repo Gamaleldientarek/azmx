@@ -192,7 +192,7 @@ body {
     rgba(1, 0, 110, 0.4) 40%,
     rgba(1, 0, 110, 0) 72%
   );
-  animation: az-ambient-a 26s var(--az-ease-inout) infinite alternate;
+  animation: az-ambient-a 13s var(--az-ease-inout) infinite alternate;
 }
 
 /* Bottom-left pool — a touch of Light Blue at the shoulder, very low alpha,
@@ -208,7 +208,7 @@ body {
     rgba(93, 143, 255, 0.14) 44%,
     rgba(1, 0, 110, 0) 74%
   );
-  animation: az-ambient-b 34s var(--az-ease-inout) infinite alternate;
+  animation: az-ambient-b 17s var(--az-ease-inout) infinite alternate;
 }
 
 /* Theme-driven: white in light, deep navy-tinted dark under [data-theme="dark"]. */
