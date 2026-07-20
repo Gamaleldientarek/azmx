@@ -3,11 +3,11 @@ import "server-only";
 import { randomInt } from "node:crypto";
 import { createServiceClient } from "@/lib/supabase/server";
 
-/** Human room code: TUES- + 4 digits, e.g. TUES-4821. */
+/** Human room code: ROOM- + 4 digits, e.g. ROOM-4821. */
 export function generateRoomCode(): string {
   // crypto-random 1000..9999 — no leading zero, unguessable enough for a
   // short-lived, projection-displayed code.
-  return `TUES-${randomInt(1000, 10000)}`;
+  return `ROOM-${randomInt(1000, 10000)}`;
 }
 
 const MAX_CODE_ATTEMPTS = 20;
@@ -41,6 +41,6 @@ export async function generateUniqueRoomCode(): Promise<string> {
 
   throw new Error(
     `Could not find a free room code after ${MAX_CODE_ATTEMPTS} attempts — ` +
-      `the TUES-#### space may be nearly exhausted; close old rooms.`
+      `the ROOM-#### space may be nearly exhausted; close old rooms.`
   );
 }

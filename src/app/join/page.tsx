@@ -70,7 +70,7 @@ export default function JoinCodePage() {
             autoCapitalize="characters"
             spellCheck={false}
             required
-            placeholder="TUES-4821"
+            placeholder="ROOM-4821"
             value={code}
             onChange={(e) => setCode(e.target.value)}
             className="mt-3 w-full appearance-none border-0 border-b-2 border-hairline bg-transparent
@@ -78,7 +78,7 @@ export default function JoinCodePage() {
                        placeholder:text-ink-meta/40 focus:border-accent"
           />
           <p className="az-caption mt-3 text-ink-meta">
-            Six characters, like TUES-4821. It&rsquo;s on the big screen, or
+            Nine characters, like ROOM-4821. It&rsquo;s on the big screen, or
             scan the QR there instead.
           </p>
 

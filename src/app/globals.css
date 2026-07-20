@@ -319,8 +319,28 @@ body {
 }
 
 /* =========================================================================
- * MOTION — reveal-ready. Respect reduced-motion.
+ * MOTION — one easing family, three durations, transform/opacity only.
+ *
+ * Personality: PREMIUM. Decelerating entrances, ZERO overshoot, nothing
+ * bouncy. The projection wheel is the hero; the panel and the phone speak the
+ * same language one notch quieter.
+ *
+ * Every animation in this block has a reduced-motion branch at the bottom
+ * that lands on the settled state. Nothing here animates a layout property.
+ * JS-side counterparts live in src/components/motion/timing.ts.
  * ========================================================================= */
+:root {
+  /* Signature curve — expo-out. Entrances, settles, landings. */
+  --az-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Starts and ends in place — FLIP reorders, travelling bands. */
+  --az-ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --az-dur-quick: 180ms; /* press / micro-feedback */
+  --az-dur-base: 420ms; /* state change */
+  --az-dur-slow: 620ms; /* entrance / landing */
+}
+
+/* Entrance — the house cascade. Used with staggered animation-delay. */
 @keyframes az-rise {
   from {
     opacity: 0;
@@ -333,12 +353,148 @@ body {
 }
 
 .az-rise {
-  animation: az-rise 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: az-rise 520ms var(--az-ease-out) both;
 }
 
+/* Landing — an element that arrives with weight. Scale settles inward, no
+ * overshoot: the number feels set down, not sprung. */
+@keyframes az-land {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.az-land {
+  animation: az-land var(--az-dur-slow) var(--az-ease-out) both;
+}
+
+/* Lock-in — for an element already on screen (the ticker's final value).
+ * Scale only, never opacity, so the numeral never blinks out of existence. */
+@keyframes az-lock {
+  from {
+    transform: scale(1.09);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.az-lock {
+  animation: az-lock var(--az-dur-slow) var(--az-ease-out) both;
+}
+
+/* Indeterminate rail — a band travelling under the Electric CTA while a draw
+ * is in flight. A moving hairline, not a spinner: no icon, no glow. */
+@keyframes az-rail {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(400%);
+  }
+}
+
+.az-rail-band {
+  animation: az-rail 1150ms var(--az-ease-inout) infinite;
+}
+
+/* Shuffle scan — a highlight travelling down the roster while the selector
+ * runs. Staggered per row via animation-delay. Opacity only. */
+@keyframes az-scan {
+  0%,
+  100% {
+    opacity: 0.42;
+  }
+  22% {
+    opacity: 1;
+  }
+}
+
+.az-scan {
+  animation: az-scan 1200ms var(--az-ease-inout) infinite;
+}
+
+/* A rule drawing itself in — the "earned" underline under a result. */
+@keyframes az-rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.az-rule-draw {
+  transform-origin: left center;
+  animation: az-rule-draw var(--az-dur-slow) var(--az-ease-out) both;
+}
+
+/* Ambient waiting breath — the only looping motion on an idle surface. */
+@keyframes az-breathe {
+  0%,
+  100% {
+    /* Shallow on purpose: a breath, not a blink. Deep enough to read as
+     * alive on a hero name without looking like it is disappearing. */
+    opacity: 0.68;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.az-breathe {
+  animation: az-breathe 1800ms var(--az-ease-inout) infinite;
+}
+
+/* Press response — anticipation on the primary action. Transform only, so it
+ * costs nothing and never nudges neighbours. */
+.az-press {
+  transition: transform var(--az-dur-quick) var(--az-ease-out);
+}
+
+.az-press:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+/* -------------------------------------------------------------------------
+ * REDUCED MOTION — every animation above resolves to its settled state.
+ * Non-negotiable: the result must be fully legible with all motion off.
+ * ---------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .az-rise,
-  .az-rise * {
+  .az-rise *,
+  .az-land,
+  .az-lock,
+  .az-scan,
+  .az-breathe,
+  .az-rule-draw,
+  .az-rail-band {
     animation: none !important;
+  }
+
+  /* Settled end-states for the keyframes that start from a transformed or
+   * dimmed value — without these, "animation: none" would strand them. */
+  .az-rule-draw {
+    transform: scaleX(1) !important;
+  }
+
+  .az-scan,
+  .az-breathe {
+    opacity: 1 !important;
+  }
+
+  /* The travelling band is pure decoration with motion off; the static rail
+   * underneath stays and carries the in-flight state on its own. */
+  .az-rail-band {
+    display: none;
+  }
+
+  .az-press:active:not(:disabled) {
+    transform: none;
   }
 }

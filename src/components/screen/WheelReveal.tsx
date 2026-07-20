@@ -2,6 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { BrandNumeral, Chevron, Eyebrow } from "@/components/brand";
+import {
+  SETTLE_PAUSE_MS,
+  STARTER_HOLD_MS,
+  TICK_COUNT,
+  prefersReducedMotion,
+  tickSchedule,
+} from "@/components/motion/timing";
 
 /**
  * WheelReveal — the animated reveal on the projection (the deck's one
@@ -36,21 +43,16 @@ export interface WheelRevealProps {
 
 type Phase = "wheel" | "starter" | "resolved";
 
-/** Tick schedule: fast start, ease-out deceleration, ~3.5s total. */
-const TICK_COUNT = 24;
-const TICK_BASE_MS = 55;
-const TICK_GROWTH_MS = 330;
-const SETTLE_PAUSE_MS = 220;
-const STARTER_HOLD_MS = 1500;
+/**
+ * Tick schedule, settle pause and starter hold now come from the shared
+ * motion language (src/components/motion/timing.ts) — the facilitator panel
+ * and the participant phone schedule against the same landing instant, so the
+ * three surfaces resolve together instead of racing each other.
+ */
 
 /** True when the reveal should skip the animation entirely. */
 function skipAnimation(resolved: boolean, orderLength: number): boolean {
-  return (
-    resolved ||
-    orderLength < 2 ||
-    (typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches)
-  );
+  return resolved || orderLength < 2 || prefersReducedMotion();
 }
 
 export function WheelReveal({ order, resolved = false }: WheelRevealProps) {
@@ -65,13 +67,13 @@ export function WheelReveal({ order, resolved = false }: WheelRevealProps) {
     if (skipAnimation(resolved, order.length)) return;
 
     const timeouts: number[] = [];
-    let at = 0;
-    for (let i = 0; i < TICK_COUNT; i++) {
-      // Interval grows with an ease-out power curve — the spinner slows down.
-      at += TICK_BASE_MS + TICK_GROWTH_MS * Math.pow(i / (TICK_COUNT - 1), 2.2);
+    // Interval grows on a power curve — the spinner visibly slows down.
+    const schedule = tickSchedule();
+    schedule.forEach((at, i) => {
       const idx = (i + 1) % order.length;
       timeouts.push(window.setTimeout(() => setCycleIndex(idx), at));
-    }
+    });
+    const at = schedule[TICK_COUNT - 1];
     timeouts.push(
       window.setTimeout(() => setPhase("starter"), at + SETTLE_PAUSE_MS)
     );

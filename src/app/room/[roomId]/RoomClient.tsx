@@ -9,12 +9,36 @@ import {
   Hairline,
   ThemeToggle,
 } from "@/components/brand";
+import { PlaceTicker } from "@/components/motion/PlaceTicker";
+import {
+  FIRST_HOLD_MS,
+  LATE_LOAD_GRACE_MS,
+  PLACE_HOLD_MS,
+  WHEEL_LAND_MS,
+  prefersReducedMotion,
+} from "@/components/motion/timing";
 import { recoverSeat, releaseSeat } from "@/app/actions/join";
 import {
   saveParticipantSession,
   useParticipantSession,
 } from "@/lib/participantSession";
 import { useRoomRealtime } from "@/lib/useRoomRealtime";
+
+/** 3 -> "3rd". Reads better than "number 3" in the payoff line. */
+function ordinal(n: number): string {
+  const teens = n % 100;
+  if (teens >= 11 && teens <= 13) return `${n}th`;
+  switch (n % 10) {
+    case 1:
+      return `${n}st`;
+    case 2:
+      return `${n}nd`;
+    case 3:
+      return `${n}rd`;
+    default:
+      return `${n}th`;
+  }
+}
 
 /**
  * /room/[roomId] — the participant's live phone view.
@@ -98,26 +122,68 @@ export function RoomClient({
     roomToken: session?.roomToken ?? null,
   });
 
-  // Suspense beat when a draw lands: hold ~1.8s before showing the order
-  // (the phone's simplified, non-wheel reveal). Skipped for reduced motion.
-  // Render-phase state adjustment (no setState-in-effect): when the draw id
-  // changes, arm the hold; a timeout releases it.
+  /* -----------------------------------------------------------------------
+   * Reveal choreography — the phone's version of the wheel.
+   *
+   *   0 ticking — the place numeral cycles and decelerates
+   *   1 landed  — the place locks and holds alone (longer if you're first)
+   *   2 settled — the full order cascades in beneath it
+   *
+   * Scheduled from draw ARRIVAL against the same WHEEL_LAND_MS the projection
+   * uses, so the phone lands on the same beat as the big screen. The old flat
+   * 1.8s hold quietly spoiled the wheel by ~2.2s.
+   *
+   * Render-phase state adjustment (never a synchronous setState in an
+   * effect): a new draw id arms the sequence; timers advance it.
+   * -------------------------------------------------------------------- */
   const drawId = latestDraw?.id ?? null;
+  const myId = session?.participant.id ?? null;
+  const myPlace = latestDraw && myId ? latestDraw.order.indexOf(myId) + 1 : 0;
+  const isFirst = myPlace === 1;
+
   const [seenDrawId, setSeenDrawId] = useState<string | null>(null);
-  const [suspenseHold, setSuspenseHold] = useState(false);
+  const [stage, setStage] = useState<0 | 1 | 2>(2);
+  const [armedDrawId, setArmedDrawId] = useState<string | null>(null);
+
+  // A draw already present in the first moments after mount is a late load (a
+  // refresh, or someone opening their phone after the fact) — those jump
+  // straight to the settled state rather than replaying a moment they missed.
+  // Only once this flag is up does an arriving draw count as live.
+  const [pastMountGrace, setPastMountGrace] = useState(false);
+  useEffect(() => {
+    const t = window.setTimeout(
+      () => setPastMountGrace(true),
+      LATE_LOAD_GRACE_MS
+    );
+    return () => window.clearTimeout(t);
+  }, []);
+
   if (drawId !== seenDrawId) {
     setSeenDrawId(drawId);
-    if (drawId) setSuspenseHold(true);
+    if (drawId) {
+      setStage(pastMountGrace ? 0 : 2);
+      setArmedDrawId(pastMountGrace ? drawId : null);
+    }
   }
-  // The hold is released by a timer whose length depends on motion
-  // preference — 0ms for reduced motion. Reading matchMedia here (effect,
-  // not render) keeps SSR safe without a synchronous setState.
+
   useEffect(() => {
-    if (!suspenseHold) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const t = window.setTimeout(() => setSuspenseHold(false), reduced ? 0 : 1800);
-    return () => window.clearTimeout(t);
-  }, [suspenseHold, drawId]);
+    if (!armedDrawId) return;
+    // Reduced motion collapses both beats to the next tick — same code path.
+    const reduced = prefersReducedMotion();
+    const hold = isFirst ? FIRST_HOLD_MS : PLACE_HOLD_MS;
+    const land = window.setTimeout(
+      () => setStage(1),
+      reduced ? 0 : WHEEL_LAND_MS
+    );
+    const settle = window.setTimeout(
+      () => setStage(2),
+      reduced ? 0 : WHEEL_LAND_MS + hold
+    );
+    return () => {
+      window.clearTimeout(land);
+      window.clearTimeout(settle);
+    };
+  }, [armedDrawId, isFirst]);
 
   const rosterById = useMemo(() => {
     const map = new Map<string, { display_name: string; join_number: number }>();
@@ -255,15 +321,28 @@ export function RoomClient({
   }
 
   const me = session.participant;
-  const revealed =
-    (status === "revealed" || status === "closed") &&
-    latestDraw !== null &&
-    order.length > 0 &&
-    (unresolvedCount === 0 || graceExpired) &&
-    !suspenseHold;
-  const drawing =
-    status === "drawing" || suspenseHold || (status === "revealed" && !revealed);
+  const settledDraw =
+    (status === "revealed" || status === "closed") && latestDraw !== null;
+  const namesReady = unresolvedCount === 0 || graceExpired;
+
+  // The place lands first and does not wait on name resolution — the number
+  // is known the instant the draw arrives.
+  const placeReady = settledDraw && stage >= 1 && myPlace > 0;
+  const listReady =
+    settledDraw && stage >= 2 && order.length > 0 && namesReady;
+  const revealed = placeReady || listReady;
+
+  const drawing = !revealed && (status === "drawing" || settledDraw);
   const closed = status === "closed";
+
+  // The place numeral is cycling: a draw is in hand, still being paced out.
+  const ticking = drawing && stage === 0 && myPlace > 0;
+  const tickTotal = latestDraw?.order.length ?? 0;
+  const revealEyebrow = placeReady
+    ? isFirst
+      ? "You're up first"
+      : "Your place"
+    : "The order";
 
   const liveStatusText = closed
     ? "This room has closed"
@@ -292,8 +371,14 @@ export function RoomClient({
           </p>
 
           <div className="mt-3 flex items-start gap-5">
-            {/* Serif fun name = the hero personality. */}
-            <h1 className="font-display text-5xl leading-[0.98] text-white sm:text-6xl">
+            {/* Serif fun name = the hero personality. It breathes while the
+                selector runs, so the top of the phone is alive too — the same
+                ambient beat as the rule under the ticker below. */}
+            <h1
+              className={`font-display text-5xl leading-[0.98] text-white sm:text-6xl ${
+                drawing ? "az-breathe" : ""
+              }`}
+            >
               {me.display_name}
             </h1>
           </div>
@@ -335,9 +420,45 @@ export function RoomClient({
         {revealed ? (
           <>
             <Eyebrow surface="light" tick>
-              The order
+              {revealEyebrow}
             </Eyebrow>
-            <h2 className="az-h2 mt-3 text-ink">Who goes when</h2>
+
+            {/* The payoff. The number the ticker was cycling locks in place —
+                scale only, so the numeral never blinks out. Going first earns
+                a bigger figure and an Electric rule; everyone else gets the
+                same gesture one notch quieter. */}
+            {placeReady && (
+              <div className="mt-6">
+                <div className="flex flex-wrap items-end gap-x-5 gap-y-2">
+                  <BrandNumeral
+                    value={myPlace}
+                    pad={2}
+                    color="accent"
+                    scale={isFirst ? "xl" : "lg"}
+                    className="az-lock"
+                  />
+                  <span className="az-h2 pb-1 text-ink">
+                    {isFirst ? "You go first" : `You go ${ordinal(myPlace)}`}
+                  </span>
+                </div>
+                <div
+                  aria-hidden
+                  className={`az-rule-draw mt-5 w-full ${
+                    isFirst ? "h-[2px] bg-accent" : "h-px bg-hairline"
+                  }`}
+                  style={{ animationDelay: "160ms" }}
+                />
+                {isFirst && (
+                  <p className="az-body mt-4 max-w-sm text-ink-body/70">
+                    You open the session. Everyone else follows you.
+                  </p>
+                )}
+              </div>
+            )}
+
+            {listReady && (
+              <div className={placeReady ? "mt-12" : "mt-3"}>
+            <h2 className="az-h2 text-ink">Who goes when</h2>
 
             {/* Announce the participant's own slot once the order settles. */}
             <p className="sr-only" aria-live="polite">
@@ -356,7 +477,8 @@ export function RoomClient({
                   <li
                     key={p.id}
                     className="az-rise"
-                    style={{ animationDelay: `${i * 50}ms` }}
+                    // Cascade, not a curtain: each row follows the one above.
+                    style={{ animationDelay: `${i * 60}ms` }}
                   >
                     <div
                       className={`flex flex-wrap items-center gap-x-5 gap-y-1 py-4 ${
@@ -400,6 +522,8 @@ export function RoomClient({
                 order is final
               </span>
             </div>
+              </div>
+            )}
           </>
         ) : closed ? (
           <>
@@ -420,10 +544,28 @@ export function RoomClient({
               Any moment now
             </Eyebrow>
             <h2 className="az-h2 mt-3 text-ink">Drawing the order</h2>
-            <p className="az-body mt-4 max-w-sm text-ink-body/70">
-              The selector is spinning on the big screen. Your place is about
-              to land here.
-            </p>
+            {ticking ? (
+              <>
+                {/* The tension: the same decelerating tick schedule as the
+                    projection wheel, cycling the one thing this person
+                    actually wants to know. */}
+                <div className="mt-8 flex flex-wrap items-end gap-x-5 gap-y-2">
+                  <PlaceTicker total={tickTotal} landOn={myPlace} />
+                  <span className="az-body pb-2 text-ink-meta">
+                    finding your place
+                  </span>
+                </div>
+                <div
+                  aria-hidden
+                  className="az-breathe mt-5 h-px w-full bg-hairline"
+                />
+              </>
+            ) : (
+              <p className="az-body mt-4 max-w-sm text-ink-body/70">
+                The selector is spinning on the big screen. Your place is about
+                to land here.
+              </p>
+            )}
           </>
         ) : (
           <>

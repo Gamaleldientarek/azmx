@@ -9,7 +9,7 @@ import type { CloseRoomResult, CreateRoomResult, Room } from "@/lib/types";
 /**
  * Create a new room (facilitator only).
  *
- * Generates a collision-checked TUES-#### code, inserts the room in `lobby`
+ * Generates a collision-checked ROOM-#### code, inserts the room in `lobby`
  * status, and returns id, code, and the absolute join URL. The global UNIQUE
  * constraint on `rooms.code` is the race-proof backstop; on the (rare) 23505
  * unique violation we retry once with a fresh code.

@@ -148,7 +148,7 @@ describe.skipIf(!LIVE)("LIVE: full session flow over HTTP", () => {
       room: { id: string; code: string; joinUrl: string };
     };
     expect(r.ok).toBe(true);
-    expect(r.room.code).toMatch(/^TUES-\d{4}$/);
+    expect(r.room.code).toMatch(/^ROOM-\d{4}$/);
     expect(r.room.joinUrl).toContain(`/join/${r.room.code}`);
     roomId = r.room.id;
     roomCode = r.room.code;

@@ -34,12 +34,12 @@ export function createServiceClient(): SupabaseClient {
   });
 }
 
-/** App-shaped room code (TUES-####), collision-checked like src/lib/code.ts. */
+/** App-shaped room code (ROOM-####), collision-checked like src/lib/code.ts. */
 export async function generateTestRoomCode(
   supabase: SupabaseClient
 ): Promise<string> {
   for (let attempt = 0; attempt < 20; attempt++) {
-    const code = `TUES-${randomInt(1000, 10000)}`;
+    const code = `ROOM-${randomInt(1000, 10000)}`;
     const { count, error } = await supabase
       .from("rooms")
       .select("id", { count: "exact", head: true })
@@ -47,7 +47,7 @@ export async function generateTestRoomCode(
     if (error) throw new Error(`code collision check failed: ${error.message}`);
     if ((count ?? 0) === 0) return code;
   }
-  throw new Error("could not find a free TUES-#### code in 20 attempts");
+  throw new Error("could not find a free ROOM-#### code in 20 attempts");
 }
 
 /** Create a marked test room in lobby status; returns { id, code }. */
