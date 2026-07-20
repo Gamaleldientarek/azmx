@@ -35,7 +35,7 @@ export default function FacilitatorLoginPage() {
       <footer className="relative z-10">
         <Hairline surface="dark" />
         <p className="az-caption mt-4 uppercase text-blue-200/70">
-          Sharing Tuesday · new room each week
+          Random Selector · one room per session
         </p>
       </footer>
     </main>

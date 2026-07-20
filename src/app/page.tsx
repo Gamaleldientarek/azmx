@@ -15,8 +15,8 @@ import {
  * The client supplied a text-free version of the red still life with the
  * whole inline-start ~55% left as a calm wall, made for type. The editorial
  * lockup returns as real, responsive code, start-aligned on that wall:
- * AZMX mark (header, links home) → eyebrow → two-line serif "Sharing /
- * Tuesday" (az-hero, mirroring the original poster's line break) → lead →
+ * AZMX mark (header, links home) → eyebrow → two-line serif "Random /
+ * Selector" (az-hero, mirroring the original poster's line break) → lead →
  * the two CTAs. Footer strip carries the tagline + URL caption.
  *
  * Contrast decisions (measured on the clean art's pixels):
@@ -46,7 +46,7 @@ export default function Home() {
       <div className="absolute inset-0">
         <Image
           src={cover}
-          alt="Sharing Tuesday cover art — a deep red still life of a pinboard with white notes, stacked blocks, and a monstera plant in a round vase"
+          alt="Random Selector cover art — a deep red still life of a pinboard with white notes, stacked blocks, and a monstera plant in a round vase"
           fill
           priority
           placeholder="blur"
@@ -92,12 +92,13 @@ export default function Home() {
           {/* The live title — the original poster's two-line serif lockup,
               now real text on the az-hero clamp scale. */}
           <h1 className="az-hero mt-4 text-white lg:mt-az-3">
-            Sharing
+            Random
             <br />
-            Tuesday
+            Selector
           </h1>
           <p className="az-lead mt-5 max-w-[24rem] text-white lg:mt-az-3">
-            Everyone shares. The order is fair.
+            Everyone gets a turn, in an order no one can argue with. Retros,
+            workshops, standups, icebreakers.
           </p>
         </div>
 

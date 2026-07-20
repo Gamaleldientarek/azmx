@@ -95,13 +95,13 @@ export function ScreenLive({
         <section className="surface-navy relative flex aspect-video w-full flex-col items-center justify-center overflow-hidden px-[4vw] py-[3.2vh]">
           <div className="relative z-10 flex flex-col items-center text-center">
             <Eyebrow surface="dark" tick>
-              Sharing Tuesday
+              Random Selector
             </Eyebrow>
             <p className="az-display mt-[2vh] text-white">
               This room has closed
             </p>
             <p className="az-proj-label mt-[2.4vh] text-blue-200">
-              See you next Tuesday
+              See you at the next one
             </p>
           </div>
         </section>

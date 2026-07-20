@@ -65,7 +65,7 @@ export default async function FacilitatorCreatePage() {
             New session
           </Eyebrow>
           <h1 className="az-title mt-4 max-w-md text-balance text-ink">
-            Create this week&rsquo;s room
+            Create a room for this session
           </h1>
           <p className="az-lead mt-6 max-w-md text-ink-body/80">
             You&rsquo;ll get a join link, a QR code, and a short code to put on

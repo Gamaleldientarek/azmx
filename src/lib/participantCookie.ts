@@ -42,6 +42,22 @@ export async function setParticipantCookie(
   });
 }
 
+/**
+ * Drop this browser's seat for a room — the "not you?" exit on a shared
+ * phone, so the next person gets a clean name form instead of inheriting
+ * the previous participant's identity.
+ */
+export async function clearParticipantCookie(roomId: string): Promise<void> {
+  const store = await cookies();
+  store.set(cookieName(roomId), "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 0,
+    path: "/",
+  });
+}
+
 /** Returns the participant id previously stored for this room, or null. */
 export async function readParticipantCookie(
   roomId: string

@@ -63,7 +63,7 @@ export default async function ScreenPage({
     <ScreenLive
       roomId={room.id}
       roomToken={roomToken}
-      roomName={room.name?.trim() || "Sharing Tuesday"}
+      roomName={room.name?.trim() || "Random Selector"}
       code={room.code}
       joinUrl={joinUrl}
       qrDataUrl={qrDataUrl}

@@ -78,7 +78,7 @@ export function RoomsList({ rooms }: { rooms: RoomListItem[] }) {
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 py-4">
                 <span className="min-w-0">
                   <span className="block az-sublabel text-ink">
-                    {room.name?.trim() || "Sharing Tuesday"}
+                    {room.name?.trim() || "Random Selector"}
                   </span>
                   <span className="az-caption mt-0.5 block uppercase text-ink-meta">
                     {room.code} · {STATUS_LABEL[room.status]} · {date}

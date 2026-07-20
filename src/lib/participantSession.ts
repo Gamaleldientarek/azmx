@@ -14,8 +14,6 @@ export interface StoredParticipant {
   id: string;
   display_name: string;
   join_number: number;
-  /** Optional: sessions saved before this field existed won't have it. */
-  real_name?: string;
 }
 
 export interface ParticipantSession {
@@ -41,7 +39,15 @@ function tokenExpired(token: string): boolean {
 
 export function saveParticipantSession(session: ParticipantSession): void {
   try {
-    sessionStorage.setItem(storageKey(session.roomId), JSON.stringify(session));
+    // Never persist the real name: the seat cookie belongs to the browser,
+    // not the person, so a shared phone would surface the previous joiner's
+    // real name to whoever holds it next.
+    const { id, display_name, join_number } = session.participant;
+    const safe: ParticipantSession = {
+      ...session,
+      participant: { id, display_name, join_number },
+    };
+    sessionStorage.setItem(storageKey(session.roomId), JSON.stringify(safe));
   } catch {
     // Storage unavailable (private mode edge cases) — the page still works
     // for this navigation; only refresh-survival is lost.

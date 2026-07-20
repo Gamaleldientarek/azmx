@@ -28,7 +28,7 @@ export interface RevealParticipant {
 }
 
 export interface WheelRevealProps {
-  /** Final speaking order; `order[0]` is the starter. */
+  /** Final running order; `order[0]` is the starter. */
   order: RevealParticipant[];
   /** Skip the animation and show the settled layout (already-revealed load). */
   resolved?: boolean;
@@ -102,7 +102,7 @@ export function WheelReveal({ order, resolved = false }: WheelRevealProps) {
 
       {/* Starter spotlight — cycles fun names, then settles on the starter. */}
       <div className="mt-[2vh] flex flex-col items-center">
-        <span className="az-proj-label text-blue-200">Speaking first</span>
+        <span className="az-proj-label text-blue-200">Goes first</span>
         <div
           className={`mt-[1.4vh] flex items-center gap-[1.6vw] ${
             spinning ? "" : "az-rise"
@@ -129,8 +129,8 @@ export function WheelReveal({ order, resolved = false }: WheelRevealProps) {
       {/* Announce only the settled result to assistive tech (no spam). */}
       <p className="sr-only" aria-live="polite">
         {spinning
-          ? "Drawing the speaking order"
-          : `Speaking first: ${starter.displayName}`}
+          ? "Drawing the order"
+          : `${starter.displayName} goes first`}
       </p>
 
       {/* The full order — settles under the starter after the held beat. */}

@@ -42,7 +42,7 @@ export default function NotFound() {
       <footer className="relative z-10">
         <Hairline surface="dark" />
         <p className="az-caption mt-4 uppercase text-blue-200/70">
-          Sharing Tuesday · games.gamaleldien.com
+          Random Selector · games.gamaleldien.com
         </p>
       </footer>
     </main>

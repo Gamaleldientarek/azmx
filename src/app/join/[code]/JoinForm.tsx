@@ -52,7 +52,7 @@ export function JoinForm({ code, roomId }: { code: string; roomId: string }) {
   const errorMessage =
     state && !state.ok
       ? state.error === "room_not_joinable"
-        ? "The draw has started — joining is closed."
+        ? "The draw has started. Joining is closed."
         : state.message
       : null;
 

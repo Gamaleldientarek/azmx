@@ -62,7 +62,7 @@ export default async function FacilitatorRoomPage({
       roomId={room.id}
       roomToken={roomToken}
       code={room.code}
-      roomName={room.name?.trim() || "Sharing Tuesday"}
+      roomName={room.name?.trim() || "Random Selector"}
       joinUrl={joinUrl}
       qrDataUrl={qrDataUrl}
       initialStatus={room.status}

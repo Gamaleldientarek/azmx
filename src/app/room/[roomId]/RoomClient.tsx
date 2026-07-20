@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   BrandNumeral,
   Button,
@@ -9,7 +9,7 @@ import {
   Hairline,
   ThemeToggle,
 } from "@/components/brand";
-import { recoverSeat } from "@/app/actions/join";
+import { recoverSeat, releaseSeat } from "@/app/actions/join";
 import {
   saveParticipantSession,
   useParticipantSession,
@@ -25,38 +25,73 @@ import { useRoomRealtime } from "@/lib/useRoomRealtime";
  * (brief suspense — the phone's simplified, non-wheel version), revealed
  * (the order with "you" highlighted and the starter marked), closed.
  */
-export function RoomClient({ roomId }: { roomId: string }) {
+export function RoomClient({
+  roomId,
+  roomCode,
+}: {
+  roomId: string;
+  /** Server-resolved so rejoin/retry states work with no session at all. */
+  roomCode: string | null;
+}) {
   // undefined = SSR/hydration shell, null = no valid session on this phone.
   const session = useParticipantSession(roomId);
 
   // Seat recovery: sessionStorage gone (new tab, restart) but the signed
-  // seat cookie may still know this phone. Try once before showing the
-  // rejoin prompt; success re-saves the session and re-renders into it.
-  const [recovering, setRecovering] = useState<"pending" | "done" | "failed">(
-    "pending"
-  );
-  const recoveryTriedRef = useRef(false);
+  // seat cookie may still know this phone. Distinguishes a genuinely absent
+  // seat (show the form) from an infrastructure failure (offer retry) — the
+  // latter must never present as "your seat is gone".
+  const [recovery, setRecovery] = useState<
+    "pending" | "done" | "no_seat" | "unavailable"
+  >("pending");
+
+  const attemptRecovery = useCallback(() => {
+    recoverSeat(roomId)
+      .then((res) => {
+        if (res.ok) {
+          saveParticipantSession({
+            roomId: res.roomId,
+            roomCode: res.roomCode,
+            roomToken: res.roomToken,
+            participant: res.participant,
+          });
+          setRecovery("done");
+        } else {
+          setRecovery(res.error === "no_seat" ? "no_seat" : "unavailable");
+        }
+      })
+      // Transport failure (offline, 500, stale action id after a redeploy):
+      // without this the screen would hang on the loading shell forever.
+      .catch(() => setRecovery("unavailable"));
+  }, [roomId]);
+
+  // Retry re-arms the pending phase, which re-runs this effect.
+  const retryRecovery = () => setRecovery("pending");
   useEffect(() => {
-    if (session !== null || recoveryTriedRef.current) return;
-    recoveryTriedRef.current = true;
-    recoverSeat(roomId).then((res) => {
-      if (res.ok) {
-        saveParticipantSession({
-          roomId: res.roomId,
-          roomCode: res.roomCode,
-          roomToken: res.roomToken,
-          participant: res.participant,
-        });
-        // "done" (terminal): the re-render reads the saved session; if
-        // storage was unavailable it falls through to the rejoin prompt
-        // instead of retrying forever.
-        setRecovering("done");
-      } else {
-        setRecovering("failed");
-      }
-    });
-  }, [session, roomId]);
-  const recoveryPending = session === null && recovering === "pending";
+    if (session !== null || recovery !== "pending") return;
+    attemptRecovery();
+  }, [session, recovery, attemptRecovery]);
+
+  const recoveryPending = session === null && recovery === "pending";
+
+  // Room code for the no-session states: prefer the live session, fall back
+  // to the server-resolved code so the rejoin link always carries it.
+  const roomCodeHint = session?.roomCode ?? roomCode;
+  const rejoinHref = roomCodeHint ? `/join/${roomCodeHint}` : "/join";
+
+  // Shared-device exit: drop this browser's seat cookie, then go to the form
+  // so the next person joins as themselves.
+  const [releasing, setReleasing] = useState(false);
+  const exitSeat = () => {
+    setReleasing(true);
+    releaseSeat(roomId)
+      .catch(() => {})
+      .finally(() => {
+        try {
+          sessionStorage.removeItem(`st:participant:${roomId}`);
+        } catch {}
+        window.location.href = `${rejoinHref}`;
+      });
+  };
 
   const { status, roster, latestDraw, authError, roomName } = useRoomRealtime({
     roomId,
@@ -72,16 +107,15 @@ export function RoomClient({ roomId }: { roomId: string }) {
   const [suspenseHold, setSuspenseHold] = useState(false);
   if (drawId !== seenDrawId) {
     setSeenDrawId(drawId);
-    if (
-      drawId &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      setSuspenseHold(true);
-    }
+    if (drawId) setSuspenseHold(true);
   }
+  // The hold is released by a timer whose length depends on motion
+  // preference — 0ms for reduced motion. Reading matchMedia here (effect,
+  // not render) keeps SSR safe without a synchronous setState.
   useEffect(() => {
     if (!suspenseHold) return;
-    const t = window.setTimeout(() => setSuspenseHold(false), 1800);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const t = window.setTimeout(() => setSuspenseHold(false), reduced ? 0 : 1800);
     return () => window.clearTimeout(t);
   }, [suspenseHold, drawId]);
 
@@ -91,31 +125,105 @@ export function RoomClient({ roomId }: { roomId: string }) {
     return map;
   }, [roster]);
 
+  // Every drawn id keeps its slot. An id missing from the roster (partial
+  // refetch, missed realtime join) resolves to null and is rendered as a
+  // placeholder AFTER a grace period — dropping it silently used to make
+  // `revealed` permanently false, leaving the phone stuck on "Drawing" while
+  // the projection showed the result.
   const order = useMemo(() => {
     if (!latestDraw) return [];
-    return latestDraw.order
-      .map((id) => {
-        const p = rosterById.get(id);
-        return p
-          ? { id, displayName: p.display_name, joinNumber: p.join_number }
-          : null;
-      })
-      .filter((p): p is NonNullable<typeof p> => p !== null);
+    return latestDraw.order.map((id) => {
+      const p = rosterById.get(id);
+      return {
+        id,
+        displayName: p?.display_name ?? null,
+        joinNumber: p?.join_number ?? null,
+      };
+    });
   }, [latestDraw, rosterById]);
 
-  // Storage still loading — quiet navy shell, no flash of the wrong state.
+  const unresolvedCount = order.filter((p) => p.displayName === null).length;
+
+  // Grace period: give realtime ~6s to fill the gap, then show the order
+  // anyway rather than stalling forever.
+  const [graceExpiredFor, setGraceExpiredFor] = useState<string | null>(null);
+  useEffect(() => {
+    if (unresolvedCount === 0 || !drawId) return;
+    const t = window.setTimeout(() => setGraceExpiredFor(drawId), 6000);
+    return () => window.clearTimeout(t);
+  }, [unresolvedCount, drawId]);
+  const graceExpired = drawId !== null && graceExpiredFor === drawId;
+
+  // Storage still loading / recovery in flight. Never an empty element:
+  // aria-busy on nothing announces nothing, and a blank navy screen is
+  // indistinguishable from a crash.
   if (session === undefined || recoveryPending) {
-    return <main className="surface-navy min-h-svh" aria-busy="true" />;
+    return (
+      <main className="surface-navy flex min-h-svh flex-col justify-center px-6 py-12 sm:px-10">
+        <div role="status">
+          <Eyebrow surface="dark" tick>
+            Getting your seat
+          </Eyebrow>
+          <p className="az-title mt-6 max-w-sm text-balance text-white">
+            One moment&hellip;
+          </p>
+          <p className="az-caption mt-4 uppercase text-blue-200/70">
+            Room {roomCodeHint ?? "—"}
+          </p>
+        </div>
+      </main>
+    );
+  }
+
+  // Recovery could not reach the server — state is UNKNOWN, so offer a retry
+  // instead of telling the user their seat is gone (the old behavior sent
+  // people into a /join <-> /room bounce on ordinary conference wifi).
+  if (session === null && recovery === "unavailable") {
+    return (
+      <main className="surface-navy flex min-h-svh flex-col px-6 py-12 sm:px-10">
+        <div className="flex flex-1 flex-col">
+          <Eyebrow surface="dark" tick>
+            Connection trouble
+          </Eyebrow>
+          <h1 className="az-title mt-8 max-w-sm text-balance text-white">
+            We couldn&rsquo;t reach the room
+          </h1>
+          <p className="az-body mt-6 max-w-sm text-blue-100/90">
+            Your seat is probably still here — the network just didn&rsquo;t
+            answer. Try again.
+          </p>
+          <div className="mt-12 flex max-w-sm flex-col gap-4">
+            <Button
+              variant="primary"
+              surface="dark"
+              chevron
+              fullWidth
+              onClick={retryRecovery}
+            >
+              Try again
+            </Button>
+            <Button variant="secondary" surface="dark" fullWidth href={rejoinHref}>
+              Enter my name instead
+            </Button>
+          </div>
+        </div>
+        <footer className="mt-10">
+          <Hairline surface="dark" />
+          <p className="az-caption mt-4 uppercase text-blue-200/70">
+            Room {roomCodeHint ?? "—"}
+          </p>
+        </footer>
+      </main>
+    );
   }
 
   // No identity on this phone (or the token expired) — gentle rejoin prompt.
   if (session === null || authError) {
-    const rejoinHref = session?.roomCode ? `/join/${session.roomCode}` : "/join";
     return (
       <main className="surface-navy relative flex min-h-svh flex-col overflow-hidden px-6 py-12 sm:px-10">
         <div className="relative z-10 flex flex-1 flex-col">
           <Eyebrow surface="dark" tick>
-            Sharing Tuesday
+            Random Selector
           </Eyebrow>
           <h1 className="az-title mt-8 max-w-sm text-balance text-white">
             We couldn&rsquo;t find your seat on this phone
@@ -125,7 +233,13 @@ export function RoomClient({ roomId }: { roomId: string }) {
             or you joined on another device. Rejoin to get a name.
           </p>
           <div className="mt-12 max-w-sm">
-            <Button variant="primary" surface="dark" chevron fullWidth href={rejoinHref}>
+            <Button
+              variant="primary"
+              surface="dark"
+              chevron
+              fullWidth
+              href={rejoinHref}
+            >
               Rejoin the room
             </Button>
           </div>
@@ -133,7 +247,7 @@ export function RoomClient({ roomId }: { roomId: string }) {
         <footer className="relative z-10 mt-10">
           <Hairline surface="dark" />
           <p className="az-caption mt-4 uppercase text-blue-200/70">
-            Joining locks when the selector runs
+            Room {roomCodeHint ?? "—"}
           </p>
         </footer>
       </main>
@@ -144,8 +258,8 @@ export function RoomClient({ roomId }: { roomId: string }) {
   const revealed =
     (status === "revealed" || status === "closed") &&
     latestDraw !== null &&
-    order.length === latestDraw.order.length &&
     order.length > 0 &&
+    (unresolvedCount === 0 || graceExpired) &&
     !suspenseHold;
   const drawing =
     status === "drawing" || suspenseHold || (status === "revealed" && !revealed);
@@ -169,11 +283,12 @@ export function RoomClient({ roomId }: { roomId: string }) {
           <Eyebrow surface="dark" tick>
             Welcome
           </Eyebrow>
-          {me.real_name && (
-            <p className="az-sublabel mt-3 text-blue-100">{me.real_name}</p>
-          )}
+          {/* The real name is deliberately NOT shown here: on a shared phone
+              the seat cookie belongs to the browser, not the person, so
+              echoing it would leak the previous joiner's name. The exit
+              below is how the next person takes over. */}
           <p className="az-caption mt-8 uppercase text-blue-200">
-            Your name for today
+            Your name for this session
           </p>
 
           <div className="mt-3 flex items-start gap-5">
@@ -220,7 +335,7 @@ export function RoomClient({ roomId }: { roomId: string }) {
         {revealed ? (
           <>
             <Eyebrow surface="light" tick>
-              Speaking order
+              The order
             </Eyebrow>
             <h2 className="az-h2 mt-3 text-ink">Who goes when</h2>
 
@@ -228,7 +343,7 @@ export function RoomClient({ roomId }: { roomId: string }) {
             <p className="sr-only" aria-live="polite">
               {`You are number ${
                 order.findIndex((p) => p.id === me.id) + 1
-              } of ${order.length}. ${order[0].displayName} speaks first.`}
+              } of ${order.length}. ${order[0].displayName ?? "Someone"} goes first.`}
             </p>
             <ol className="mt-8">
               {order.map((p, i) => {
@@ -293,7 +408,7 @@ export function RoomClient({ roomId }: { roomId: string }) {
             </Eyebrow>
             <h2 className="az-h2 mt-3 text-ink">This room has closed</h2>
             <p className="az-body mt-4 max-w-sm text-ink-body/70">
-              See you next Tuesday — a new room opens each week.
+              That&rsquo;s a wrap. A new room opens whenever you need one.
             </p>
             <p className="az-caption mt-8 uppercase text-ink-meta">
               Real names are purged when the room closes
@@ -329,10 +444,20 @@ export function RoomClient({ roomId }: { roomId: string }) {
         )}
         </div>
 
-        {/* Quiet theme control, tucked into the footer area. */}
+        {/* Quiet theme control + the shared-device exit. */}
         <footer className="mt-14">
           <Hairline surface="light" />
-          <div className="mt-3 flex justify-end">
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+            {/* Hands the phone to the next person: clears this browser's seat
+                so they join as themselves instead of inheriting this one. */}
+            <button
+              type="button"
+              onClick={exitSeat}
+              disabled={releasing}
+              className="az-caption cursor-pointer uppercase text-ink-meta underline-offset-4 transition-colors hover:text-accent hover:underline disabled:opacity-50"
+            >
+              {releasing ? "Leaving…" : "Not you? Join as someone else"}
+            </button>
             <ThemeToggle surface="light" />
           </div>
         </footer>

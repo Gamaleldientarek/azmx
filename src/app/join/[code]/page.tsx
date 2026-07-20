@@ -47,30 +47,52 @@ export default async function JoinPage({
   // room — the room page recovers the identity itself. Covers the locked
   // "draw has started" state too, so returning participants never hit the
   // blocked wall.
+  //
+  // The cookie alone is NOT enough: redirecting on an unverified cookie
+  // bounces the user between /join and /room when the row is gone or the DB
+  // hiccups. Confirm the participant row first, and on ANY uncertainty fall
+  // through to the form. `redirect()` stays outside the try — it throws a
+  // control-flow signal a catch would swallow.
+  let seatedRoomId: string | null = null;
   if (room && room.status !== "closed") {
-    const seated = await readParticipantCookie(room.id);
-    if (seated) redirect(`/room/${room.id}`);
+    try {
+      const seatedId = await readParticipantCookie(room.id);
+      if (seatedId) {
+        const supabase = createServiceClient();
+        const { data: seat, error } = await supabase
+          .from("participants")
+          .select("id")
+          .eq("id", seatedId)
+          .eq("room_id", room.id)
+          .maybeSingle<{ id: string }>();
+        if (!error && seat) seatedRoomId = room.id;
+      }
+    } catch (err) {
+      console.error("join page seat verification failed:", err);
+      // Unknown state → show the form rather than risk a redirect loop.
+    }
   }
+  if (seatedRoomId) redirect(`/room/${seatedRoomId}`);
 
-  const roomName = room?.name?.trim() || "Sharing Tuesday";
+  const roomName = room?.name?.trim() || "Random Selector";
 
   let blockedTitle: string | null = null;
   let blockedBody: string | null = null;
   if (!room) {
     blockedTitle = "We can’t find that room";
     blockedBody =
-      "Check the code on the screen and try again — it looks like TUES-1234.";
+      "Check the code on the screen and try again.";
   } else if (room.status === "closed") {
     blockedTitle = "This room has ended";
-    blockedBody = "The session is over. A new room opens next Tuesday.";
+    blockedBody = "This session has wrapped. Ask the host for the new room.";
   } else if (room.status === "locked") {
     blockedTitle = "Joining is closed right now";
     blockedBody =
-      "The facilitator has closed joining for the moment — ask them to reopen it.";
+      "The host has paused joining for a moment. Ask them to reopen it.";
   } else if (room.status !== "lobby") {
     blockedTitle = "The draw has started";
     blockedBody =
-      "Joining is closed for this round — watch the screen for the order.";
+      "Joining is closed for this round. Watch the screen for the order.";
   }
 
   return (

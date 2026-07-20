@@ -2,6 +2,7 @@
 
 import { mintRoomToken } from "@/lib/roomToken";
 import {
+  clearParticipantCookie,
   readParticipantCookie,
   setParticipantCookie,
 } from "@/lib/participantCookie";
@@ -155,27 +156,41 @@ export type RecoverSeatResult =
         id: string;
         display_name: string;
         join_number: number;
-        real_name: string;
       };
       roomId: string;
       roomCode: string;
       roomToken: string;
     }
-  | { ok: false; error: "no_seat" };
+  /** No cookie, or a confirmed-missing participant row — show the form. */
+  | { ok: false; error: "no_seat" }
+  /** Infrastructure failed; state is UNKNOWN — offer retry, never a wall. */
+  | { ok: false; error: "unavailable" };
 
 /**
  * Recover an existing seat from the signed per-room cookie — no name entry.
  * Lets a participant who lost sessionStorage (new tab, restart) get back to
  * their identity even after the draw locked the room. Closed rooms never
  * recover (names are purged).
+ *
+ * Deliberately does NOT return `real_name`: on a shared phone the cookie
+ * belongs to the browser, not the person, so echoing the previous joiner's
+ * real name would leak it to whoever holds the device next.
  */
 export async function recoverSeat(roomId: string): Promise<RecoverSeatResult> {
+  let participantId: string | null;
   try {
-    const participantId = await readParticipantCookie(roomId);
-    if (!participantId) return { ok: false, error: "no_seat" };
+    participantId = await readParticipantCookie(roomId);
+  } catch (err) {
+    console.error("recoverSeat: cookie read failed:", err);
+    return { ok: false, error: "unavailable" };
+  }
+  if (!participantId) return { ok: false, error: "no_seat" };
 
+  let room: { id: string; code: string; status: string } | null;
+  let participant: Participant | null;
+  try {
     const supabase = createServiceClient();
-    const [{ data: room }, { data: participant }] = await Promise.all([
+    const [roomRes, participantRes] = await Promise.all([
       supabase
         .from("rooms")
         .select("id, code, status")
@@ -183,30 +198,66 @@ export async function recoverSeat(roomId: string): Promise<RecoverSeatResult> {
         .maybeSingle<{ id: string; code: string; status: string }>(),
       supabase
         .from("participants")
-        .select("id, room_id, display_name, join_number, real_name")
+        .select("id, room_id, display_name, join_number")
         .eq("id", participantId)
         .eq("room_id", roomId)
         .maybeSingle<Participant>(),
     ]);
-    if (!room || room.status === "closed" || !participant) {
-      return { ok: false, error: "no_seat" };
+    // A query ERROR means we do not know the state — never claim "no seat".
+    if (roomRes.error || participantRes.error) {
+      console.error(
+        "recoverSeat: query failed:",
+        roomRes.error?.message ?? participantRes.error?.message
+      );
+      return { ok: false, error: "unavailable" };
     }
+    room = roomRes.data;
+    participant = participantRes.data;
+  } catch (err) {
+    console.error("recoverSeat: infrastructure failure:", err);
+    return { ok: false, error: "unavailable" };
+  }
 
+  // Confirmed absences (row genuinely gone / room ended) → seat is really gone.
+  if (!room) return { ok: false, error: "unavailable" };
+  if (room.status === "closed" || !participant) {
+    return { ok: false, error: "no_seat" };
+  }
+
+  try {
     const roomToken = await mintRoomToken(roomId);
+    // Slide the 12h cookie forward so an active participant is never locked
+    // out mid-session by an expiry that started at first join.
+    await setParticipantCookie(roomId, participant.id);
     return {
       ok: true,
       participant: {
         id: participant.id,
         display_name: participant.display_name,
         join_number: participant.join_number,
-        real_name: participant.real_name ?? "",
       },
       roomId,
       roomCode: room.code,
       roomToken,
     };
   } catch (err) {
-    console.error("recoverSeat failed:", err);
-    return { ok: false, error: "no_seat" };
+    console.error("recoverSeat: token/cookie failed:", err);
+    return { ok: false, error: "unavailable" };
+  }
+}
+
+/**
+ * Release this browser's seat — the "Not you?" exit on a shared phone.
+ * Clears the seat cookie so the next person gets a fresh name form.
+ */
+export async function releaseSeat(
+  roomId: string
+): Promise<{ ok: true } | { ok: false }> {
+  try {
+    await clearParticipantCookie(roomId);
+    return { ok: true };
+  } catch (err) {
+    console.error("releaseSeat failed:", err);
+    return { ok: false };
   }
 }

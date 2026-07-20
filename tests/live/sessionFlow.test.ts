@@ -301,7 +301,7 @@ describe.skipIf(!LIVE)("LIVE: full session flow over HTTP", () => {
     // The settled reveal announces the starter — and it is order[0].
     const starterName = byId.get(firstOrder[0])!.display_name;
     expect(html).toContain("The order is set");
-    expect(html).toContain(`Speaking first: ${starterName}`);
+    expect(html).toContain(`${starterName} goes first`);
     for (const p of participants) expect(html).not.toContain(p.real_name);
   });
 

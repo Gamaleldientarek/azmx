@@ -48,7 +48,7 @@ export default function JoinCodePage() {
         </Eyebrow>
         <div className="mt-3 flex items-baseline gap-3">
           <span className="font-display text-2xl text-ink">
-            Sharing Tuesday
+            Random Selector
           </span>
         </div>
       </header>
@@ -78,7 +78,7 @@ export default function JoinCodePage() {
                        placeholder:text-ink-meta/40 focus:border-accent"
           />
           <p className="az-caption mt-3 text-ink-meta">
-            It&rsquo;s on the screen — or scan the QR instead.
+            It&rsquo;s on the screen. Or scan the QR instead.
           </p>
 
           <div className="mt-12">

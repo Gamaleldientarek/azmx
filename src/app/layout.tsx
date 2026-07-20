@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   // absolute so shared links preview the cover art.
   metadataBase: new URL("https://games.gamaleldien.com"),
   title: "Random Selector",
-  description: "Join the session, get your name, and let the wheel decide who shares first.",
+  description: "Put your whole group in a fair random order. Everyone joins on a phone, gets a name, and sees where they land.",
 };
 
 /**

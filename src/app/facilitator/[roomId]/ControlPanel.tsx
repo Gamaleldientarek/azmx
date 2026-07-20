@@ -212,7 +212,7 @@ export function ControlPanel({
         {closed
           ? "Room closed. Real names purged."
           : starterName
-            ? `Order drawn. Speaking first: ${starterName}.`
+            ? `Order drawn. ${starterName} goes first.`
             : ""}
       </p>
       {/* Top nav: wordmark home link + live status, theme, log out. */}
@@ -335,8 +335,8 @@ export function ControlPanel({
 
           {roster.length === 0 ? (
             <p className="az-body mt-8 max-w-sm text-ink-body/70">
-              No one has joined yet. Put the projection on the big screen —
-              people appear here the moment they scan.
+              No one has joined yet. Put the projection on the big screen.
+              People appear here the moment they scan.
             </p>
           ) : (
             <ul className="mt-8">
@@ -397,8 +397,8 @@ export function ControlPanel({
                     </Eyebrow>
                     <p className="az-h2 mt-4 text-white">Room closed</p>
                     <p className="az-body mt-3 text-blue-100/85">
-                      Real names are purged. A fresh room takes a minute to
-                      set up next week.
+                      Real names are purged. A fresh room takes about a minute
+                      to set up whenever you need one.
                     </p>
                     <div className="mt-8">
                       <Button
@@ -423,9 +423,9 @@ export function ControlPanel({
                     <p className="az-body mt-3 text-blue-100/85">
                       {hasDraw
                         ? starterName
-                          ? `${starterName} speaks first right now. A redraw shuffles the locked group again.`
+                          ? `${starterName} goes first right now. A redraw shuffles the locked group again.`
                           : "A redraw shuffles the locked group again."
-                        : "Locks joining and draws the full speaking order for everyone."}
+                        : "Locks joining and draws a running order for everyone in the room."}
                     </p>
                     <div className="mt-8">
                       {confirming === "redraw" ? (
@@ -558,7 +558,7 @@ export function ControlPanel({
                   />
                 </div>
                 <p className="az-caption max-w-[16rem] uppercase text-ink-meta">
-                  Same QR as the projection — handy for phones nearby
+                  Same QR as the projection. Handy for phones nearby
                 </p>
               </div>
             </div>
