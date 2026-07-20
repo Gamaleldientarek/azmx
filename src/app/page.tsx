@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import cover from "../../public/sharing-tuesday-cover.jpg";
+import cover from "../../public/sharing-tuesday-cover-clean.jpg";
 import {
   AzmxLogo,
   Button,
@@ -9,118 +9,140 @@ import {
 } from "@/components/brand";
 
 /**
- * Landing — the official cover art IS the page (client direction).
+ * Landing — the clean cover art is the stage; the title and mark are LIVE
+ * (client direction: "make it with code and make it working responsively").
  *
- * The full red cover bleeds edge to edge at every breakpoint; the baked-in
- * serif "Sharing Tuesday" title and AZMX mark are the hero and the brand
- * attribution, so no live headline or wordmark duplicates them on desktop.
- * Live type is reduced to what the page functionally needs — a one-line lead
- * and the two CTAs — placed in the calm dark-red wall band below the baked
- * title (measured 11:1+ against white). The desktop footer keeps to the
- * bottom-right table front, clear of the baked logo in the bottom-left.
+ * The client supplied a text-free version of the red still life with the
+ * whole inline-start ~55% left as a calm wall, made for type. The editorial
+ * lockup returns as real, responsive code, start-aligned on that wall:
+ * AZMX mark (header, links home) → eyebrow → two-line serif "Sharing /
+ * Tuesday" (az-hero, mirroring the original poster's line break) → lead →
+ * the two CTAs. Footer strip carries the tagline + URL caption.
  *
- * Contrast decisions (measured on the source pixels):
- * - White type on the calm zones: 11–14:1 (AA/AAA). No scrim behind the lead
- *   or desktop CTAs.
- * - Electric #001aff on this red is 1.4–2.2:1 — no boundary contrast, pure
- *   chroma vibration — so the ONE hot CTA is a white block with a Navy label
- *   (Electric survives as the chevron punctuation on white, 8:1).
- * - The bottom band's lit table edge dips to ~3.2:1, so a localized
- *   gradient-to-dark sits under the footer strip (and under the stacked CTAs
- *   on phone) only — never a full-page wash.
+ * Contrast decisions (measured on the clean art's pixels):
+ * - Wall type column (x < 0.42): white averages 12:1, worst-case 7.9:1
+ *   (AAA). NO scrim behind the lockup — the clean wall needs none.
+ * - Electric #001aff on this red family: 1.2–1.8:1 (chroma vibration, no
+ *   boundary) — still banned. The ONE hot CTA stays a white block with a
+ *   Navy label; Electric survives only as the chevron punctuation on white
+ *   (8:1). Light Blue measures 3.2–5.3:1 — passes as a ≥3:1 graphic (the
+ *   eyebrow tick) but not as small text, so eyebrow text is white.
+ * - The lit floor at the bottom dips to ~2.9:1, so the localized red-black
+ *   gradient stays under the footer strip (and under the bottom-anchored
+ *   CTAs on phone/tablet) only — never a full-page wash.
  *
- * Phone (portrait) crops the 16:9 art to the still life (object-position
- * 60%), which pushes the baked title out of frame — so a compact live serif
- * wordmark returns at the top on phone/tablet only (it doubles as the h1;
- * from lg up the h1 is visually replaced by the baked title and goes sr-only).
+ * Composition: the still life sits right-of-center (x 0.41–0.95). Portrait
+ * crops bias toward it (object-position 70%) so the blocks/plant stay in
+ * frame while the lockup owns the darker upper wall; from lg the crop
+ * relaxes to 55% so both the wall and the whole still life share the frame,
+ * and the type column is width-capped so nothing overlaps the still life.
  * Landing stays fixed-dark (exempt from theming).
  */
 export default function Home() {
   return (
     <main className="relative flex min-h-svh flex-col bg-navy text-white">
-      {/* Full-bleed cover art. Portrait crops center on the still life;
-          landscape crops bias to the inline-start so the baked title stays
-          in frame. */}
+      {/* Full-bleed clean cover. Portrait keeps the still life in frame
+          (70%); landscape balances wall + still life (55%). */}
       <div className="absolute inset-0">
         <Image
           src={cover}
-          alt="Official Sharing Tuesday cover — the serif title and AZMX mark over a deep red still life of pinned notes, stacked blocks, and a monstera plant"
+          alt="Sharing Tuesday cover art — a deep red still life of a pinboard with white notes, stacked blocks, and a monstera plant in a round vase"
           fill
           priority
           placeholder="blur"
           sizes="100vw"
-          className="object-cover object-[60%_50%] select-none lg:object-[15%_50%]"
+          className="select-none object-cover object-[70%_50%] lg:object-[55%_50%]"
         />
-        {/* Localized legibility gradient: a short bottom band only, red-black
-            so the image darkens instead of graying out. It exists for the
-            footer strip, whose lit table edge dips to ~3.1:1 bare — the hero
-            block never relies on it. */}
+        {/* Localized legibility gradient: bottom band only, red-black so the
+            image darkens instead of graying out. It exists for the footer
+            caption (lit floor ~2.9:1 bare) and the bottom-anchored CTAs on
+            phone/tablet; the lockup on the wall never relies on it. */}
         <div
           aria-hidden
-          className="absolute inset-x-0 bottom-0 h-[24svh] bg-[linear-gradient(to_top,rgba(20,2,6,0.66),rgba(20,2,6,0.24)_60%,transparent)]"
+          className="absolute inset-x-0 bottom-0 h-[38svh] bg-[linear-gradient(to_top,rgba(20,2,6,0.68),rgba(20,2,6,0.26)_55%,transparent)] lg:h-[22svh] lg:bg-[linear-gradient(to_top,rgba(20,2,6,0.6),rgba(20,2,6,0.2)_55%,transparent)]"
         />
       </div>
 
-      {/* Compact live wordmark — phone/tablet only, where the portrait crop
-          loses the baked title. From lg the baked title is the hero and this
-          collapses to the page's sr-only h1. */}
-      <header className="relative px-6 pt-8 sm:px-10 lg:p-0">
-        <h1 className="font-display text-[2rem] leading-none tracking-[-0.01em] text-white lg:sr-only">
-          Sharing Tuesday
-        </h1>
+      {/* Header — the live AZMX mark, back on every breakpoint now that the
+          baked one is gone. White on the wall: 9.9:1 avg / 7.6:1 worst. */}
+      <header className="relative px-6 pt-8 sm:px-10 lg:px-az-6 lg:pt-az-4 xl:px-az-7">
+        <Link
+          href="/"
+          className="inline-flex items-center rounded-[2px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+        >
+          <AzmxLogo variant="white" height={24} />
+          <span className="sr-only">AZMX — home</span>
+        </Link>
       </header>
 
-      {/* The functional core: one-line lead + the two CTAs. Below lg the
-          portrait crop's only calm zone is the dark upper wall (15:1+
-          measured; the mid band holds the white pinned notes), so the block
-          anchors under the wordmark and leaves the still life unobstructed.
-          From lg it drops to the calm wall band below the baked title;
-          10svh bottom padding keeps it above the baked AZMX mark across
-          viewport heights. */}
-      <div className="relative flex flex-1 flex-col justify-start px-6 pt-8 sm:px-10 lg:justify-end lg:px-az-6 lg:pb-[10svh] lg:pt-0 xl:px-az-7">
-        <div className="max-w-xl">
-          <p className="az-lead text-white">
+      {/* The editorial lockup, start-aligned on the clean wall. Phone/tablet:
+          top-anchored over the dark upper wall (10.9:1 worst), CTAs pushed to
+          the bottom scrim band. From lg the whole group centers vertically
+          and the column is capped (max-w-sm → max-w-md at xl) so the CTA row
+          ends before the still life's inline edge (image x 0.41). */}
+      <div className="relative flex flex-1 flex-col px-6 pb-6 pt-10 sm:px-10 lg:justify-center lg:px-az-6 lg:py-az-4 xl:px-az-7">
+        <div className="max-w-md lg:max-w-sm xl:max-w-md">
+          {/* Eyebrow — white text (Light Blue fails 4.5:1 as small text on
+              this red); the tick keeps the two-blues accent as a ≥3:1
+              graphic. Same taxonomy label as the join page header. */}
+          <p className="eyebrow flex items-center gap-2 text-white/90">
+            <Chevron variant="filled" color="light-blue" size={10} />
+            <span>Games</span>
+          </p>
+          {/* The live title — the original poster's two-line serif lockup,
+              now real text on the az-hero clamp scale. */}
+          <h1 className="az-hero mt-4 text-white lg:mt-az-3">
+            Sharing
+            <br />
+            Tuesday
+          </h1>
+          <p className="az-lead mt-5 max-w-[24rem] text-white lg:mt-az-3">
             Everyone shares. The order is fair.
           </p>
-          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
-            {/* The one hot CTA — white block, Navy label. Electric-on-red
-                measured 1.75:1 (vibration, no edge), so Electric appears only
-                as the chevron punctuation on the white block. */}
-            <Link
-              href="/join"
-              className="group inline-flex min-h-14 w-full select-none items-center justify-center gap-3 rounded-[2px] bg-white px-6 py-4 font-body text-base font-semibold tracking-[0.01em] text-navy transition-colors duration-150 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto"
-            >
-              <span>Join a room</span>
-              <Chevron
-                variant="filled"
-                color="electric"
-                size={12}
-                className="transition-transform duration-150 group-hover:translate-x-0.5"
-              />
-            </Link>
-            <Button
-              href="/facilitator/login"
-              surface="dark"
-              variant="secondary"
-              className="w-full sm:w-auto"
-            >
-              I&rsquo;m the facilitator
-            </Button>
-          </div>
+        </div>
+
+        {/* CTAs: bottom-anchored full-width stack on phone (over the scrim
+            band, clear of the white pinned notes mid-frame); inline row under
+            the lead from lg, wrap-tolerant so a narrow lg viewport stacks
+            instead of crossing onto the still life. */}
+        <div className="mt-auto flex flex-col gap-4 pt-10 sm:flex-row sm:flex-wrap sm:items-center lg:mt-az-4 lg:pt-0">
+          {/* The one hot CTA — white block, Navy label. Electric-on-red
+              measured 1.2–1.8:1, so Electric appears only as the chevron
+              punctuation on the white block. */}
+          <Link
+            href="/join"
+            className="group inline-flex min-h-14 w-full select-none items-center justify-center gap-3 rounded-[2px] bg-white px-6 py-4 font-body text-base font-semibold tracking-[0.01em] text-navy transition-colors duration-150 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto"
+          >
+            <span>Join a room</span>
+            <Chevron
+              variant="filled"
+              color="electric"
+              size={12}
+              className="transition-transform duration-150 group-hover:translate-x-0.5"
+            />
+          </Link>
+          <Button
+            href="/facilitator/login"
+            surface="dark"
+            variant="secondary"
+            className="w-full sm:w-auto"
+          >
+            I&rsquo;m the facilitator
+          </Button>
         </div>
       </div>
 
-      {/* Footer strip. Phone: full hairline strip with the live AZMX mark
-          (the baked one is out of the portrait crop). Desktop: quiet
-          end-aligned row over the table front, clear of the baked mark in
-          the bottom-left — no duplicate logo, no hairline across the art. */}
+      {/* Footer strip — tagline + URL caption over the scrim band. Hairline
+          on phone only; on desktop a rule across the art would be noise. */}
       <footer className="relative px-6 pb-8 sm:px-10 lg:px-az-6 lg:pb-az-4 xl:px-az-7">
         <Hairline surface="dark" className="lg:hidden" />
-        <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 lg:mt-0 lg:justify-end">
-          <AzmxLogo variant="white" height={22} className="lg:hidden" />
-          <span className="az-caption uppercase text-white/75">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 lg:mt-0">
+          <span className="az-caption uppercase text-white/80">
             Forward · Human always
           </span>
+          {/* white/75, not /60 — /60 measured 4.4:1 worst-case on the phone
+              floor band, a hair under AA for caption-size text. */}
+          <span className="az-caption uppercase text-white/75">azmx.sa</span>
           {/* No ThemeToggle here: the landing is art-directed photography and
               looks identical in both themes, which read as "broken" to the
               client. Theme control lives on the themed in-flow pages. */}
