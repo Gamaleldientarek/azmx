@@ -26,6 +26,10 @@
   --color-neutral-500: #6c737f;
   --color-neutral-900: #111927;
 
+  /* RAG semantic dots ONLY (AZMX §2.4) — e.g. the joining open/closed state. */
+  --color-green: #22c36f;
+  --color-red: #ff2b3c;
+
   /* Hairline colors (§5.7) — 1px rules. Light = Neutral-900 @12%, Dark = White @14% */
   --color-hairline-light: rgba(17, 25, 39, 0.12);
   --color-hairline-dark: rgba(255, 255, 255, 0.14);

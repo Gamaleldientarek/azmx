@@ -307,14 +307,23 @@ export function ControlPanel({
               Order = join order · real names visible only to you
             </p>
             {/* Door control: close joining without drawing, reopen any time
-                (incl. after a draw — a redraw then includes latecomers). */}
+                (incl. after a draw — a redraw then includes latecomers).
+                Deliberately prominent: bordered control + state dot. */}
             {!closed && (
               <button
                 type="button"
                 disabled={joiningPending}
                 onClick={toggleJoining}
-                className="az-caption cursor-pointer uppercase text-accent underline-offset-4 transition-colors hover:underline disabled:opacity-50"
+                className="inline-flex cursor-pointer items-center gap-2.5 rounded-[2px] border-2 border-accent px-4 py-2.5
+                           az-caption font-semibold uppercase text-accent transition-colors
+                           hover:bg-accent hover:text-white disabled:opacity-50"
               >
+                <span
+                  aria-hidden
+                  className={`inline-flex h-2 w-2 rounded-full ${
+                    effectiveStatus === "lobby" ? "bg-green" : "bg-red"
+                  }`}
+                />
                 {joiningPending
                   ? "Updating…"
                   : effectiveStatus === "lobby"
