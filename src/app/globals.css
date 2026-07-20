@@ -164,9 +164,9 @@ body {
    * surface on its own when motion is off. */
   background-image: linear-gradient(
     168deg,
-    var(--color-blue-950) 0%,
-    var(--color-navy) 55%,
-    var(--color-blue-950) 100%
+    var(--color-blue-900) 0%,
+    var(--color-blue-950) 42%,
+    var(--color-navy) 100%
   );
   color: var(--color-white);
 }
@@ -182,15 +182,15 @@ body {
 
 /* Top-right pool. */
 .surface-navy-ambient::before {
-  top: -34vmax;
-  right: -22vmax;
-  width: 76vmax;
-  height: 76vmax;
+  top: -24vmax;
+  right: -14vmax;
+  width: 80vmax;
+  height: 80vmax;
   background: radial-gradient(
     circle at center,
-    rgba(1, 0, 110, 0.55) 0%,
-    rgba(1, 0, 110, 0.28) 42%,
-    rgba(1, 0, 110, 0) 70%
+    rgba(2, 0, 168, 0.62) 0%,
+    rgba(1, 0, 110, 0.4) 40%,
+    rgba(1, 0, 110, 0) 72%
   );
   animation: az-ambient-a 26s var(--az-ease-inout) infinite alternate;
 }
@@ -198,15 +198,15 @@ body {
 /* Bottom-left pool — a touch of Light Blue at the shoulder, very low alpha,
  * so the two pools aren't the same note twice. */
 .surface-navy-ambient::after {
-  bottom: -40vmax;
-  left: -26vmax;
-  width: 84vmax;
-  height: 84vmax;
+  bottom: -28vmax;
+  left: -18vmax;
+  width: 88vmax;
+  height: 88vmax;
   background: radial-gradient(
     circle at center,
-    rgba(1, 0, 110, 0.42) 0%,
-    rgba(93, 143, 255, 0.05) 45%,
-    rgba(1, 0, 110, 0) 72%
+    rgba(1, 0, 110, 0.58) 0%,
+    rgba(93, 143, 255, 0.14) 44%,
+    rgba(1, 0, 110, 0) 74%
   );
   animation: az-ambient-b 34s var(--az-ease-inout) infinite alternate;
 }
@@ -525,23 +525,23 @@ body {
  * falloff, so the edge of a pool never sweeps past a line of text. */
 @keyframes az-ambient-a {
   from {
-    opacity: 0.7;
+    opacity: 0.45;
     transform: translate3d(0, 0, 0) scale(1);
   }
   to {
     opacity: 1;
-    transform: translate3d(-9vmax, 6vmax, 0) scale(1.14);
+    transform: translate3d(-16vmax, 10vmax, 0) scale(1.24);
   }
 }
 
 @keyframes az-ambient-b {
   from {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1.06);
+    transform: translate3d(0, 0, 0) scale(1.1);
   }
   to {
-    opacity: 0.7;
-    transform: translate3d(7vmax, -7vmax, 0) scale(1);
+    opacity: 0.45;
+    transform: translate3d(13vmax, -12vmax, 0) scale(1);
   }
 }
 
