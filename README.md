@@ -27,6 +27,7 @@ references/
   layout-archetypes.md            14 slide recipes with grid coordinates
   research-notes.md               Phosphor, bilingual EN/AR, category conventions
   figma-workflow.md               Working in Figma — safety protocol, plugin API gotchas
+  editorial-technique.md          20 named techniques, tracking/leading numbers, 10 archetypes
 ```
 
 ---

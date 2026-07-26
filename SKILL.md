@@ -11,7 +11,7 @@ One-line ethos: **dark green ground, one neon accent, and a pixel field that ass
 
 **Decks go to CEOs. Readability outranks expression, every time.**
 
-For exact Figma variables read `references/figma-tokens.md`. For every tone in every ramp read `references/colors.md`. For the 14 layout recipes with grid coordinates — plus research-findings slides (§2), the motif construction rules (§4) and Arabic/RTL (§5) — read `references/layout-archetypes.md`. For component specs read `references/components.md`. For working the design system inside Figma read `references/figma-workflow.md`.
+For exact Figma variables read `references/figma-tokens.md`. For every tone in every ramp read `references/colors.md`. For the 14 layout recipes with grid coordinates — plus research-findings slides (§2), the motif construction rules (§4) and Arabic/RTL (§5) — read `references/layout-archetypes.md`. For component specs read `references/components.md`. For working the design system inside Figma read `references/figma-workflow.md`. **For editorial and typographic technique — the 20 named techniques, exact tracking and leading numbers, the 10 one-big-move archetypes, grid-break thresholds, and the amateur-tell checklist — read `references/editorial-technique.md`.**
 
 ---
 
