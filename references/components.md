@@ -8,6 +8,8 @@ The wordmark is **`colab.`** — lowercase, geometric/techno face, terminal peri
 
 Taglines: `USER EXPERIENCE LABORATORY` · `كولاب مختبر تجربة المستخدم`
 
+> **Shipped 2026-07-26.** The target model below is now live in Figma and exported to `assets/logo/` — 21 SVGs, one per variant. The old set remains on the page as `Colab Logo (deprecated 2026-07-26)`; never instantiate it. Asset filenames, per-lockup sizes and usage rules are in `references/logo-and-shapes.md`.
+
 ### Target model — 7 lockups × 3 colours = 21 variants
 
 | `Lockup` | Content | Approx size |
@@ -49,6 +51,8 @@ solid square · outlined square · plus `+` · cross `×` · ring `o` · chevron
 
 ### Composites
 square + checker corner + marker badge · image-frame treatments · multi-block clusters
+
+> **Shipped 2026-07-26, partially.** 40 variants are live as `Shape` (20 options) × `Colour` (`Brand` / `White`) and exported to `assets/shapes/`. Three of the five target fixes landed: the property is renamed, every option has a real name, and a colour axis exists. **Two did not: bounding boxes are still un-normalised (36 × 36 → 479 × 267), and the shipped colour axis is `Brand` / `White` rather than the three named colours below.** The two-value axis is the better model — it preserves each shape's native two-tone construction instead of flattening the dither to one hue. See `references/logo-and-shapes.md`.
 
 ### Target model
 - Rename the variant property from `Property` to something meaningful (e.g. `Shape`).
@@ -108,8 +112,8 @@ Built fresh on the canonical grid: 100px content margins, 8 × 180 columns, 40px
 
 | Component | State |
 |---|---|
-| `Colab Logo` | **Needs rework** — 4 of 8 variants, wrong property model, no colour |
-| `Shapes` | **Needs rework** — inconsistent sizes, meaningless names, no colour |
+| `Colab Logo` | **Shipped 2026-07-26** — 21 variants, `Lockup` × `Colour`, built to target model. SVGs vendored in `assets/logo/` |
+| `Shapes` | **Shipped 2026-07-26** — 40 variants, `Shape` × `Colour`. Names and colour axis fixed; **bounding boxes still not normalised**. SVGs vendored in `assets/shapes/` |
 | `Photo-Effect` | **Exists** — rebuild atoms to 20px module |
 | `Header` / `Footer` | **Exists** — frozen; new versions needed on the canonical grid |
 | `Main Slide` | **Exists** — frozen; new master needed |

@@ -33,8 +33,10 @@ Before any structural or destructive change:
 ## Gotchas
 
 - **Instances ignore direct text edits.** Use the instance-properties API, not `node.characters = ...`. Direct edits fail silently.
-- **Phosphor icons are flattened fills, not strokes.** Bind colour variables to `fill`. A `stroke` binding does nothing.
-- **Duotone Phosphor icons are two shapes.** One variable swap recolours only one layer.
+- **Hugeicons Stroke instances are live strokes, not fills.** Bind colour variables to `stroke`. A `fill` binding does nothing. (Solid instances are the reverse — bind to `fill`. Check the `Style` variant first.)
+- **Never flatten an icon.** Flattening converts live strokes to fills and permanently breaks the `stroke` binding and the stroke-weight step.
+- **The Scale tool multiplies stroke weight; the W/H fields do not.** Resize icons with W/H, then set stroke weight explicitly — see the size table in `references/icons.md`.
+- **Icon variants are `Type` and `Style`, not a weight.** Lock `Type=Rounded`, `Style=Stroke`. A component offering Thin/Light/Regular/Bold is not Hugeicons.
 - `figma.mixed` comes back from `fontName` and `fills` on multi-style text — handle it with `getStyledTextSegments`.
 - Always `await figma.loadAllPagesAsync()` before traversing `figma.root`.
 - Load fonts before writing text: `await figma.loadFontAsync({ family:'Inter', style:'Bold' })`.

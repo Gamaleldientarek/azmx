@@ -24,10 +24,21 @@ references/
   colors.md                       Full ramps, the pairing matrix, verified contrast ratios
   figma-tokens.md                 Every live Figma variable, exact
   components.md                   Logo, Shapes, Photo-Effect, slide masters, inventory
+  logo-and-shapes.md              Every lockup and shape primitive — files, sizes, usage rules
   layout-archetypes.md            14 slide recipes with grid coordinates
-  research-notes.md               Phosphor, bilingual EN/AR, category conventions
+  icons.md                        Hugeicons house rules, the 43-icon working set, colour + RTL
+  icon-index.md                   Every vendored icon with its download link (sharded a–z)
+  research-notes.md               Hugeicons, bilingual EN/AR, category conventions
   figma-workflow.md               Working in Figma — safety protocol, plugin API gotchas
   editorial-technique.md          20 named techniques, tracking/leading numbers, 10 archetypes
+assets/
+  logo/                           21 logo SVGs — 7 lockups × 3 colours
+  shapes/                         40 shape SVGs — 20 primitives × brand/white
+  icons/stroke-rounded/           5,437 Hugeicons SVGs, MIT
+  figma-export-manifest.json      Source variant, size and colour for every exported SVG
+scripts/
+  vendor-hugeicons.py             Re-vendor the icon set at a pinned version
+  rebuild-icon-index.py           Regenerate references/icon-index.md and its shards
 ```
 
 ---
@@ -54,6 +65,8 @@ references/
 **Grid —** 1920×1080. 8 columns × 180px, 40px gutters, 100px side margins, 50px bleed-safe, 98px footer band, 932px live content height.
 
 **Motif —** 20px base module (exactly 1/9 of a column), density migrating toward an edge, ≤3 columns of travel, ≤20% canvas coverage on content slides, never under text.
+
+**Icons —** Hugeicons, `Type=Rounded` and `Style=Stroke`, always. 5,437 MIT-licensed SVGs vendored in `assets/icons/stroke-rounded/`. Sizes 24/32/40/48/64/80 on the 8px grid. Green icons are banned on light grounds — Pine Green instead.
 
 ---
 
@@ -84,3 +97,5 @@ Layout archetype coordinates are derived for this specific grid from sourced com
 ## Licence
 
 The tooling and documentation structure are MIT. The Colab brand assets, palette, and identity are the property of Colab and are not licensed for reuse.
+
+The icons in `assets/icons/stroke-rounded/` are the Hugeicons free set — **MIT**, redistributed under the terms in `assets/icons/LICENSE`. Only the Stroke Rounded style is MIT. Hugeicons Pro styles (Solid, Duotone, Twotone, Bulk) and Pro types (Sharp, Standard) are **not** included here and require a [Hugeicons Pro licence](https://hugeicons.com/license-agreement).

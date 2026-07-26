@@ -27,35 +27,54 @@ Computed per WCAG 2.x relative luminance (`C_lin = C/12.92` if `C≤0.03928` els
 
 ---
 
-## 2. Phosphor Icons
+## 2. Hugeicons — the library the file actually uses
+
+**Correction, 2026-07-26.** This section previously described Phosphor. That was an assumption made before the Figma file was audited, and it was wrong. Resolving every remote instance across all 8 pages found **1,272 Hugeicons placements and zero Phosphor**. The owner's decision: Hugeicons is the real system, the docs were the error. Everything Phosphor-specific below has been replaced.
 
 | Fact | Detail |
 |---|---|
-| Weights | 6 — Thin, Light, Regular, Bold, Fill, Duotone |
-| Authoring grid | 256×256, built to survive downscale to a 16px base |
-| Figma library | Ships as **component sets with a weight variant property** |
-| License | **MIT** — unrestricted commercial, no attribution |
-| Count | ~1,248–1,512 unique (×6 weights). Moving target — verify live before quoting |
+| Variant axes | **2, not weights** — `Type` (Rounded / Sharp / Standard) × `Style` (Stroke / Solid / Duotone / Twotone / Bulk) |
+| Authoring grid | 24×24, 1.5px stroke, round caps and joins |
+| Figma library | Component sets with `Type` and `Style` variant properties |
+| Licence | **MIT for Stroke Rounded only** (`@hugeicons/core-free-icons`). All other styles and types are Pro |
+| Count | 5,437 free icons at `@hugeicons/core-free-icons@4.2.3`; 54,000+ across the Pro tier |
+| Vendored here | All 5,437 free icons, `assets/icons/stroke-rounded/`, ~5.5 MB |
+
+**What the audit found**
+
+| Axis | Result |
+|---|---|
+| `Type=Rounded` | **1,272 / 1,272.** Sharp and Standard: zero |
+| `Style=Stroke` | Every icon except four |
+| `Style=Solid` | `checkmark-circle-01`, `multiplication-sign-circle`, `cancel-circle`, `stars` — all filled status/affirmation glyphs |
+| Distinct icons | 43 |
+
+Both of those are now house rules, not observations. See `references/icons.md`.
 
 **Gotchas that affect us**
-- Many Phosphor Figma instances are **flattened vector fills, not live strokes**. Binding a colour variable to `stroke` does nothing → **bind to `fill`**. Audit before wiring to Colab colour variables.
-- **Duotone** = two overlapping shapes (full-opacity foreground + reduced-opacity background). One variable swap recolours only one layer. Needs a dedicated two-tone token pair.
-- **Thin/Light vanish at display sizes** (200px+) — use Regular/Bold large, reserve Thin/Light for dense grids ≤32px.
-- **Bold/Fill clog below ~16px** — compounds the green-on-white contrast problem.
+- **Hugeicons Stroke instances are live strokes, not flattened fills.** Bind colour variables to `stroke`. This is the exact opposite of the Phosphor advice that was previously in this repo, and following the old advice silently does nothing.
+- **Solid instances have no stroke** — bind to `fill`. Check the style before wiring the variable.
+- **Flattening destroys the binding** and the stroke-weight step. Never flatten.
+- **Scaling multiplies stroke weight.** Resize with W/H, then set stroke weight explicitly per size step.
+- **The Duotone/Twotone two-tone token problem still applies in principle** — two overlapping shapes, one variable swap recolours one layer, so a two-tone token pair would be needed. It is moot for Colab: both styles are Pro and both are banned by the Rounded/Stroke house rules.
+- **Thin strokes at small sizes compound the green-on-white contrast failure.** A 1.5px Electric Green stroke is the most fragile mark in the system; it is banned on light grounds outright and floored at 3px on any projected dark surface.
 
-**Coverage for UX-research subject matter — no gaps.** Candidate mappings (verify exact names in the live library):
+**Licence constraint — verified, and it binds.** The free tier is MIT and covers Stroke Rounded only. Solid, Duotone, Twotone, Bulk, Sharp and Standard require a Hugeicons Pro licence and are **not redistributable**. Colab work ships to enterprise clients, so no Pro asset may be committed to this repository or placed in a deliverable without a licence. The four Solid glyphs above are therefore documented as Pro-tier and substituted — Stroke equivalent, or a composed filled circle plus a free stroke glyph.
 
-| Concept | Candidates |
+**Coverage for UX-research subject matter — no gaps.** These names are verified against the vendored set, not guessed:
+
+| Concept | In the vendored set |
 |---|---|
-| Usability testing / session | `flask`, `clipboard-text`, `check-square-offset` |
-| Participants / recruitment | `users-three`, `user-plus`, `identification-card`, `user-circle-check` |
-| Eye-tracking / attention | `eye`, `eyeglasses`, `target`, `crosshair` |
-| Surveys / forms | `list-checks`, `clipboard-text`, `note-pencil` |
-| Analytics / reporting | `chart-bar`, `chart-line-up`, `presentation-chart`, `magnifying-glass` |
-| Moderation / interviews | `microphone`, `chat-circle-text`, `video-camera`, `headset` |
-| Panel / reach | `globe`, `map-pin`, `users-four` |
-| Session recording | `monitor-play`, `record`, `screencast` |
-| Methodology / process | `flow-arrow`, `tree-structure`, `funnel` |
+| Usability testing / session | `test-tube-01`, `clipboard`, `checkmark-square-01` |
+| Participants / recruitment | `user`, `user-account`, `user-multiple`, `user-add-01`, `id` |
+| Eye-tracking / attention | `eye`, `view`, `view-off`, `target-01`, `crosshair` |
+| Surveys / forms | `quiz-03`, `check-list`, `note-edit`, `task-01` |
+| Analytics / reporting | `chart-line-data-02`, `analytics-01`, `presentation-01`, `search-01` |
+| Moderation / interviews | `mic-01`, `bubble-chat`, `video-01`, `customer-service-01` |
+| Panel / reach | `global`, `location-01`, `user-group` |
+| Session recording | `record`, `screen-add-to-home`, `camera-video` |
+| Methodology / process | `flow`, `hierarchy-square-01`, `filter` |
+| Timing / effort | `stop-watch`, `clock-01`, `time-quarter` |
 
 ---
 
@@ -100,7 +119,7 @@ Computed per WCAG 2.x relative luminance (`C_lin = C/12.92` if `C≤0.03928` els
 ---
 
 ## Flagged as unverified
-- Exact Phosphor icon count and per-weight stroke values
+- ~~Exact Phosphor icon count and per-weight stroke values~~ — resolved. The library is Hugeicons, not Phosphor; 5,437 free icons at `@hugeicons/core-free-icons@4.2.3`, one stroke value (1.5px at 24px), no weight axis
 - Alexandria vs Inter numeric metrics — measure directly
 - Arabic expansion percentage — test with real copy
 - No primary competitor decks obtained

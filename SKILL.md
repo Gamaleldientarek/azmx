@@ -11,7 +11,7 @@ One-line ethos: **dark green ground, one neon accent, and a pixel field that ass
 
 **Decks go to CEOs. Readability outranks expression, every time.**
 
-For exact Figma variables read `references/figma-tokens.md`. For every tone in every ramp read `references/colors.md`. For the 14 layout recipes with grid coordinates — plus research-findings slides (§2), the motif construction rules (§4) and Arabic/RTL (§5) — read `references/layout-archetypes.md`. For component specs read `references/components.md`. For working the design system inside Figma read `references/figma-workflow.md`. **For editorial and typographic technique — the 20 named techniques, exact tracking and leading numbers, the 10 one-big-move archetypes, grid-break thresholds, and the amateur-tell checklist — read `references/editorial-technique.md`.**
+For exact Figma variables read `references/figma-tokens.md`. For every tone in every ramp read `references/colors.md`. For the 14 layout recipes with grid coordinates — plus research-findings slides (§2), the motif construction rules (§4) and Arabic/RTL (§5) — read `references/layout-archetypes.md`. For component specs read `references/components.md`. For icons — the Hugeicons house rules, the proven working set, and 5,437 vendored SVGs — read `references/icons.md` and `references/icon-index.md`. For working the design system inside Figma read `references/figma-workflow.md`. **For editorial and typographic technique — the 20 named techniques, exact tracking and leading numbers, the 10 one-big-move archetypes, grid-break thresholds, and the amateur-tell checklist — read `references/editorial-technique.md`.**
 
 ---
 
@@ -177,13 +177,19 @@ Taglines: `USER EXPERIENCE LABORATORY` / `كولاب مختبر تجربة ال�
 
 ---
 
-## Icons — Phosphor
+## Icons — Hugeicons
 
-MIT licensed. Prefer the **line** weights (Thin/Light/Regular/Bold) over Fill and Duotone.
+**Hugeicons, not Phosphor.** The audit found 1,272 Hugeicons placements across all 8 pages and zero Phosphor. The free Stroke Rounded set is MIT licensed; all 5,437 icons are vendored in `assets/icons/stroke-rounded/`.
 
-- Bind colour variables to **`fill`, not `stroke`** — Phosphor's Figma instances are largely flattened fill paths, so a stroke binding silently does nothing.
-- Thin and Light vanish above ~200px. Use Regular or Bold at display sizes.
-- Bold and Fill clog below ~16px — and green-on-white compounds it.
+Hugeicons has **no weight axis**. It has two variant axes: **Type** (Rounded / Sharp / Standard) and **Style** (Stroke / Solid / Pro-only Duotone, Twotone, Bulk).
+
+- **`Type=Rounded`, always.** 1,272 of 1,272 placements. Sharp and Standard are never used.
+- **`Style=Stroke` is the default.** Solid is a status device only — four icons in the whole file appear Solid: `checkmark-circle-01`, `multiplication-sign-circle`, `cancel-circle`, `stars`. All Pro styles and Pro types are non-redistributable and must never be committed.
+- Bind colour variables to **`stroke`** — Hugeicons Stroke instances are live strokes. Bind to `fill` only on a Solid instance. **Never flatten an icon**; it destroys the binding.
+- Sizes on the 8px grid: **24 / 32 / 40 / 48 / 64 / 80**, stroke **1.5 / 2 / 2 / 2.5 / 3 / 3**. Never below 24px on a 1920 slide. Resize with W/H, not the Scale tool, or the stroke weight multiplies.
+- ⛔ Electric and Jade Green icons are **banned on white and light grounds** — 1.34:1 and 1.29:1, below the 3:1 non-text floor. On light, the icon colour is Pine Green; Olive Green is the second tier. Grey `#BCBEC0` is a dark-ground device only (1.86:1 on white).
+
+Full rules, the 43-icon proven working set, colour table and RTL swap pairs: `references/icons.md`. Every icon name with its download link: `references/icon-index.md`.
 
 ---
 
