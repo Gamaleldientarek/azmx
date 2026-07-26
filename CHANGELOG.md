@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 — 2026-07-26
+
+First tagged release. Bundles everything in 0.1.0, which shipped as documentation only and was never tagged.
 
 ### Added
 - `assets/logo/` — all 21 logo lockups as SVG, exported from the `Colab Logo` component set: 7 lockups × 3 colours, text outlined so no font is required. Bounding box verified constant per lockup across all three colours
