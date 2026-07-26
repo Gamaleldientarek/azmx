@@ -92,7 +92,7 @@ No peer-reviewed source gives a numeral-to-canvas ratio. The sourced principle i
 | Inside a KPI row (#6, N≤5) | **160–200px** | Multiple numerals must stay within the display scale so the row doesn't compete internally |
 | Supporting stat beside a chart (#3/#9) | **60–100px** | Reinforcement, not headline |
 
-**Colour** — White on Pine/Navy; Pine or Navy on white. **Electric Green only as the delta/comparison indicator, never as the numeral fill on a light ground** (1.34:1).
+**Colour** — White on Pine/Deep Jade; Pine or Deep Jade on white. **Electric Green only as the delta/comparison indicator, never as the numeral fill on a light ground** (1.34:1).
 
 **Label** — directly below, body-24/28, ≤3 words, **same left edge as the numeral, not centred under it**.
 
@@ -125,7 +125,7 @@ No peer-reviewed source gives a numeral-to-canvas ratio. The sourced principle i
 | **Coverage ceiling** | ≤20% of canvas on content slides. Covers/dividers may run 60–100% |
 | **Never under text** | The field occupies its own bounded zone that never underlaps a text bounding box, even at low density. Direct application of Tufte's chartjunk discipline to brand texture |
 | **Markers (`+ × o`)** | A controlled glyph set, not free additions. Placed at cell intersections only, ~**1 marker per 8–12 plain modules**, never adjacent to one another |
-| **Colour** | **One colour per instance.** Electric Green on Pine/Navy, or Pine/Navy on white/Electric-Green grounds. Never a second accent hue inside the motif |
+| **Colour** | **One colour per instance.** Electric Green on Pine/Deep Jade, or Pine/Deep Jade on white/Electric-Green grounds. Never a second accent hue inside the motif |
 
 > The `Photo-Effect` component already implements this as four directional edge vectors — `Pixel Top/Right/Bottom/Left`. Rebuild these to the 20px module rather than authoring new ones.
 
@@ -158,7 +158,7 @@ The client has flagged RTL as a place to be careful. Rules, in priority order:
 | 7 | **Multiple accents competing in one chart** — Electric + Jade + Orange together | Destroys the "look here" signal; Duarte's rule is one bright colour per slide `[S]` |
 | 8 | **Improvised severity colours** | Undermines skim-by-colour. Fix the ordinal mapping: Vivid Orange = critical/high · Olive Green = medium · Pale Sky Blue/grey = low `[D]` |
 | 9 | **Numeral without a benchmark** | Reads as decoration, not insight `[D]` |
-| 10 | **One dark ground everywhere** | Uniform flat dark fields read harsh against the neon accent. Vary Pine and Navy across a deck `[S]` |
+| 10 | **One dark ground everywhere** | Uniform flat dark fields read harsh against the neon accent. Rotate Pine, Deep Jade and white across a deck `[S]` |
 | 11 | **Identical motif on every slide** | Treating a generative density system as a static lockup defeats its own premise `[D]` |
 | 12 | **RTL as an afterthought** | See §5 `[D]` |
 

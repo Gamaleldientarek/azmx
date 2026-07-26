@@ -20,7 +20,7 @@ Every value verified against the live Figma variable collection `color 🎨` on 
 | Pale Sky Blue | `#B1D9E8` | `Brand/Secondary/Pale Sky Blue/200*` |
 | Vivid Orange | `#FF5A32` | `Brand/Secondary/Vivid Orange/400⭐️` |
 | Olive Green | `#5B6B3E` | `Brand/Secondary/Olive Green/600*` |
-| Charcoal Navy | `#101938` | `Brand/Secondary/Charcoal Navy/900*` |
+| Deep Jade | `#011E14` | `Brand/Primary/Jade-green/950` |
 
 ---
 
@@ -37,24 +37,24 @@ The authoritative rule set. When in doubt, consult this table rather than improv
 | Eyebrow / kicker | Electric Green |
 | Icons | Electric Green · White |
 | Accents, chips | Electric Green · Vivid Orange · Jade Green |
-| **Forbidden** | Olive Green text (too close in value) · Charcoal Navy text |
+| **Forbidden** | Olive Green 600 text (2.19:1 — use `Olive Green/onDark`) |
 
 ### Ground: **White `#FFFFFF`** — the default light surface
 
 | Element | Permitted |
 |---|---|
-| Display headline | Pine Green · Charcoal Navy |
+| Display headline | Pine Green · Deep Jade |
 | Body copy | Pine Green · Neutral 600/700 |
 | Eyebrow / kicker | Pine Green · Olive Green |
 | Icons | Pine Green · Neutral 500 |
 | Accents | Electric Green **as a large block, bar, or shape only** |
 | **Forbidden** | ⛔ Electric Green as text, small UI, or thin icon strokes — **1.34:1** · Jade Green text (worse) · Pale Sky Blue text |
 
-### Ground: **Charcoal Navy `#101938`** — alternate dark surface
+### Ground: **Deep Jade `#011E14`** — the deepest surface
 
 | Element | Permitted |
 |---|---|
-| Display headline | White · Electric Green (12.84:1 — the widest margin in the system) |
+| Display headline | White (17.54:1) · Electric Green (13.07:1 — the widest margin in the system) |
 | Body copy | White · White @ 80% |
 | Eyebrow / kicker | Electric Green · Jade Green |
 | Icons | Electric Green · White — **safe down to fine strokes here** |
@@ -66,9 +66,9 @@ Permitted only on covers, section dividers, and minimal-text slides. **Never beh
 
 | Element | Permitted |
 |---|---|
-| Display headline | Pine Green · Charcoal Navy |
-| Short label / badge text | Charcoal Navy (12.84:1) · Pine Green (9.49:1) |
-| Icons | Pine Green · Charcoal Navy |
+| Display headline | Pine Green · Deep Jade |
+| Short label / badge text | Deep Jade (13.91:1) · Pine Green (9.49:1) |
+| Icons | Pine Green · Deep Jade |
 | **Forbidden** | ⛔ White text (1.34:1) · body copy of any colour · any paragraph-length text |
 
 ---
@@ -81,9 +81,23 @@ WCAG 2.x relative luminance: `C_lin = C/12.92` if `C ≤ 0.03928` else `((C+0.05
 |---|---|---|---|---|
 | `#34FF67` on `#FFFFFF` | **1.34** | ✗ | ✗ | ✗ |
 | `#34FF67` on `#103A21` | **9.49** | ✓ | ✓ | ✓ |
-| `#34FF67` on `#101938` | **12.84** | ✓ | ✓ | ✓ |
+| `#34FF67` on `#011E14` | **13.07** | ✓ | ✓ | ✓ |
 
-> Not yet computed: Jade Green, Vivid Orange, Pale Sky Blue and Olive Green against the four grounds. Compute before clearing any of them for text or icon roles at the same confidence.
+**Verified — all computed:**
+
+| Foreground | on White | on Pine | on Deep Jade |
+|---|---|---|---|
+| Electric Green `#34FF67` | **1.34** ✗ | 9.49 ✓ | 13.07 ✓ |
+| **Jade Green `#33FFC2`** | **1.29** ✗ | 9.84 ✓ | 13.55 ✓ |
+| Vivid Orange `#FF5A32` | 3.11 ⚠ | 4.10 ⚠ | 5.65 ✓ |
+| Olive Green `#5B6B3E` | 5.81 ✓ | **2.19** ✗ | — |
+| Olive Green `/onDark` `#A8B294` | — | 5.74 ✓ | 7.90 ✓ |
+| Pale Sky Blue `#B1D9E8` | **1.50** ✗ | 8.46 ✓ | 11.66 ✓ |
+| Pale Sky Blue `/onLight` `#3C7E94` | 4.56 ✓ | — | — |
+| Grey `#BCBEC0` | **1.86** ✗ | 6.83 ✓ | 9.41 ✓ |
+| White | — | 12.73 ✓ | **17.54** ✓ |
+
+**Jade Green is worse than Electric Green on white.** Both are accent-on-dark only. Vivid Orange is never body text on any ground.
 
 ---
 
@@ -134,20 +148,17 @@ WCAG 2.x relative luminance: `C_lin = C/12.92` if `C ≤ 0.03928` else `((C+0.05
 | 900 | `#3F0C00` |
 | 950 | `#280500` |
 
-### Charcoal Navy
-| Step | Hex |
-|---|---|
-| 50 | `#EFF0FA` |
-| 100 | `#D5DAF3` |
-| 200 | `#AFB8E8` |
-| 300 | `#8B9ADF` |
-| 400 | `#697ED5` |
-| 500 | `#4B66C1` |
-| 600 | `#3B509B` |
-| 700 | `#2B3C77` |
-| 800 | `#1D2A56` |
-| **900 \*** | **`#101938`** |
-| 950 | `#090F27` |
+### Ground family — all green
+
+| Ground | Hex | Token | Role |
+|---|---|---|---|
+| Pine Green | `#103A21` | `Brand/Primary/Electric Green/Pine Green` | Primary dark |
+| **Deep Jade** | `#011E14` | `Brand/Primary/Jade-green/950` | Deepest — White reads **17.54:1** |
+| White | `#FFFFFF` | `Main Colors/Base/White` | Primary light |
+| Off-white | `#F9FAFB` | `Main Colors/Neutral/50` | Soft light |
+| Electric Green | `#34FF67` | `Brand/Primary/Electric Green/400⭐️` | Flood — Deep Jade type |
+
+> Charcoal Navy was removed from the system by client decision. Deep Jade replaces it and is measurably better: White 17.54:1 vs 12.73 on Pine, Electric 13.07:1.
 
 ### Olive Green
 | Step | Hex |
@@ -220,8 +231,8 @@ WCAG 2.x relative luminance: `C_lin = C/12.92` if `C ≤ 0.03928` else `((C+0.05
 | Level | Colour | Hex |
 |---|---|---|
 | Critical / High | Vivid Orange | `#FF5A32` |
-| Medium | Olive Green | `#5B6B3E` |
-| Low | Pale Sky Blue | `#B1D9E8` |
+| Medium | Olive Green | `#5B6B3E` on light · `#A8B294` (`/onDark`) on dark |
+| Low | Pale Sky Blue | `#B1D9E8` on dark · `#3C7E94` (`/onLight`) on light |
 | Resolved / Positive | Electric Green | `#34FF67` |
 | No change / Neutral | Grey | `#BCBEC0` |
 

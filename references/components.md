@@ -23,7 +23,7 @@ Taglines: `USER EXPERIENCE LABORATORY` · `كولاب مختبر تجربة ال
 | `Colour` | Hex | Use |
 |---|---|---|
 | `Pine Green` | `#103A21` | Default. Light and white grounds |
-| `Electric Green` | `#34FF67` | Dark grounds — Pine or Charcoal Navy |
+| `Electric Green` | `#34FF67` | Dark grounds — Pine or Deep Jade |
 | `White` | `#FFFFFF` | Photography, dark grounds, wherever Electric would vibrate |
 
 **Rules**

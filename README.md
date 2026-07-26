@@ -44,7 +44,7 @@ references/
 | Jade Green | `#33FFC2` | Secondary accent |
 | Grey | `#BCBEC0` | True neutral |
 | Vivid Orange | `#FF5A32` | Critical severity — the palette has no red |
-| Charcoal Navy | `#101938` | Alternate dark ground |
+| Deep Jade | `#011E14` | Deepest ground — highest contrast in the system |
 | Olive Green | `#5B6B3E` | Medium severity |
 | Pale Sky Blue | `#B1D9E8` | Low severity |
 
@@ -64,7 +64,7 @@ references/
 |---|---|
 | on White | **1.34 : 1** — fails every threshold, including the 3:1 non-text floor |
 | on Pine Green | **9.49 : 1** — AAA |
-| on Charcoal Navy | **12.84 : 1** — AAA |
+| on Deep Jade | **13.07 : 1** — AAA |
 
 Decks go to CEOs. Default backgrounds are dark green or white; electric green is reserved for covers, dividers, and minimal-text moments.
 

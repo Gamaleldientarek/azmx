@@ -23,13 +23,13 @@ For exact Figma variables read `references/figma-tokens.md`. For every tone in e
 |---|---|---|
 | `#34FF67` on White | **1.34 : 1** | Fails everything, including the 3:1 non-text floor |
 | `#34FF67` on Pine Green `#103A21` | **9.49 : 1** | AAA, all sizes |
-| `#34FF67` on Charcoal Navy `#101938` | **12.84 : 1** | AAA, widest margin |
+| `#34FF67` on Deep Jade `#011E14` | **13.07 : 1** | AAA, widest margin |
 
-- **Default backgrounds are Pine Green or White.**
+- **Default backgrounds are Pine Green, Deep Jade or White.** Rotate them — never run one ground through a whole deck.
 - Electric Green as a *surface* is permitted only on covers, dividers, and minimal-text slides.
-- On white or light grounds Electric Green may be a large decorative block, bar, or shape — **never text, never small UI, never thin icon strokes.** Substitute Pine Green or Olive Green.
-- On Pine or Navy grounds Electric Green is fully usable down to body size.
-- Green-fill badges take **Charcoal Navy** text, not white.
+- ⛔ **Electric Green and Jade Green must NEVER appear on a white or light ground.** Not as text, not as icons, not as decorative blocks, not as rules, not as number accents. On light grounds the accent role is played by **Pine Green** or **Olive Green**. Jade at **1.29:1** is worse than Electric at 1.34 — the ban covers both.
+- On Pine or Deep Jade grounds Electric Green is fully usable down to body size.
+- Electric Green floods take **Deep Jade** text (13.91:1), not Pine (9.49:1) and never white (1.34:1).
 
 Projector caution: `#34FF67` sits near the sRGB gamut edge in chroma-key green territory. Lamp projectors and Teams/Zoom chroma subsampling degrade thin green strokes and small green text first. Never let green alone carry legibility in a projected or recorded context.
 
@@ -53,7 +53,7 @@ Projector caution: `#34FF67` sits near the sRGB gamut edge in chroma-key green t
 | Token | Hex | Conventional role |
 |---|---|---|
 | **Vivid Orange** | `#FF5A32` | Critical / high severity. Below-target. The palette has no red — this substitutes. |
-| **Charcoal Navy** | `#101938` | Alternate dark ground. Business-impact category. |
+| **Deep Jade** | `#011E14` | The deepest ground. White reads 17.54:1 on it — the highest in the system. |
 | **Olive Green** | `#5B6B3E` | Medium severity. |
 | **Pale Sky Blue** | `#B1D9E8` | Low severity. Quiet informational ground. |
 
@@ -92,7 +92,7 @@ The legacy `Font-size/Heading Size/*` and `Font-size/Text Size/*` scales are **d
 | Eyebrow / kicker | Body 20–24 | Medium | **Electric Green** | Pine Green |
 | Body | Body 20–24 | Regular/Light | White @ 80% | Pine Green / Neutral |
 | Caption | Body 12–16 | Regular | White @ 80% | Neutral |
-| Stat numeral | see below | Bold/Black | White | Pine or Navy |
+| Stat numeral | see below | Bold/Black | White | Pine or Deep Jade |
 | Footer meta | Body 12–16 | Regular/Bold | White @ 80% | Pine Green |
 
 Use **tabular (lining) figures** so KPI-row digits align. Both faces support it.
@@ -212,7 +212,7 @@ Full rules in `references/layout-archetypes.md` §5. The non-negotiables:
 | Electric + Jade + Orange together in one chart | Destroys the "look here" signal |
 | Improvised severity colours | Breaks skim-by-colour. Fix the ordinal mapping |
 | A big number with no benchmark | Reads as decoration, not insight |
-| One dark ground everywhere | Vary Pine and Navy across a deck |
+| One dark ground everywhere | Rotate Pine, Deep Jade and white across a deck |
 | The same motif on every slide | It is a generative density system, not a static lockup |
 | RTL as an afterthought | See above |
 
