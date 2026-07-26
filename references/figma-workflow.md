@@ -41,3 +41,21 @@ Before any structural or destructive change:
 - Always `await figma.loadAllPagesAsync()` before traversing `figma.root`.
 - Load fonts before writing text: `await figma.loadFontAsync({ family:'Inter', style:'Bold' })`.
 - **The Plugin API cannot rename a file.** `figma.root.name` is read-only — assigning to it succeeds silently and changes nothing. Renaming must be done by hand in the Figma UI.
+
+---
+
+## Hard-won gotchas from the report-template build (2026-07)
+
+- **`setBoundVariableForPaint` strips base opacity — every time.** The safe pattern: assign the bound paint to the node FIRST, read it back, then respread with opacity:
+  ```js
+  n.fills = [figma.variables.setBoundVariableForPaint({type:'SOLID', color: RGB}, 'color', variable)];
+  const cur = n.fills[0];
+  n.fills = [{ ...cur, opacity: 0.07 }];
+  ```
+  Never spread the paint object before assigning it to a node — the opacity silently lands at 1. Instances created while a master carried the bad paint keep it as a local override; fix instance children with the same pattern separately.
+- **Instance-override law.** Only text characters and fills can be overridden on instance children; position/size assignments throw. Design variants with identical geometry — paint-only deltas (alpha toggles) or nested-instance swaps.
+- **Section bounds silently soft-delete masters.** A component master pushed outside its section's bounds is released/soft-deleted while its instances keep rendering (`getMainComponentAsync` still resolves). When rearranging, resize the section BEFORE moving anything deep; verify every child sits inside bounds afterwards.
+- **Phosphor icon anatomy** (`Icon / *` masters in the report template): COMPONENT → frame `glyph` (carries an *invisible* fill — never make it visible) → VECTOR paths. To tint an instance: clear the frame fills, bind the VECTOR fills. Blanket "fill everything with fills" turns the icon into a solid square.
+- **`resize()` on an instance does not scale its children** — a 32px glyph resized to 24 overflows its frame. Use `instance.rescale(factor)` for icon-scale changes; W/H fields only where the component was designed for it.
+- **Live-edit collisions.** Manual edits or undo in the Figma UI during a scripted pass can revert masters mid-flight (deleted layers, reset overrides, frames renamed to a bare space). Save a version-history checkpoint after every scripted pass; restore from checkpoints rather than hand-rebuilding; avoid hand-editing while a pass is running.
+- **Idempotent repair passes win.** When state is contested, write one script that re-asserts every fill, override and name from the source of truth and screenshot-verify after — piecemeal patches chase their own tail.

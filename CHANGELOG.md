@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.0 — 2026-07-27
+
+Release 2. The skill graduates from a brand/system reference to a full working system: the client decision law, the componentized usability-report template, and the hard-won Figma build gotchas are now part of the skill.
+
+### Added
+- `references/decision-law.md` — the standing client decision law: C-01…C-17 distilled (the Electric/Jade ban on light grounds, the navy ban and all-green ground family, the Advanced Presentation grid scope, Phosphor for documents, variables as source of truth, the logo/shapes target models, the report-template brief) plus the deck-era standing rules — V2 DNA numbers (x93 spine, y≤950 floor, x+w≤1880, dither formula), footer-only logo, `page-num` convention, Vivid Orange text/glyph floors, the severity ink-density ladder, the n<10 counting law, tracking system, font-variable binding rules — and the client taste profile (approves/rejects)
+- `references/report-template.md` — the componentized 31-slide usability-report system: page anatomy, the full component catalog with variant axes and legal instance overrides, the five approved slide patterns (Counted Field, Severity Ledger, Establishing Shot, Verdict Slide, device evidence), the device screen-clip recipe, and the reporting conventions (SUS grading, GEO MEAN, P01–P08 placeholders)
+
+### Changed
+- `references/figma-workflow.md` — added the report-template build gotchas: the `setBoundVariableForPaint` opacity trap with the exact safe pattern, the instance-override law, the section-bounds soft-delete trap, Phosphor icon anatomy and tinting recipe, `rescale()` vs `resize()` on instances, live-edit collision discipline, and idempotent repair passes
+- `SKILL.md` — reference index now points at the two new documents; clarified that the report template uses Phosphor-derived `Icon / *` masters (flattened fills, bind `fill`) while legacy Brand Book placements are Hugeicons (live strokes, bind `stroke`) — both icon systems coexist in the file
+
 ## 0.2.0 — 2026-07-26
 
 First tagged release. Bundles everything in 0.1.0, which shipped as documentation only and was never tagged.
