@@ -64,7 +64,17 @@ Rule at **y 244**, cap line at **y 284** (one gutter below). **Set Vertical trim
 | Mid | Regular 400, 20/28 | Default body |
 | Dark | Medium 500, 20/24 | Evidence, tables |
 
-Max two grey values per slide, never stacked. **Set measure first, then size:** 400 → Body 20 (~50 char) · 620 → Body 24 (~66) · 840 → Body 28 (~76, ceiling).
+Max two grey values per slide, never stacked. **Set measure first, then size** `[M]` — measured by binary-searching Inter Regular against each measure, so these are glyphs that *fit*, not an em-based estimate:
+
+| Measure | Size | Chars that fit |
+|---|---|---|
+| 400 | Body 20 | **40** |
+| 620 | Body 24 | **54** |
+| 840 | Body 28 | **62** (ceiling) |
+| 540 | Body 16 | **69** |
+| 840 | Body 24 | **71** |
+
+These supersede the previously published ~50 / ~66 / ~76, which were **~20% optimistic** — a paragraph written to the old figures overflows its measure. Values are at tracking 0; the prescribed negative tracking buys roughly 2% more.
 
 **T-04 · One Contrast Per Composition.** `[S]` Ruder. Declare one axis: Scale (240:16) · Weight (Thin/Black) · Mass (filled 840 vs 840 void) · Tone (T-17) · Density · Direction. **If a slide has two, delete one. Three weak contrasts cancel to zero — the commonest failure in a competent deck.**
 

@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.2.1 — 2026-07-28
+
+Patch. One measured correction, found while auditing the project's working documents against the skill.
+
+### Corrected
+- **T-03's characters-per-measure figures were ~20% optimistic.** `editorial-technique.md` published `400 → ~50 char · 620 → ~66 · 840 → ~76`. Measured by binary-searching Inter Regular against each measure in a live file, the real capacities are **40 / 54 / 62**. A paragraph written to the old figures overflows its measure. Now published as a table with two extra pairs (540 → Body 16 = 69, 840 → Body 24 = 71), marked `[M]`, with the tracking caveat stated
+
+### Notes
+- Also verified this release: slide 26's **counted field carries 73 squares at Electric @24% = 1.93:1**, below the 3:1 non-text floor, in both the EN and AR decks. `report-template.md` already states the 40% floor, so the skill was right and the artefact was wrong — the AR deck has been corrected to 40% (3.15:1). The EN deck is under a no-touch constraint and is flagged for the client
+
 ## 3.2.0 — 2026-07-27
 
 Release 3.2. Adds the **slide library** — 36 measured, reviewed layouts with their exact geometry, motif spec and ground — and folds in what a slide-by-slide review of the Arabic deck taught. The governing finding is that a mirrored motif fails in **four distinct ways**, only one of which is visible without measuring, and that the naive fix for the commonest one destroys the band's proportions.
