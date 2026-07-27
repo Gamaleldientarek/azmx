@@ -25,11 +25,15 @@ Claude Code discovers it automatically. Invoke with `/colab-design`, or just men
 ```
 SKILL.md                          Entry point — the rules you need on every job
 references/
+  decision-law.md                 Standing client decision law C-01…C-17 + taste profile
   colors.md                       Full ramps, the pairing matrix, verified contrast ratios
   figma-tokens.md                 Every live Figma variable, exact
+  variable-architecture.md        How the variable layer is governed, scoped and repaired
   components.md                   Logo, Shapes, Photo-Effect, slide masters, inventory
   logo-and-shapes.md              Every lockup and shape primitive — files, sizes, usage rules
-  layout-archetypes.md            14 slide recipes with grid coordinates
+  layout-archetypes.md            14 slide recipes, vertical anchors, motif construction, pass gate
+  report-template.md              The componentized usability-report system
+  rtl-arabic.md                   Arabic/RTL build system — mirror law, auto-layout, bidi, motif
   icons.md                        Hugeicons house rules, the 43-icon working set, colour + RTL
   icon-index.md                   Every vendored icon with its download link (sharded a–z)
   research-notes.md               Hugeicons, bilingual EN/AR, category conventions
@@ -102,7 +106,7 @@ git clone https://github.com/Gamaleldientarek/colab-design-skill.git ~/.claude/s
 cd ~/.claude/skills/colab-design && git pull
 
 # pin to a specific release
-cd ~/.claude/skills/colab-design && git checkout v3.0.0
+cd ~/.claude/skills/colab-design && git checkout v3.1.0
 ```
 
 Claude Code discovers the skill automatically. No restart needed — the next invocation picks up the change.
@@ -120,6 +124,7 @@ Claude Code discovers the skill automatically. No restart needed — the next in
 | A component's anatomy, variants, or legal overrides | `references/components.md` |
 | A Plugin API trap or a build-safety rule | `references/figma-workflow.md` |
 | A report pattern or a research-reporting convention | `references/report-template.md` |
+| Anything Arabic, RTL, mirroring, or bilingual | `references/rtl-arabic.md` |
 
 `SKILL.md` is loaded on **every** invocation. A rule earns a place there only if a designer would produce failing work without it. Everything else goes in a reference and gets a pointer.
 

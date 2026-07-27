@@ -1,6 +1,6 @@
 ---
 name: colab-design
-description: Apply the official Colab design system to any deliverable. Use whenever work involves Colab branding, Colab presentations, research reports, usability-test findings decks, sales decks, slides, or documents, or when the user mentions Colab colors, Electric Green, Pine Green, Jade Green, the pixel or dither motif, the Advanced Presentation grid, or the colab. wordmark. Colab is a bilingual EN/AR user experience research lab. Provides the full palette with contrast rules, type scale, the 8-column slide grid, 14 layout archetypes, the pixel/dither graphic language, component specs, and Arabic/RTL rules.
+description: Apply the official Colab design system to any deliverable. Use whenever work involves Colab branding, Colab presentations, research reports, usability-test findings decks, sales decks, slides, or documents, or when the user mentions Colab colors, Electric Green, Pine Green, Jade Green, the pixel or dither motif, the Advanced Presentation grid, or the colab. wordmark. Also use for any Arabic, RTL, mirrored, or bilingual EN/AR version of Colab work — Alexandria typography, mirroring a deck, or right-to-left layout. Colab is a bilingual EN/AR user experience research lab. Provides the full palette with contrast rules, type scale, the 8-column slide grid, 14 layout archetypes, the pixel/dither graphic language, component specs, and a measured Arabic/RTL build system.
 ---
 
 # Colab Design System
@@ -11,7 +11,7 @@ One-line ethos: **dark green ground, one neon accent, and a pixel field that ass
 
 **Decks go to CEOs. Readability outranks expression, every time.**
 
-For exact Figma variables read `references/figma-tokens.md`. For every tone in every ramp read `references/colors.md`. For the 14 layout recipes with grid coordinates — plus research-findings slides (§2), the motif construction rules (§4) and Arabic/RTL (§5) — read `references/layout-archetypes.md`. For component specs read `references/components.md`. For icons — the Hugeicons house rules, the proven working set, and 5,437 vendored SVGs — read `references/icons.md` and `references/icon-index.md` (note: the **report template** uses Phosphor-derived `Icon / *` masters instead — flattened fills, bind `fill`; see `references/report-template.md`). For working the design system inside Figma — including the paint-opacity trap, the instance-override law and the section-bounds soft-delete — rea**For governing the Figma variable layer — why `scopes` and not `hiddenFromPublishing` controls the picker, semantic-vs-primitive layering, alias repair, and the EN/AR modes — read `references/variable-architecture.md`.** d `references/figma-workflow.md`. **For editorial and typographic technique — the 20 named techniques, exact tracking and leading numbers, the 10 one-big-move archetypes, grid-break thresholds, and the amateur-tell checklist — read `references/editorial-technique.md`.** **For the standing client decision law (C-01…C-17 plus the deck-era rules and the client taste profile) read `references/decision-law.md` — it overrides anything older.** **For the componentized 31-slide usability-report system — catalog, approved slide patterns, screen-clip recipe, reporting conventions — read `references/report-template.md`.**
+For exact Figma variables read `references/figma-tokens.md`. For every tone in every ramp read `references/colors.md`. For the 14 layout recipes with grid coordinates — plus research-findings slides (§2), the motif construction rules (§4) and Arabic/RTL (§5) — read `references/layout-archetypes.md`. For component specs read `references/components.md`. For icons — the Hugeicons house rules, the proven working set, and 5,437 vendored SVGs — read `references/icons.md` and `references/icon-index.md` (note: the **report template** uses Phosphor-derived `Icon / *` masters instead — flattened fills, bind `fill`; see `references/report-template.md`). For working the design system inside Figma — including the paint-opacity trap, the instance-override law, the section-bounds soft-delete and the RTL API traps — read `references/figma-workflow.md`. **For governing the Figma variable layer — why `scopes` and not `hiddenFromPublishing` controls the picker, semantic-vs-primitive layering, alias repair, and the EN/AR modes — read `references/variable-architecture.md`.** **For building an Arabic/RTL deck — the mirror invariant, the auto-layout reversal laws, the instance-override probe, bidi traps, motif re-solving and the 12-predicate verification set — read `references/rtl-arabic.md`.** **For editorial and typographic technique — the 20 named techniques, exact tracking and leading numbers, the 10 one-big-move archetypes, grid-break thresholds, and the amateur-tell checklist — read `references/editorial-technique.md`.** **For the standing client decision law (C-01…C-17 plus the deck-era rules and the client taste profile) read `references/decision-law.md` — it overrides anything older.** **For the componentized 31-slide usability-report system — catalog, approved slide patterns, screen-clip recipe, reporting conventions — read `references/report-template.md`.**
 
 ---
 
@@ -225,14 +225,18 @@ Full rules, the 43-icon proven working set, colour table and RTL swap pairs: `re
 
 ## Arabic / RTL
 
-Full rules in `references/layout-archetypes.md` §5. The non-negotiables:
+**Full build system in `references/rtl-arabic.md`** — measured against a complete 36-slide AR build. Summary in `references/layout-archetypes.md` §5. The non-negotiables:
 
-1. **Mirror the grid, not just the text.** C1↔C8, C2↔C7, C3↔C6, C4↔C5. Right-aligned text on an unmirrored LTR grid is the amateur tell.
-2. **The motif direction mirrors too** — it encodes assembly. Backwards density reads as disassembly.
-3. **Flip only directional elements**: arrows, chevrons, carets, progress. **Never flip** the logo, charts, photos, or screenshots.
-4. Numerals stay LTR inside RTL flow. Keep them in their own text nodes where practical.
-5. Arabic gets its own line-height token — floor 1.5.
-6. Use **variable modes** (EN/AR), not duplicated masters. Separate pages only at deck level.
+1. **RTL is not right-alignment.** It is a coordinate transform on x, a reversal of every auto-layout reading order, and a re-fitted vertical rhythm. Applying `textAlignHorizontal = RIGHT` and stopping there flips the glyphs and nothing else.
+2. **Mirror the grid: `x' = 1920 − x − w`.** The grid is symmetric about x960, so C1↔C8, C2↔C7, C3↔C6, C4↔C5 and legal edges map onto legal edges.
+3. **Vertical does not mirror — but it must be re-fitted.** Arabic's ×1.5 leading floor against EN display's ×0.90 makes any stat block ~**1.67× taller**. Re-space the block; never shrink the type, because 1.5 is a collision constraint (MSA ink envelope 1.505em).
+4. **Auto-layout is the blocker.** VERTICAL stacks need `counterAxisAlignItems: MAX`; HORIZONTAL stacks need their **child order reversed**, at every nesting level. Figma has no RTL auto-layout.
+5. **`x`, `constraints` and child order are not overridable on an instance.** Every mirror is therefore a master-level fix — build AR sibling components.
+6. **Re-solve the motif; never mirror it.** Arabic text extents differ, so a mirrored field lands on content. Solve **last**, after translation and alignment.
+7. **Counted fields are data.** Never re-solve them, and mirror the modules *inside* the field, not just its frame.
+8. Numerals stay LTR, pinned to Inter as inline ranges. **The en dash is bidi class ON and inverts `25–34` into `34–25`** — ASCII hyphen only in ranges.
+9. **Arabic is ~10% narrower than Latin, not smaller.** Do not apply an optical size step-up; a measurement suggesting otherwise is a stale-layout artifact.
+10. Use **variable modes** (EN/AR) for anything a mode can carry — type, numerals, colour. Geometry cannot be carried by a mode, which is what forces AR siblings.
 
 ---
 

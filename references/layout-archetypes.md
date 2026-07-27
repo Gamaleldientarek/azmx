@@ -133,15 +133,19 @@ No peer-reviewed source gives a numeral-to-canvas ratio. The sourced principle i
 
 ## 5. RTL — professional handling
 
-The client has flagged RTL as a place to be careful. Rules, in priority order:
+> **Full build system: `references/rtl-arabic.md`.** It carries the mirror invariant, the instance-override probe results, the three auto-layout failure modes, the bidi traps, the motif re-solve procedure and the 12-predicate verification set — all measured against a complete 36-slide AR build. This section is the summary; that file governs.
 
-1. **Mirror the grid, not just the text.** C1↔C8, C2↔C7, C3↔C6, C4↔C5. An Arabic slide built on an unmirrored LTR grid with right-aligned text is the amateur tell.
-2. **Motif direction mirrors too.** The dissolve encodes "assembling, piece by piece." Left-to-right density on an RTL slide reads as disassembling.
-3. **Flip directional elements only.** Arrows, chevrons, next/back carets, progress indicators, the `>` shape. **Never flip:** the Colab logo, charts, photographs, screenshots, or numerals.
-4. **Numerals stay LTR inside RTL flow.** Figma documents cursor and selection bugs on mixed-direction lines — expect them, and keep numerals in their own text nodes where practical.
-5. **Arabic needs its own line-height token.** The system's `1.16` body ratio is too tight for Alexandria. Floor of **1.5** for AR body. Do not share one line-height token across EN and AR.
-6. **Asymmetric components need mirrored equivalents** — a card with a coloured left border, shadow offsets, single-side padding. Repositioning is not mirroring.
-7. **Use variable modes (EN/AR), not duplicated masters.** Separate pages only at deck level. Component-level duplication guarantees drift.
+Rules, in priority order:
+
+1. **Mirror the grid, not just the text.** `x' = 1920 − x − w`. The grid is symmetric about x960, so C1↔C8, C2↔C7, C3↔C6, C4↔C5 and legal edges map onto legal edges. An Arabic slide built on an unmirrored LTR grid with right-aligned text is the amateur tell.
+2. **Vertical does not mirror.** Every y anchor in §0.5 is identical EN↔AR. But the **rhythm** must be re-fitted: Arabic's ×1.5 leading floor against EN display's ×0.90 makes any stat or display block ~**1.67× taller**. See `rtl-arabic.md` §5.2.
+3. **Auto-layout is the blocker.** Figma has no RTL auto-layout. VERTICAL stacks need `counterAxisAlignItems: MAX`; HORIZONTAL stacks need their **child order reversed** — child order *is* reading order. Nested rows must be reversed at every level.
+4. **Re-solve the motif; never mirror it.** Arabic text extents differ, so a mirrored field lands on content. Mirror the box, clip it against the *Arabic* occupancy grid, fall back to §4.6 if clipping kills it. Solve **last**, after translation and alignment — the grid is a function of final geometry.
+5. **Flip directional elements only.** Arrows, chevrons, next/back carets, progress indicators, the `>` shape. **Never flip:** the Colab logo, charts, photographs, screenshots, or numerals.
+6. **Numerals stay LTR inside RTL flow**, pinned to Inter as inline ranges via `setRangeFontName`. Beware the **en dash** — it is bidi class ON and inverts `25–34` into `34–25`. ASCII hyphen only in ranges.
+7. **Arabic needs its own line-height token.** Floor of **1.5** — a collision constraint, not a preference (the MSA ink envelope measures 1.505em). Tracking pinned to 0. Never share a line-height token across EN and AR.
+8. **Asymmetric components need mirrored AR siblings.** `x`, `constraints` and child order are **not overridable on an instance**, so there is no override path for a mirror — it is always a master-level fix. Repositioning is not mirroring.
+9. **Use variable modes (EN/AR), not duplicated masters,** for anything a mode can carry — type, numerals, colour. Geometry cannot be carried by a mode, which is precisely what forces AR sibling components.
 
 ---
 
@@ -339,9 +343,24 @@ Returns `[0,1)`, deterministic per cell, and decorrelated in both axes — so th
 | `peak` | ≤ 1 − base | Fill probability at the dense edge |
 | `γ` | **2.2–2.6** | Onset. Higher = later, tighter, more sudden assembly |
 
-**Ratified: `p(d) = 0.04 + 0.56·d^2.2`.** Peak fill 60% at the dense edge.
+**Ratified for interior fields: `p(d) = 0.04 + 0.56·d^2.2`.** Peak fill 60% at the dense edge.
 
 This supersedes the `0.04 + 0.66·d^2.2` published in `decision-law.md` and `HANDOFF.md` §3.4. 0.56 is the coefficient every field in the Example Deck V2 was built with and reviewed at; 0.66 was never rendered at scale. Ratifying the value the artefact actually uses is the only version that stays true.
+
+#### 4.3.1 Edge-anchored bands take **`base = 0`** `[M]`
+
+The Report Template's own 31 fields were measured directly and fit a different member of the same family:
+
+**`p(u) = 0.70 · u²`** — `u = 0` at the **content** edge, `u = 1` at the **canvas** edge. Peak ≈ 0.70, mean ≈ 0.19, peak-to-mean ≈ 4.
+
+Two findings from that measurement, both operational:
+
+- **A non-zero `base` destroys the dissolve.** The floor scatters isolated cells all the way to the content edge, so the field terminates in a visible straight line instead of fading out. Built both ways against the same slide: the floored version reads as a hard-edged slab. **Use `base > 0` only when the sparse end is interior and wants a faint texture — never for a band that must fade out against text.**
+- **The vertical distribution is flat.** There is no y gradient. The ramp is one-dimensional, along the axis pointing at the anchored edge.
+
+**Shape family, measured across the same 31 fields:** the dominant form is a **shallow top band anchored to the outer canvas edge** (h 200–360); only **6 of 31** are full-height columns — covers, dividers and the headline slide; and **5 of 31 slides carry no field at all**. Absence is part of the composition, not an omission. Median slide coverage is **0.027**.
+
+When rebuilding a deck's motif, match this distribution before tuning any constant — a system where every slide carries a full-height field is wrong at the composition level regardless of its density curve.
 
 ### 4.4 Opacity floor — per ground, not per deck
 

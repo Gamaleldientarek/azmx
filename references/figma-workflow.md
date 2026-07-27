@@ -92,3 +92,46 @@ Ten traps, all hit in a live 32-slide build. None of them throw.
   n.x = x; n.y = y;
   ```
   Re-assert both axes, not just y. On a 32-slide pass this is the difference between the anchors holding at 0px deviation and every title being 4px out.
+
+---
+
+## API traps from the AR / RTL build (2026-07)
+
+Every one of these was hit while mirroring a 36-slide deck. None throw; all of them silently produce a wrong-looking slide.
+
+- **`x` and `y` cannot be written on any node inside an instance.** This one *does* throw — `in set_x: This property cannot be overridden in an instance` — and because it throws mid-loop it leaves a batch half-applied. Detect instance ancestry before the write and guard it:
+  ```js
+  let inInstance = false;
+  for (let n = node.parent; n && n.type !== 'PAGE'; n = n.parent)
+    if (n.type === 'INSTANCE') { inInstance = true; break; }
+  ```
+  `constraints` and child order are equally locked, but fail silently rather than throwing.
+
+- **`constraints` apply only *on resize*, and are not overridable.** A component authored at width `W0` with children on `constraints.horizontal = MIN` dumps all slack on the right edge when an instance is widened. Fixing the master does **not** retro-fit existing instances — they keep stale geometry until something resizes them. Force it:
+  ```js
+  inst.resize(W0, h); inst.resize(w, h);
+  ```
+  Measured: 10 cards whose accent marker sat 40px inside the card edge, from an 800px master used at 840px.
+
+- **`swapComponent()` discards text overrides.** The swap succeeds, the instance adopts the new master, and every overridden string reverts to the master's default. Re-apply text immediately after swapping, and diff the strings before/after if the swap is scripted across many instances.
+
+- **In a VERTICAL auto-layout, `counterAxisAlignItems: MIN` means left-align** — and it overrides any `x` you write to a child. The write returns without error and reads back unchanged. For RTL the value is `MAX`. This presents identically to the instance-lock above; check both.
+
+- **In a HORIZONTAL auto-layout, child order *is* reading order, and there is no RTL property.** Reversing a row means re-appending its children in reverse. Nested rows must be reversed at every level — reversing only the outer container moves the groups but leaves each group internally LTR.
+  ```js
+  const kids = [...frame.children];
+  for (let i = kids.length - 1; i >= 0; i--) frame.appendChild(kids[i]);
+  ```
+
+- **`absoluteBoundingBox` on a TEXT node is the layout box, not the ink.** Verified: a right-aligned 1720-wide title reports `width === 1720` while its glyphs occupy the right ~400px. Any collision audit built on it reports every full-width right-aligned title as overlapping everything on the left of the slide — **57 reported overlaps on this deck, 26 real**. To measure ink, clone the node, set `textAutoResize = 'WIDTH_AND_HEIGHT'`, read `width`, remove the clone. Multi-line text does fill its box, so skip the clone when the node wraps.
+
+- **Removing a child from a HORIZONTAL auto-layout re-centres its siblings.** Lifting a `dither-field` out of a two-child row shrank the row to its remaining child and re-placed it — the title block silently drifted from the right margin to the middle of the slide. Re-pin the survivor after any structural removal.
+
+- **Preloading a full font family times out.** Eighteen `loadFontAsync` calls in one `figma_execute` exceeded the ~30s cap on its own, before any work. Load lazily behind a `Set` cache keyed `family|style`.
+
+- **Long generative passes must be batched.** Motif generation for 36 slides in a single call times out and leaves the section half-built with no error. Batch 6–12 slides per call and hang the shared solver off `globalThis` — globals survive a Desktop Bridge reconnect, so probe before re-seeding:
+  ```js
+  return { hasSolver: typeof globalThis.__dither === 'function' };
+  ```
+
+- **Exclude `px`-class children from any tree dump.** A single divider carries 600+ modules; the dump buries the four nodes you were looking at.

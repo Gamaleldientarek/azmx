@@ -98,7 +98,7 @@ The only directional asset in the set. **This one flips for RTL.** Nothing else 
 | Dither / Strip | Pine | 64.36 × 106.42 | `shape-dither-strip-*` |
 | Dither / Grid | Pine | 100 × 100 | `shape-dither-grid-*` |
 
-The dither blocks are a **density gradient** — cells thin out left to right. That direction encodes assembly, so **the motif mirrors under RTL along with the grid.** Running it backwards reads as disassembly.
+The dither blocks are a **density gradient** — cells thin out left to right. That direction encodes assembly, so under RTL the dense end must end up on the opposite edge; running it backwards reads as disassembly. **But do not mirror an existing field to get there — re-solve it against the Arabic layout.** Arabic text extents differ, so a mirrored field lands on content, and the solver picks the correct edge from geometry without being told the reading direction. See `references/rtl-arabic.md` §8.
 
 Never place a dither block behind or under a headline. It is a field, not a texture wash.
 

@@ -1,5 +1,43 @@
 # Changelog
 
+## 3.1.0 — 2026-07-27
+
+Release 3.1. The skill gains a full **Arabic/RTL build system**, measured against a complete 36-slide `Report Template - AR` built from the English original in a live Figma session. The governing finding is that **RTL is not right-alignment**: it is a coordinate transform on x, a reversal of every auto-layout reading order, and a *re-fitted* vertical rhythm — and only the first of those three is a mirror. The second governing finding is that the motif must be **re-solved against Arabic content, never mirrored**, and solved **last**.
+
+### Added
+- **`references/rtl-arabic.md`** — new reference, the whole build system. The mirror invariant `x' = W − x − w` and its three failure modes; the two write laws; the probed instance-override table; the three auto-layout blockers; Arabic typography including the ×1.5 collision floor; the bidi and glyph traps; motif re-solving; AR component practice; a 12-predicate verification set; execution mechanics; 8 recorded decisions (R-01…R-08); and a 10-row anti-pattern table
+- **The instance-override law, probed rather than assumed** — `characters`, `fills`, `textAlignHorizontal`, `textAutoResize`, `resize()`, `fontName`/`fontSize`/`lineHeight`/`letterSpacing` are overridable; **`x`/`y`, `constraints` and child order are not**. The corollary is the whole RTL job: *every mirror is a master-level fix*, because mirroring is positional and positional properties have no override path
+- **The three auto-layout blockers** — `layout-archetypes.md` §5, `figma-workflow.md`, `rtl-arabic.md` §4. Figma has **no RTL auto-layout**. VERTICAL stacks need `counterAxisAlignItems: MAX`; HORIZONTAL stacks need their **child order reversed**, at *every* nesting level; and `constraints` apply **on resize only**, so a master fix does not retro-fit live instances until they are nudged
+- **The bidi trap set** — the **en dash is bidi class ON and inverts numeric ranges**: `25–34` renders as `34–25`. ASCII hyphen only. Plus `→`→`←`, `“`→`»`, and the Inter-pinned inline numeral run with its regex
+- **The translation-completeness inversion** — `/[A-Za-z]{3,}/` is **not** a completeness test. It reported zero while **68 nodes** were still English, because it misses every short token (`A vs. B`, `NO`, `2m 10s`, `12h`, `WEB`, `APP`). The correct test is inverted: flag any node with **no Arabic character** that is not pure numerals and not an allow-listed acronym
+- **Nine new Figma API traps** — `references/figma-workflow.md`, all hit in the AR build: the instance `set_x` throw that aborts a batch mid-pass, the constraint-on-resize delay, `swapComponent()` discarding text overrides, the two auto-layout blockers, `absoluteBoundingBox` on TEXT being the layout box, auto-layout re-centring on child removal, font-preload timeouts, and generative-pass batching
+- **`layout-archetypes.md` §4.3.1** — the measured EN field family and the `base = 0` requirement for edge-anchored bands
+
+### Changed
+- **`layout-archetypes.md` §5 rewritten** from 7 advisory rules to 9 operational ones, with the coordinate transform, the vertical re-fit, the auto-layout laws and the motif ordering stated explicitly. It now points at `rtl-arabic.md` as governing
+- **`SKILL.md` § Arabic/RTL rewritten** — 6 rules to 10, led by "RTL is not right-alignment"
+- **Motif ordering is now explicit: solve it LAST.** The occupancy grid is a function of *final* content geometry, so solving before translation and alignment guarantees solving again. This build re-solved three times before the ordering was made a rule
+- **`README.md`** — the file tree was three references out of date (`decision-law.md`, `report-template.md`, `variable-architecture.md` were all missing); added those plus `rtl-arabic.md`, and a routing row for Arabic/RTL knowledge
+
+### Fixed
+- **`SKILL.md`'s reference index contained a garbled sentence** — the v3.0.0 `variable-architecture.md` pointer had been spliced into the middle of the `figma-workflow.md` sentence, leaving `rea…d references/figma-workflow.md` wrapped around it. Both pointers now read as sentences
+- **Two stale ×1.16 references in Arabic contexts** — `figma-tokens.md` and `research-notes.md` still compared the Arabic floor against the superseded EN body leading. Both now compare against the ratified ×1.35 and state that ×1.5 is a collision constraint
+
+### Corrected
+- **`base > 0` destroys the dissolve on an edge-anchored band.** The §4.3 floor of 0.02–0.04 is correct for a field whose sparse end is *interior*, and wrong for a band that must fade out against text: the floor scatters isolated cells to the content edge, so the field terminates in a visible straight line instead of dissolving. Measured against the Report Template's own 31 fields, which fit **`p(u) = 0.70·u²` with no floor**, `u = 0` at the content edge. Built both ways on the same slide to confirm
+- **The EN motif is mostly shallow top bands, not full-height columns.** Measured across 31 fields: only **6 are full-height**, **5 slides carry no field at all**, the vertical distribution is **flat** (no y gradient), and median slide coverage is **0.027**. A rebuild that puts a full-height field on every slide is wrong at the composition level regardless of its density curve. Absence is part of the composition
+- **Arabic is ~10% narrower than Latin, not smaller `[✗]`.** A mid-build claim that Arabic renders ~0.70× optically smaller and needed a size step-up was a **stale-layout artifact**. Control test on fresh nodes at 60px/150%: Inter **h90**, Alexandria **h90** — identical. **No optical size step-up.** Recorded as disproved so it is not re-derived
+- **The real Arabic vertical problem is display leading, not mirroring.** EN display runs ×0.90 and the Arabic floor is ×1.5, so a 160px stat's line box goes 144px → **240px** and any display block is ~**1.67× taller** in Arabic. Vertical rhythm must be **re-fitted, not mirrored**, and the type must not be shrunk to recover the space — 1.5 is a collision constraint. Measured: stat labels landed 96px lower and collided with the caption; a 6-row list grew 656px → 854px and no longer fit between eyebrow and footer
+- **Counted fields must be mirrored one level deeper.** Mirroring only the field frame leaves its internal arrangement LTR, so the ragged edge and the hero numeral both end up on the same side and collide. Mirror the **modules inside** the field. Counted fields are also never re-solved or re-densified — they are the dataset. Detection, cheapest first: **colour cardinality ≥ 2 ⇒ counted**, since §4 mandates one colour per decorative field
+- **A collision audit built on text `absoluteBoundingBox` reports ~3× false positives.** It is the layout box, not the ink: a right-aligned 1720-wide title reports `width === 1720` while its glyphs occupy the right ~400px. **57 reported overlaps on this deck, 26 real.** Measure ink by cloning, setting `WIDTH_AND_HEIGHT`, reading `width`, and removing the clone
+- **The footer keep-out silently clips a 47-row occupancy grid.** The footer instance at y960 plus 40px padding blocks row 46, so **no column is ever free full-height** and every full-height solve falls through to the fallback. Stop the grid above the footer
+
+### Notes
+- **Fix the master, not the slides.** Repairing the AR footer component cleared the same defect on **30 slides** in one write; re-pinning one card master's constraints fixed **10 cards**. A defect with identical geometry across many slides is a component defect
+- Verify **which** master a deck instantiates before building its AR sibling — this deck used `Footer Bar` (1840×73), not `Footer Bar / Canonical` (1720×56), and the wrong sibling was built first
+- The **EN section was verified byte-identical on every one of ~30 passes** via a `name|childCount|WxH` fingerprint. The tripwire is cheap and is the only thing that catches a write into the wrong section early
+- Every number in this release was measured in a live Figma session and verified on the canvas
+
 ## 3.0.0 — 2026-07-27
 
 Release 3. Measured against a live 32-slide build, the system gains the one thing it never had — **fixed vertical anchors** — and loses three published values the file disproved: the ×1.16 body leading, the 24px motif module, and hue-carried severity. The governing finding is that **0 of 899 text nodes in the file were bound to a text style**, and that exactly the unbound properties are the ones that drifted.

@@ -60,7 +60,7 @@ Colour groups: `Main Colors` 57 · `Brand` 66 · `Semantics` 29 · `Component-le
 
 Letter-spacing: all 13 `Typography/letter-spacing/*` tokens resolve to `0`.
 
-> ⚠️ For Arabic, override line-height to a **1.5 floor**. Do not reuse the 1.16 body ratio.
+> ⚠️ For Arabic, override line-height to a **×1.5 floor** — a collision constraint, not a preference (MSA ink envelope 1.505em). Do not reuse the EN body ratio (×1.35), and never share one line-height token across EN and AR. Delivered by the **AR mode** of the `numbers` collection. See `references/rtl-arabic.md` §5.
 
 ### Deprecated scale — do not use
 `Font-size/Heading Size/*` — H1 40 · H2 36 · H3 30 · H4 24 · H5 18

@@ -84,7 +84,7 @@ Both of those are now house rules, not observations. See `references/icons.md`.
 
 **Metrics — do not assume parity.** No authoritative x-height/cap-height comparison between Alexandria and Inter was found. Measure both at the same point size in Figma and set Arabic slightly larger if needed.
 
-**Line-height — do not share one token across EN and AR.** Arabic needs more vertical room (diacritics, connectors, Kufi-influenced forms). The UAE system's floor is **1.5× for body**, applied universally. Our current `Typography/line-height/body/*` runs at **1.16×** — that is too tight for Arabic and likely too tight for Arabic body copy at any size. Give AR text styles their own larger line-height.
+**Line-height — do not share one token across EN and AR.** Arabic needs more vertical room (diacritics, connectors, Kufi-influenced forms). The UAE system's floor is **1.5× for body**, applied universally. EN body was ratified at **×1.35** in v3.0.0 (it previously ran at 1.16×) — still below the Arabic floor. Give AR text styles their own line-height: **×1.5**, delivered as an AR *mode*, not a parallel token set.
 
 **Text expansion — estimate, unverified.** Arabic typically runs ~10–20% *shorter* in character count but needs *more vertical* space. Don't assume it fits where English fit. Test with real client copy.
 
