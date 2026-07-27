@@ -371,3 +371,101 @@ Four peaks, each followed within one slide by a 1 or 2. Six voids, evenly spread
 ## Sources
 
 [The Vignelli Canon](https://www.rit.edu/vignellicenter/sites/rit.edu.vignellicenter/files/documents/The%20Vignelli%20Canon.pdf) · [NPS Unigrid](https://npshistory.com/brochures/unigrid.pdf) · [Müller-Brockmann, Grid Systems](https://designopendata.wordpress.com/portfolio/grid-systems/) · [Ruder, Typographie](https://www.typotheque.com/books/typography-a-manual-of-design) · [Hofmann, Graphic Design Manual](https://b.parsons.edu/~dejongo/12-fall/stuff/departmentalReadings/graphic-design-manual-principles-and-practice.pdf) · [Gerstner, Designing Programmes](https://openlab.citytech.cuny.edu/langecomd3504sp2020/files/2018/10/Gerstner_DesigningProgrammes-1.pdf) · [Crouwel, Stedelijk](https://www.stedelijk.nl/en/news/wim-crouwel-mr-gridnik-2) · [Experimental Jetset](https://en.wikipedia.org/wiki/Experimental_Jetset) · [Scher: Type is Image](https://www.printmag.com/fine-art/for-paula-scher-type-is-image/) · [Bierut, Pentagram](https://www.pentagram.com/about/michael-bierut) · [Real Review / OK-RM](https://bpando.org/2017/09/25/hands-real-review/) · [Fantastic Man, Eye](https://eyemagazine.com/feature/article/the-alternative-viewpoint) · [Esterson on Eye](https://www.typocircle.com/portfolio/simon-esterson-making-magazines/) · [032c, AIGA Eye on Design](https://eyeondesign.aiga.org/how-germanys-032c-magazine-is-still-pioneering-the-new-ugly-15-years-in/) · [Inter Dynamic Metrics](https://d.rsms.me/inter-website/v3/dynmetrics/) · [Inter](https://rsms.me/inter/) · [CreativePro: Optical Margin Alignment](https://creativepro.com/typetalk-hung-punctuation-optical-margin-alignment/) · [Fonts.com: Rags, Widows & Orphans](https://www.myfonts.com/pages/fontscom-learning-fontology-level-2-text-typography-rags-widows-orphans) · [Quark: Rules Designers Break on Purpose](https://www.quark.com/about/blog/the-typography-rules-professional-designers-break-on-purpose)
+
+---
+
+### 2.10 The collapsed ladder and the dominance rule
+
+#### 2.10.1 Seven sizes, deck-wide
+
+| Role | Size | LH | Tracking | Style |
+|---|---|---|---|---|
+| Hero numeral | **240** | 0.90 | −2.5% | `Display/XL` |
+| Statement title — cover, divider, closing | **160** | 0.90 | −2.5% | `Display/M` |
+| Running title | **60** | 0.95 | −2.2% | `Display/S` |
+| Primary claim | **40** | 1.16 | −2.2% | `Display/XS` |
+| Body | **24** | **1.35** | −2.0% | `Body/M` |
+| Eyebrow / caps label | **24** | 1.00 | **+4%** | `Caps/M` |
+| Secondary / label | **20** | **1.35** | −1.7% | `Body/S` |
+| Footer meta | **16** | 1.35 | −1.1% | `Body/XS` |
+
+**Eliminated from slide-level type:** `520 · 200 · 100 · 96 · 64 · 56 · 50 · 36 · 28 · 22 · 18 · 17 · 15 · 14 · 13 · 7.62`
+
+**The ladder is closed at 240.** Archetype A-01 / T-14's over-scale numeral is achieved by positioning a Display 240 so it **crops at the canvas edge** — never by inventing a 380–420px size. The visual effect is preserved; the ladder stays honest and the 0-off-scale gate stays enforceable.
+
+**Scope.** The ladder governs **slide-level** type. `Typography/*` retains 200/40/36/28 for component internals and dense tables — the same scope split the pass gate uses. A 28px value on a slide root is a defect; a 28px value inside a `Finding Card` instance is the component's business.
+
+#### 2.10.2 Dominance
+
+**Floor 1.6. Target 2.0.** Below 1.6 the reader sees two attempts at one size and reads neither as primary — the same failure §2.1 names at <1.4, arriving earlier because these are competing *roles*, not competing sizes.
+
+| Pairing | Ratio | Verdict |
+|---|---|---|
+| Statement 160 / meta 24 | 6.67 | ✅ |
+| Hero 240 / gloss 40 | 6.00 | ✅ |
+| Title 60 / body 24 | **2.50** | ✅ |
+| Claim 40 / body 24 | 1.67 | ✅ |
+| ~~Title 60 / claim 40~~ | ~~**1.50**~~ | ⛔ **banned pairing** |
+
+**A slide uses either a 60px title OR a 40px claim as its primary — never both.** The 60/40 pairing is the single most common way a competent slide goes flat: two headline-weight blocks, 1.50 apart, and no instruction about which one is the point. If a slide needs both a title and a claim, the claim drops to Body 24 and earns its rank by **measure**, not size — see T-18.
+
+#### 2.10.3 Optical alignment at the anchors
+
+Titles beginning `A T V W Y " 1` are nudged **−4 to −8px** at 60px and **−12 to −16px** at 160px, so the *ink* — not the glyph box — lands on the column line. Per-character offsets in §2.5.
+
+The −7px offsets at x97 / x973 / x1413 in the masters are **not** optical corrections. They are inherited drift and must snap to 100 / 980 / 1420.
+
+---
+
+### 2.4 Leading
+
+Inter `[M]`: cap 0.727 em · x-height 0.546 · ascender 0.750 · descender 0.241.
+
+| Setting | Collision floor | Recommended |
+|---|---|---|
+| All-caps display | 0.727 | **0.80** |
+| Mixed case, display ≥100px | 0.991 | **0.90** |
+| Display 60 | — | 0.95 |
+| **Body 12–40** | — | **×1.35 — ratified** |
+
+**Move display line-height from 0.95 → 0.90 for all sizes ≥100px.**
+
+#### The ×1.35 ratification — supersedes ×1.16
+
+Three sources disagreed, in three directions:
+
+| Source | Body leading | Status |
+|---|---|---|
+| `Typography/body/*` variables, `figma-tokens.md`, `SKILL.md` | **×1.16** | Superseded |
+| This document, previous edition | ×1.40–1.60 | Superseded |
+| The deck as built, 720 text nodes | **×1.20–1.36**, mode **1.33** | The evidence |
+
+**Ratified: ×1.35 for all body sizes.**
+
+It is set at 1.35 because the deck's measured mode is **1.33** and its cluster is **1.33–1.38**. 1.35 sits on the existing centre of gravity. It is a ratification of what the designers already did by eye, not a value imposed on them — which is the only reason it will hold. A 1.16 mandate had already failed: nothing in 720 nodes was set to it.
+
+Resolved pixel values `[M]`:
+
+| Body size | ×1.16 (was) | **×1.35 (ratified)** |
+|---|---|---|
+| 40 | 46.4 | **54** |
+| 36 | 41.76 | **48.6** |
+| 28 | 32.48 | **37.8** |
+| 24 | 27.84 | **32.4** |
+| 20 | 23.2 | **27** |
+| 16 | 18.56 | **21.6** |
+| 12 | 13.92 | **16.2** |
+
+⚠️ **The variable layer is stale.** `Typography/line-height/*` still resolves to ×1.16 in EN mode. The style layer is ratified at ×1.35. Until the variables are re-pointed, a style that binds `lineHeight` to the variable inherits the wrong number — set the styles' leading literally, or fix the variables first. See `arabic-modes` notes in `figma-tokens.md`.
+
+**Arabic is not ×1.35.** AR mode is **×1.5** at every size, and that is a floor, not a target. Never share a line-height token across EN and AR.
+
+Block height for cap-trimmed text `[M]`: `(n−1) × LH × size + 0.727 × size`
+
+| Size | LH | 1 line | 2 | 3 |
+|---|---|---|---|---|
+| 240 | 0.90 | 175 | 391 | 607 |
+| 160 | 0.90 | 116 | **260** | 404 |
+| 60 | 0.95 | 44 | 101 | 158 |
+
+**Memorise the 160 row.** Two-line 160 = 260px; cap at y 284 → bottom at 544, almost exactly the content-zone midline. The deck's most reliable headline setting.

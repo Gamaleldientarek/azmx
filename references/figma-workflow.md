@@ -59,3 +59,36 @@ Before any structural or destructive change:
 - **`resize()` on an instance does not scale its children** — a 32px glyph resized to 24 overflows its frame. Use `instance.rescale(factor)` for icon-scale changes; W/H fields only where the component was designed for it.
 - **Live-edit collisions.** Manual edits or undo in the Figma UI during a scripted pass can revert masters mid-flight (deleted layers, reset overrides, frames renamed to a bare space). Save a version-history checkpoint after every scripted pass; restore from checkpoints rather than hand-rebuilding; avoid hand-editing while a pass is running.
 - **Idempotent repair passes win.** When state is contested, write one script that re-asserts every fill, override and name from the source of truth and screenshot-verify after — piecemeal patches chase their own tail.
+
+---
+
+## API traps from the V2 deck build (2026-07)
+
+Ten traps, all hit in a live 32-slide build. None of them throw.
+
+- **`hiddenFromPublishing` does not filter the variable picker — `scopes` does.** `hiddenFromPublishing` governs library consumption by *other* files and nothing else; a "hidden" variable is still in the picker for everyone working in this one. Filter by surface instead: `v.scopes = ['TEXT_FILL']`, `['FRAME_FILL','SHAPE_FILL']`, `['STROKE_COLOR']`. Park what nobody should pick on `['EFFECT_COLOR']`. **Scopes never affect existing bindings** — re-scoping 169 primitives on a live file changed nothing on the canvas. Full model in `references/variable-architecture.md`.
+
+- **Section children use SECTION-RELATIVE coordinates.** A `SECTION` is its own coordinate space. Adding the section's own x/y to a child's target position doubles the offset — and a node pushed outside the section's bounds is silently released, the soft-delete trap above. Set `child.x = targetXInSection` directly; convert only when going to or from absolute space, and re-read `absoluteBoundingBox` to verify.
+
+- **Instances appended to a frame use FRAME-relative coordinates.** Same trap, different container. A footer placed at `frame.x + 100` on a slide frame at x = 4200 lands at 4300 *inside* the frame — 4300px off a 1920px canvas, invisible and still in the layer list. After `frame.appendChild(inst)`, set `inst.x = 40; inst.y = 960` — the slide-local numbers, always.
+
+- **`insertChild(i, node)` on an already-parented node can be a silent no-op.** Re-ordering an existing child by re-inserting it at a new index frequently does nothing and reports nothing. To float a node above a full-bleed ground rect, **move the ground instead** — `parent.insertChild(0, groundRect)` sends it to the back, which is the operation that reliably works.
+
+- **`absoluteBoundingBox` on a rotated node returns the rotated bounds.** `node.width` and `node.height` remain the intrinsic, unrotated values. A packing or collision routine that mixes the two will under-reserve space for every rotated element. **Use `absoluteBoundingBox.width` / `.height` throughout, or none of it.**
+
+- **A slide's visible ground may be a `content-panel` RECTANGLE child, not the frame fill.** Delete it as "an empty rectangle" and the background goes with it: the frame's own fill is white or unset, white text becomes invisible, and every Electric element on the slide instantly violates C-01b. **Check `frame.fills` before deleting any full-bleed child.** If the frame fill is `[]` or white, that rectangle *is* the ground.
+
+- **Changing a slide's ground REQUIRES swapping the `Footer Bar` `Ground` variant.** The footer's text and the `colab.` wordmark are bound per variant. Move a slide from Dark to Light without swapping and they land at **1.00:1** — same colour on same colour. It is invisible on the slide *and* invisible in the thumbnail, so it survives review. Ground change and variant swap are one operation, never two.
+
+- **Load fonts before `setTextStyleIdAsync`, and before setting `characters`.** Applying a text style pulls in a font the document may not have loaded; the call rejects. `await figma.loadFontAsync(styleFontName)` first — for both the style's font *and* the node's current font, since the node has to be re-laid-out from its existing state.
+
+- **Auto-layout parents ignore x/y.** Assigning `child.x` inside a frame with `layoutMode !== 'NONE'` succeeds and does nothing — the layout engine re-places the child on the next tick. Either set `parent.layoutMode = 'NONE'`, or re-parent the child out, position it, and leave it out. There is no third option.
+
+- **Applying a text style shifts the node a few pixels.** The style re-lays-out the text, and `textAutoResize` resizes the box; a node anchored at y168 lands at y164 or y171. **Re-anchor after every restyle:**
+  ```js
+  const x = n.x, y = n.y;
+  await figma.loadFontAsync(styleFont);
+  await n.setTextStyleIdAsync(style.id);
+  n.x = x; n.y = y;
+  ```
+  Re-assert both axes, not just y. On a 32-slide pass this is the difference between the anchors holding at 0px deviation and every title being 4px out.

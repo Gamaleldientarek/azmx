@@ -250,3 +250,50 @@ The palette has no red. Vivid Orange carries the critical role. Consistency here
 | Duplicates | `Main Colors/Red/500` = `Red/600` = `#D92055`; `Green/500` = `Green/600` = `#079465` |
 | Bloat | `Tailwind Colors` holds **242 of 436** colour variables — 55%, none brand-related |
 | Naming | `⭐️`, `*` and trailing spaces are baked into variable names — brittle for code export |
+
+---
+
+## 6. Severity — ink density, because hue is not available
+
+### 6.1 The measurement that decides it
+
+**No two severity inks in the Colab palette reach 3:1 of each other on any ground** `[M]`:
+
+| Pair | Ratio |
+|---|---|
+| Electric `#34FF67` vs Vivid Orange 400 `#FF5A32` | **2.31 : 1** — the best case in the palette |
+| Olive 600 `#5B6B3E` vs Vivid Orange 600 `#C33800` | **1.07 : 1** |
+
+WCAG 1.4.1 requires that information is not conveyed by colour alone; the accepted mitigation is that adjacent meaningful colours separate by at least 3:1. **The palette cannot do it.** Best case is 2.31, and the worst pair is optically identical.
+
+**Therefore hue cannot carry severity here.** The ink-density ladder is not a stylistic preference and not a nicety for colour-blind readers — it is the only construction in this palette that passes. Colour reinforces; **form carries**.
+
+### 6.2 The pixel ladder — 3 × 3 modules
+
+Built on the 20px module. **3 × 3 cells = 60 × 60px.** Clearance to adjacent text ≥ 40 (one gutter).
+
+| Level | Construction | Cells inked | Reads as |
+|---|---|---|---|
+| **Positive** | **Ring** — perimeter closed, centre open | 8 / 9 | A hollow O |
+| **Major** | **Checker** — alternating, centre inked | 5 / 9 | A dither, ~56% grey |
+| **Critical** | **Solid** | 9 / 9 | A block |
+
+**Positive is not the bottom of the ladder — it is off the ladder.** The severity levels are read by fill fraction, 5/9 → 9/9. Ranking Positive by ink count would place it (8/9) above Major, which is why it is given a distinct silhouette — a closed perimeter around an open centre — rather than a lower count.
+
+**Survives greyscale and dim projection.** That is the whole test: print the slide black-and-white, or run it through a lamp projector at the back of a room, and the three levels must still separate. They do, because the difference is geometry.
+
+The `Severity Glyph` component's five levels render at **32px**, where outline and solid+`×` are legible as distinct marks. **The three-cell ladder is the construction at 60px and below**, where only fill fraction and silhouette survive.
+
+### 6.3 Colour, as reinforcement only
+
+| Level | On dark | On light |
+|---|---|---|
+| Positive / Resolved | Electric `#34FF67` | Leaf `#066120` |
+| Low | Pale Sky Blue `#B1D9E8` | `#3C7E94` (`/onLight`) |
+| Medium / Major | Olive `#A8B294` (`/onDark`) | Olive 600 `#5B6B3E` |
+| Critical / High | Vivid Orange `#FF5A32` | Vivid Orange `#FF5A32` |
+| No change | Grey `#BCBEC0` | Neutral 500 `#6C737F` |
+
+The palette has no red; Vivid Orange carries the critical role. **Orange is severity-true** — it appears only where something is critical or below target, never as decoration.
+
+⛔ **Never remove the form and keep the colour.** A severity list encoded in hue alone is unreadable at 2.31:1 by a reader with normal vision, let alone a projector.

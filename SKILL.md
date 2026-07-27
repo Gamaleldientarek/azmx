@@ -11,7 +11,7 @@ One-line ethos: **dark green ground, one neon accent, and a pixel field that ass
 
 **Decks go to CEOs. Readability outranks expression, every time.**
 
-For exact Figma variables read `references/figma-tokens.md`. For every tone in every ramp read `references/colors.md`. For the 14 layout recipes with grid coordinates — plus research-findings slides (§2), the motif construction rules (§4) and Arabic/RTL (§5) — read `references/layout-archetypes.md`. For component specs read `references/components.md`. For icons — the Hugeicons house rules, the proven working set, and 5,437 vendored SVGs — read `references/icons.md` and `references/icon-index.md` (note: the **report template** uses Phosphor-derived `Icon / *` masters instead — flattened fills, bind `fill`; see `references/report-template.md`). For working the design system inside Figma — including the paint-opacity trap, the instance-override law and the section-bounds soft-delete — read `references/figma-workflow.md`. **For editorial and typographic technique — the 20 named techniques, exact tracking and leading numbers, the 10 one-big-move archetypes, grid-break thresholds, and the amateur-tell checklist — read `references/editorial-technique.md`.** **For the standing client decision law (C-01…C-17 plus the deck-era rules and the client taste profile) read `references/decision-law.md` — it overrides anything older.** **For the componentized 31-slide usability-report system — catalog, approved slide patterns, screen-clip recipe, reporting conventions — read `references/report-template.md`.**
+For exact Figma variables read `references/figma-tokens.md`. For every tone in every ramp read `references/colors.md`. For the 14 layout recipes with grid coordinates — plus research-findings slides (§2), the motif construction rules (§4) and Arabic/RTL (§5) — read `references/layout-archetypes.md`. For component specs read `references/components.md`. For icons — the Hugeicons house rules, the proven working set, and 5,437 vendored SVGs — read `references/icons.md` and `references/icon-index.md` (note: the **report template** uses Phosphor-derived `Icon / *` masters instead — flattened fills, bind `fill`; see `references/report-template.md`). For working the design system inside Figma — including the paint-opacity trap, the instance-override law and the section-bounds soft-delete — rea**For governing the Figma variable layer — why `scopes` and not `hiddenFromPublishing` controls the picker, semantic-vs-primitive layering, alias repair, and the EN/AR modes — read `references/variable-architecture.md`.** d `references/figma-workflow.md`. **For editorial and typographic technique — the 20 named techniques, exact tracking and leading numbers, the 10 one-big-move archetypes, grid-break thresholds, and the amateur-tell checklist — read `references/editorial-technique.md`.** **For the standing client decision law (C-01…C-17 plus the deck-era rules and the client taste profile) read `references/decision-law.md` — it overrides anything older.** **For the componentized 31-slide usability-report system — catalog, approved slide patterns, screen-clip recipe, reporting conventions — read `references/report-template.md`.**
 
 ---
 
@@ -34,6 +34,32 @@ For exact Figma variables read `references/figma-tokens.md`. For every tone in e
 Projector caution: `#34FF67` sits near the sRGB gamut edge in chroma-key green territory. Lamp projectors and Teams/Zoom chroma subsampling degrade thin green strokes and small green text first. Never let green alone carry legibility in a projected or recorded context.
 
 ---
+
+
+## The second rule: bind, don't correct
+
+**0 of 720 deck text nodes and 0 of 179 master text nodes were bound to a text style.** 30 text styles existed in the file, with **2 consumers file-wide**.
+
+Exactly the properties that were bound held. Exactly the properties that were not, drifted:
+
+| Property | Bound on | What happened |
+|---|---|---|
+| `fills` | **100%** — `unboundFills: 0` | On-palette throughout. No drift |
+| `fontFamily` | 94% | Held |
+| `fontSize` | 44% | **28 distinct sizes**, including `7.6195859909px` from Scale-tool operations |
+| `lineHeight` | **0%** | **10 distinct leadings** across a 12:1 size range |
+| `letterSpacing` | **0%** | Uncontrolled at every size |
+
+**353 of 720 text nodes were off-scale.**
+
+The correlation is the finding. This was never a discipline problem and never a taste problem — **the deck was already 100% variable-bound for fills.** C-05 was satisfied for colour and silently unsatisfied for type, because type had no style layer to bind to.
+
+**Binding to styles is what makes a system hold.** Correcting values slide by slide fixes today's deck; binding fixes every deck after it. A slide-by-slide correction pass on 720 nodes is a week of work that decays the moment someone duplicates a slide and nudges a size.
+
+Two consequences, both enforceable:
+
+1. **Every slide-level text node binds to a text style.** Pass-gate check #13. Component-instance internals are exempt — the instance-override law means a slide cannot change them.
+2. **Every text style binds its `fontSize`, `lineHeight`, `letterSpacing` and `fontFamily` to variables.** A style with hard-coded numbers is a second place for the truth to live, and it will not survive the EN→AR mode switch.
 
 ## Palette
 
@@ -71,15 +97,19 @@ Sanctioned weights: Light, Regular, Medium, SemiBold, Bold, Black.
 
 | Display | 240 | 200 | 160 | 60 | 40 | 24 | 20 | 16 |
 |---|---|---|---|---|---|---|---|---|
-| Line-height | ×0.95 throughout |
+| Line-height | ×0.90 at ≥100px · ×0.95 below |
 
 | Body | 40 | 36 | 28 | 24 | 20 | 16 | 12 |
 |---|---|---|---|---|---|---|---|
-| Line-height | ×1.16 throughout |
+| Line-height | **×1.35 throughout** |
 
-Letter-spacing is `0` at every size.
+Letter-spacing is **not** `0`. Display ≥100px is −2.5%; Display 60/40 is −2.2%; body runs −1.1% to −2.0%; all-caps labels are **+4%**, and **+6%** at 12. Full table in `references/editorial-technique.md` §2.3.
 
-⚠️ **Arabic needs its own line-height.** `1.16` is far too tight for Alexandria. Floor of **1.5** for AR body. Never share one line-height token across EN and AR.
+**×1.35 supersedes ×1.16.** The published 1.16, this skill's own 1.40–1.60 recommendation and the deck's actual 1.20–1.36 were a three-way conflict. The deck's measured mode is **1.33**; 1.35 sits on that centre of gravity. A value nobody used is not a standard.
+
+**Two style families carry the labels and the emphasis:** `Caps/*` at 24/20/16/12 (UPPER, +4%, +6% at 12) and `Body/* SemiBold` at 28/24/20/16. Before they existed, bold body text had nowhere legal to bind — which is why 353 nodes drifted off-scale.
+
+⚠️ **Arabic gets its own line-height.** **×1.5** at every size, delivered by the **AR mode** of the `numbers` collection — a mode, not a parallel token set. Arabic tracking is pinned to **0** in AR mode. Never share a line-height token across EN and AR.
 
 The legacy `Font-size/Heading Size/*` and `Font-size/Text Size/*` scales are **deprecated** (and contain a bug: `XL = 120px`, sitting between `LG 18` and `2XL 24`).
 
@@ -127,7 +157,7 @@ A density field of squares that migrates sparse → dense toward a canvas edge. 
 | 2× module | **40px** — equals the gutter |
 | Direction | Always toward an **edge or corner, never the centre** |
 | Span | ≤3 columns (540px) from sparse to dense. Longer reads as texture, not assembly |
-| Coverage | ≤20% of canvas on content slides. Covers and dividers may run 60–100% |
+| Coverage | **0% on content slides** — decorative motif appears on statement slides (cover, dividers, closing) and counted fields only. Covers and dividers may run 60–100% |
 | Never under text | The field occupies a bounded zone that never underlaps a text bounding box, even at low density |
 | Markers `+ × o` | At cell intersections only, ~1 per 8–12 plain modules, never adjacent to each other |
 | Colour | **One colour per instance.** Never two accent hues inside the motif |
@@ -229,3 +259,5 @@ Full rules in `references/layout-archetypes.md` §5. The non-negotiables:
 Derived from the client's Figma file (audited 2026-07-26), its Brand Book pages, and the 37 client-approved slides in `Design Slides V2` — which the client authored and confirmed as the reference look and feel.
 
 Contrast ratios are computed with the WCAG 2.x relative-luminance formula, not estimated. Layout archetype coordinates are derived for this specific grid from sourced composition principles; they are Colab's own design rules, not external benchmarks. See `references/layout-archetypes.md` for the sourced/derived split.
+
+**Motif opacity floor.** Electric composited on the ground must clear the 3:1 non-text floor: **40% on Deep Jade** (3.15:1), **50% on Pine** (3.62:1 — 40% is only 2.85:1 there). Below the floor it is decoration and must never carry data. See `references/layout-archetypes.md` §4.4.

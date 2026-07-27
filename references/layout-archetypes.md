@@ -167,3 +167,280 @@ The client has flagged RTL as a place to be careful. Rules, in priority order:
 ## 7. Reconciliation note
 
 §4 sets the base module at **20px**; `03-design-system-spec.md` §5.2 proposed **40px**. These agree — 20px is the base, 40px is the 2× module and equals the gutter. Update the spec to state both, with 20px as the atom.
+
+---
+
+## 0.5 Vertical law — the anchor system
+
+The `Advanced Presentation` grid governed x and nothing else. Measured against the live file, **11.8%** of structural node edges in the 13 masters landed on a column start; the Example Deck ran at **1.0%**. A grid nothing aligns to is decoration.
+
+Vertical was worse, because there was no vertical law to break. **Title cap-lines took 10 distinct values across a 230px spread.** Under the anchors below, **25 of 32 slides sit on two.**
+
+Horizontal law is unchanged. This section adds the vertical half.
+
+### 0.5.1 Running slides
+
+| Anchor | y | Rule |
+|---|---|---|
+| **Eyebrow top** | **120** | Every running slide. Deviation **0px** |
+| **Title top** | **168** | Every running slide. Deviation **0px** |
+| Content ceiling — 1-line title | **320** | |
+| Content ceiling — 2-line title | **380** | |
+| **Content floor** | **940** | Nothing below it except the footer |
+| Footer band | **982 → 1080** | C-03, untouched |
+
+Derived relationships `[M]` — memorise these, they are why the numbers are what they are:
+
+- Eyebrow → title = **48**. `Caps/M` at 24/1.00 occupies 120→144, leaving a **24** gap — the smallest preferred gap.
+- The two ceilings differ by **60**. A second title line at Display 60 / LH 0.95 adds 57px; 57 is not on the 4-unit, so the step is 60.
+- Floor 940 leaves **42px** of air above the footer band. That air is structural — it is what stops content from appearing to sit *on* the footer.
+
+**There are exactly two legal content ceilings. Not a continuum.** A slide that needs 344 does not get 344; it gets 320 and its content re-flowed, or 380 and a second title line it can justify.
+
+**Titles are one line by default, two maximum.** A three-line title means the title is wrong, not that the anchor is wrong.
+
+### 0.5.2 Statement slides — cover, dividers, closing
+
+| Anchor | y |
+|---|---|
+| Eyebrow top | **470** |
+| **Title top** | **518** |
+| Meta block top | **894** |
+| Footer band | 982 → 1080 — empty on covers and dividers |
+
+Same **48** eyebrow→title delta as the running slides. The statement block is the running block dropped 350px into the optical centre; the relationship between its two lines does not change, which is what makes a cover read as the same system as slide 14.
+
+### 0.5.3 Vertical unit
+
+All vertical positions and all gaps are **multiples of 4**. Preferred gaps: **24 · 40 · 80 · 120**.
+
+The 98px footer band is inherited from C-03 and is not on the 4-unit. It is a fixed line, not a rhythm participant.
+
+The 20px motif module is 5 × 4, so every module edge is a legal vertical position. The converse does not hold — y168 is legal type, not a legal module row.
+
+### 0.5.4 Spacing — the 2× proximity law
+
+**Space between groups ≥ 2× space within a group.**
+
+| Level | Value |
+|---|---|
+| Within a lockup (label → value) | 8 / 12 |
+| Within a group (row → row) | 24 |
+| Between groups | 40 — the gutter |
+| Between sections of a slide | 80 |
+| Title → content | 120 |
+
+**Corollary: delete boxes.** Where a card border plus 24px padding currently separates two groups, replace it with 80px of air and no border. Every container removed this way is a tier gain. Cards survive only where they carry a severity fill that *is* information.
+
+---
+
+## 8. The per-slide pass gate
+
+A slide is done when **all fourteen** hold. Not "mostly".
+
+| # | Check |
+|---|---|
+| 1 | Every structural left edge on a legal column start — `100 · 320 · 540 · 760 · 980 · 1200 · 1420 · 1640` |
+| 2 | Nothing past **x1820**. Full-bleed grounds and motif fields are the only exemptions |
+| 3 | Eyebrow **y120**, title **y168** — or **470 / 518** on statements. Deviation **0px** |
+| 4 | Nothing below **y940** except the footer |
+| 5 | All vertical gaps multiples of **4** |
+| 6 | Font sizes drawn only from the 7-size ladder |
+| 7 | Dominance ratio **≥1.6**; the banned 60/40 pairing absent |
+| 8 | **0** contrast failures — text **and** non-text (3:1 floor) |
+| 9 | No Electric or Jade on a light ground, in any role (C-01b) |
+| 10 | Footer `Ground` variant matches the slide ground |
+| 11 | Radius 0, zero effects |
+| 12 | Layer names kebab-case and purposeful |
+| 13 | All **slide-level** text bound to a text style |
+| 14 | `tnum` on every numeric layer |
+
+**Gate scope — component-instance internals are exempt from #11 and #13.** The `Footer Bar` instance carries `page-num-chip` at `r2` and four unbindable `footer-*` text nodes. Those are the component's business; the instance-override law means a slide *cannot* change them. Checking them flags false defects on every slide in the deck.
+
+**#13 is the one that makes the system durable.** See `SKILL.md` § "The second rule".
+
+### 8.1 Deck-level gates
+
+- **Flip test** — page at ~1s per slide. Eyebrow, title, floor and footer must not move a pixel.
+- **Contact sheet** — every slide at ~10%. Grounds must read as a pattern, not noise.
+- **Squint test** — per slide, one unambiguous primary element.
+- **Ground rotation** — no more than 2 consecutive slides on one ground; a ground change at least every 6 slides.
+- **Archetype rotation** — no more than 4 consecutive slides on one archetype.
+- **≥5 slides under 25% content density.** A deck with no quiet slides has no dynamic range.
+
+---
+
+### Rules `[D]`
+
+| Rule | Specification |
+|---|---|
+| **Base module** | **20px** square — exactly 1/9 of a 180px column. **2× module = 40px**, matching the gutter. See §4.1 for why 24 is illegal |
+| **Cell selection** | A **decorrelating integer hash**, never a linear sequence. See §4.2 |
+| **Density** | `p(d) = base + peak · d^γ`, base **0.02–0.04**, γ **2.2–2.6**, rising toward the dense edge. See §4.3 |
+| **Gradient direction** | Always toward a canvas **edge or corner, never the centre** |
+| **Gradient span** | ≤3 columns (**540px**) sparse to dense. Longer reads as diffuse texture, not directional assembly |
+| **Opacity floor** | **40% on Deep Jade · 50% on Pine.** Below the floor it is decoration and must never carry data. See §4.4 |
+| **Discipline** | **Statement slides only** — cover, dividers, closing — plus counted fields. Content slides **0%**. See §4.5 |
+| **Bounds** | Never crosses **y940**. Bleeds to the canvas edge at **x1920**, not x1820 — the motif is one of two exemptions from the x1820 limit, the other being full-bleed grounds |
+| **Never under text** | Enforced by construction, not by eye — see the placement algorithm, §4.6 |
+| **Markers (`+ × o`)** | Cell intersections only, ~1 per 8–12 plain modules, never adjacent |
+| **Colour** | **One colour per instance.** Never a second accent hue inside the motif |
+
+### 4.1 The module is 20px, and 24px is arithmetically impossible
+
+`180 ÷ 20 = 9` — nine cells tile a column with no remainder.
+`180 ÷ 24 = 7.5` — **a 24px cell can never land on a column edge.**
+
+The failure is not approximate. Anchor a 24px lattice at x0 and its boundaries fall on multiples of 24: **96 and 120 straddle the x100 spine; 264 and 288 straddle the C1 end at 280.** Neither the margin nor any column edge is reachable at any phase offset, because 24 does not divide 100, 180, 220 or 1720.
+
+24 *does* divide the canvas — 1920/24 = 80, 1080/24 = 45 — which is why it looked fine and shipped. **It tiles the canvas and misses the grid.** That is why the deck's motif never related to its layout: it was a second, unrelated system laid over the first.
+
+At 20px everything closes `[M]`:
+
+| Landmark | px | Cells |
+|---|---|---|
+| Spine | 100 | 5 |
+| Column | 180 | 9 |
+| Gutter | 40 | **2** |
+| Column pitch | 220 | 11 |
+| Measure | 1720 | 86 |
+| Right edge | 1820 | 91 |
+| Canvas | 1920 | **96** |
+| Content floor | 940 | **47** |
+
+20 = 5 × 4, so every module edge is also a legal vertical position under the 4-unit. The converse does not hold.
+
+### 4.2 Cell selection must decorrelate
+
+Density says *how many*. It does not say *which*. Which cells fill must come from a hashed 2D function, never a linear one.
+
+A sequence like `(cx*7 + cy*13) % 100` produces visible **diagonal banding** — it reads as a barcode glitch, not a constellation. The bands are a direct consequence of the linear form: cells with equal `7x + 13y` lie on a line, and lines of equal value are exactly what the eye picks up. **Verified by building it wrong first.**
+
+Use an integer avalanche hash:
+
+```js
+function hash2(x, y) {
+  let h = (x * 374761393 + y * 668265263) | 0;
+  h = ((h ^ (h >>> 13)) * 1274126177) | 0;
+  return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+}
+```
+
+Returns `[0,1)`, deterministic per cell, and decorrelated in both axes — so the same slide rebuilds identically and no two neighbouring cells inherit each other's state. **Never `Math.random()`**: the field must be reproducible or a re-run silently redraws the slide.
+
+### 4.3 Density
+
+`p(d) = base + peak · d^γ`
+
+| Term | Range | Meaning |
+|---|---|---|
+| `d` | 0 → 1 | Normalised distance from the sparse boundary of the field to the dense edge, clamped |
+| `base` | **0.02–0.04** | Floor density. Below 0.02 the sparse end reads as dirt, not as a field |
+| `peak` | ≤ 1 − base | Fill probability at the dense edge |
+| `γ` | **2.2–2.6** | Onset. Higher = later, tighter, more sudden assembly |
+
+**Ratified: `p(d) = 0.04 + 0.56·d^2.2`.** Peak fill 60% at the dense edge.
+
+This supersedes the `0.04 + 0.66·d^2.2` published in `decision-law.md` and `HANDOFF.md` §3.4. 0.56 is the coefficient every field in the Example Deck V2 was built with and reviewed at; 0.66 was never rendered at scale. Ratifying the value the artefact actually uses is the only version that stays true.
+
+### 4.4 Opacity floor — per ground, not per deck
+
+Electric `#34FF67` composited on the ground, measured against that same ground `[M]`:
+
+**On Deep Jade `#011E14`:**
+
+| Alpha | Ratio vs ground | Verdict |
+|---|---|---|
+| 100% | 13.07 : 1 | ✅ |
+| **40%** | **3.15 : 1** | ✅ **floor** |
+| 30% | 2.34 : 1 | ❌ |
+| 24% | 1.93 : 1 | ❌ |
+| 20% | 1.71 : 1 | ❌ |
+| 10% | 1.28 : 1 | ❌ |
+
+**On Pine `#103A21`:**
+
+| Alpha | Ratio vs ground | Verdict |
+|---|---|---|
+| **50%** | **3.62 : 1** | ✅ **floor** |
+| 40% | **2.85 : 1** | ❌ fails |
+
+**The floor is 40% on Deep Jade and 50% on Pine.** A single "≥38% on dark" rule is wrong: Pine is 3.3× lighter than Deep Jade, so the same alpha buys less separation. Ratio rises monotonically with alpha, so every step above each floor passes.
+
+**Below the floor it is decoration and must never carry data.** The accessibility ledger found **73 real data units sitting at 24%** — 1.93:1, invisible, and each one carrying meaning.
+
+### 4.5 Discipline
+
+The deck as built carried the field on **24 of 32 slides**. The master system restricts it to **4 of 13**.
+
+| Slide type | Coverage |
+|---|---|
+| Cover / closing | 30–50% |
+| Divider | 30–47% |
+| **Content slide** | **0%** |
+| Counted field (the motif *is* the data) | As the data requires — every unit above the §4.4 floor |
+
+**Decorative motif appears on statement slides only.** The one exception is the counted field, where each module is a datum — and there the opacity floor is not a guideline, it is the difference between a chart and a stain.
+
+**Dashed rules and leader lines are built from the module**, never from a stroke dash pattern: a 20px square every **40px** — 20 on, 20 off, the 2× module and the gutter. `dashPattern` produces a dash length that does not divide the column and a phase that resets at every node origin, so no two dashed rules on a slide align.
+
+### 4.6 The placement algorithm
+
+This is the reusable construction. It guarantees zero text collision by arithmetic rather than by eye, and adapts to any layout without being re-authored per slide.
+
+1. Build a **20px occupancy grid** over the slide: 96 columns × 47 rows (the field never crosses y940).
+2. Mark every content node's bounding box **plus 40px padding** as blocked.
+3. Solve the **largest free rectangle** by the histogram method.
+4. Fill **only** that rectangle, density rising toward the nearest canvas edge.
+5. For dense slides, remove the solved rectangle and solve again for a second disjoint block. Two blocks maximum.
+
+```js
+const M = 20, PAD = 40;                       // module, keep-out
+const W = 1920 / M, H = 940 / M;              // 96 × 47
+
+const grid = Array.from({ length: H }, () => new Uint8Array(W));
+for (const n of contentNodes) {
+  const b = n.absoluteBoundingBox;            // rotated bounds — see figma-workflow
+  const c0 = Math.max(0,     Math.floor((b.x - slide.x - PAD) / M));
+  const r0 = Math.max(0,     Math.floor((b.y - slide.y - PAD) / M));
+  const c1 = Math.min(W - 1, Math.ceil((b.x - slide.x + b.width  + PAD) / M) - 1);
+  const r1 = Math.min(H - 1, Math.ceil((b.y - slide.y + b.height + PAD) / M) - 1);
+  for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) grid[r][c] = 1;
+}
+
+// Largest all-zero rectangle. O(W·H). Returns cell coords, inclusive.
+function largestFreeRect(grid) {
+  const H = grid.length, W = grid[0].length;
+  const h = new Int32Array(W);
+  let best = { area: 0, x0: 0, y0: 0, x1: -1, y1: -1 };
+  for (let r = 0; r < H; r++) {
+    for (let c = 0; c < W; c++) h[c] = grid[r][c] ? 0 : h[c] + 1;
+    const st = [];
+    for (let c = 0; c <= W; c++) {
+      const cur = c === W ? 0 : h[c];
+      while (st.length && h[st[st.length - 1]] >= cur) {
+        const top  = st.pop();
+        const left = st.length ? st[st.length - 1] + 1 : 0;
+        const area = h[top] * (c - left);
+        if (area > best.area) {
+          best = { area, x0: left, y0: r - h[top] + 1, x1: c - 1, y1: r };
+        }
+      }
+      st.push(c);
+    }
+  }
+  return best;
+}
+
+const R = largestFreeRect(grid);
+for (let r = R.y0; r <= R.y1; r++) {
+  for (let c = R.x0; c <= R.x1; c++) {
+    const d = distToDenseEdge(c, r, R);       // 0 at the sparse side, 1 at the dense edge
+    if (hash2(c, r) < BASE + PEAK * Math.pow(d, GAMMA)) {
+      placeModule(c * M, r * M);              // 20 × 20, one colour, ≥ the §4.4 floor
+    }
+  }
+}
+```
+
+**Reject the solve if `best.area` is under 40 cells or the rectangle is narrower than 3 cells.** A field that thin is a smear. On a slide with no legal block, the answer is no motif — which is the correct answer for a content slide anyway.

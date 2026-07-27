@@ -20,13 +20,13 @@ Standing client decisions, in force for all Colab work. These override any infer
 
 **C-03 / C-09 · `Advanced Presentation` grid governs new work.** 16:9, 1920×1080. The 37 approved V2 slides stay frozen on their legacy grid as a *style* reference only — never rebuild them from new masters.
 
-**V2 DNA (locked visual language for the report template):** left spine x93 · content floor y≤950 (footer only below) · right limit x+w≤1880 (content column ends 1827) · titles 100/200px Bold (tracking −2.5%, LH 0.90) · 50px Light eyebrows · 24px-module constellation dither, dense edge top-right, `p(d) = 0.04 + 0.66·d^2.2`, never below y950 · hairline rules at White@12–30 · radius 0 and zero effects on dark editorial slides.
+**V2 DNA — ⛔ SUPERSEDED 2026-07-27.** The x93 spine, y950 floor, x1880 limit, 100/200px titles, 50px eyebrows and 24px dither module are all retired. See **“V2 DNA (locked visual language, corrected 2026-07-27)”** at the end of this file for the current law, and `references/slide-anchors` material in `layout-archetypes.md` §0.5.
 
 **Logo appears in the footer only.** Never a second logo in a header or corner. Footer bar is a component instance at (40, 960), 1840×73, with a Ground variant per slide ground; the page-number layer is named `page-num` everywhere and matches the slide's number prefix.
 
 ## Type
 
-**C-11 · `Typography/*` is the canonical scale** (Display 0.95 LH, Body 1.16 LH); the old `Font-size/*` groups are deprecated. Weights relaxed: Regular/Medium/SemiBold sanctioned alongside Black/Bold/Light. **C-14 · Inter (EN) and Alexandria (AR) are the only fonts** — Jura, Poppins and other strays are leftovers, never carried forward.
+**C-11 · `Typography/*` is the canonical scale** (Display **0.90 LH at ≥100px, 0.95 below**; Body **1.35 LH** — ratified 2026-07-27, supersedes 1.16); the old `Font-size/*` groups are deprecated. Weights relaxed: Regular/Medium/SemiBold sanctioned alongside Black/Bold/Light. **C-14 · Inter (EN) and Alexandria (AR) are the only fonts** — Jura, Poppins and other strays are leftovers, never carried forward.
 
 **Tracking system (Inter dynamic metrics):** −2.5% at ≥100px · −2.2% at ≥40px · −1.7% to −2.0% at body sizes · positive tracking on all-caps labels (+4% typical, +6% at 12px). Arabic line-height floor 1.5 — never share a line-height token across EN and AR.
 
@@ -54,3 +54,20 @@ Standing client decisions, in force for all Colab work. These override any infer
 
 - **Approves:** giant display numerals; editorial full-width ledger rows; data-as-motif (counted fields where every module is a datum); Deep Jade grounds; mixed-ink titles (White + Electric spans in one line); flush baseline stat strips; generous but *filled* space.
 - **Rejects:** pastel dashboard tints; uniform card-grid monotony; empty boxes; navy; decoration without data; dead space in the lower third of a slide; duplicated logos; headers carrying project names.
+
+---
+
+Replaces the sentence beginning *"**V2 DNA (locked visual language for the report template):** left spine x93 …"* in full.
+
+**V2 DNA (locked visual language, corrected 2026-07-27):** left spine **x100** · content floor **y≤940** · right limit **x1820** · eyebrow top **y120**, title top **y168** on running slides; **y470 / y518** on statements · titles **Display 60** running, **Display 160** statement (tracking −2.5% at ≥100px, −2.2% at 60, LH 0.90 at ≥100px) · eyebrows **`Caps/M` 24, +4% tracking** · **20px**-module constellation dither, dense edge toward a canvas edge, `p(d) = base + peak·d^γ` with base 0.02–0.04 and γ 2.2–2.6, never below y940 · hairline rules at White@12–30 · radius 0 and zero effects on dark editorial slides.
+
+**Superseded values and why:**
+
+| Was | Now | Reason |
+|---|---|---|
+| Spine **x93** | **x100** | x93/x97/x973/x1413 are inherited −7px drift, not optical correction. Optical correction applies to the leading glyph, not the whole column |
+| Floor **y950** | **y940** | 950 is not on the 4-unit; 940 is, and leaves 42px above the footer band |
+| Right limit **x1880** | **x1820** | x1880 is the bleed margin, not a column end. Only grounds and motif may reach it |
+| Titles **100 / 200px** | **60 / 160** | 100 and 200 are off the 7-size deck ladder |
+| Eyebrows **50px Light** | **`Caps/M` 24 +4%** | 50 is off the ladder; a 50px eyebrow against a 100px title is 2.00 dominance against a title that should be 160 |
+| Dither module **24px** | **20px** | `180 ÷ 24 = 7.5`. A 24px cell can never land on a column edge — see `layout-archetypes.md` §4.1 |
