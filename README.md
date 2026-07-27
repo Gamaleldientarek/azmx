@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/brand/cover.png" alt="Colab Design Skill — Colab User Experience Laboratory" width="100%">
+</p>
+
 # colab-design
 
 The Colab design system as an Agent Skill for [Claude Code](https://claude.com/claude-code).
