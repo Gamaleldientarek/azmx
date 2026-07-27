@@ -303,7 +303,7 @@ Every AR value lands on **exactly ×1.5**, the C-11 floor.
 
 **AR display at ×1.5 is loose by Latin standards, and it is correct.** Alexandria carries the diacritic stack above and below the baseline — fatha and damma above, kasra below — which Latin metrics do not account for. The 1.5 floor is a floor **at every size**, not a body-only rule. Do not tighten AR display to match the EN 0.90.
 
-⚠️ **The EN column is stale.** All 15 EN line-heights still resolve to the shipped ×1.16 / ×0.95 values against the ratified ×1.35 body leading. **The variable layer and the style layer disagree.** A style that binds `lineHeight` to these variables inherits ×1.16. Re-point the EN mode to the ratified column before binding anything.
+✅ **The EN column was repaired 2026-07-27.** All 15 EN line-heights now resolve to the ratified values — body **×1.35** (40→54 · 36→48.6 · 28→37.8 · 24→32.4 · 20→27 · 16→21.6 · 12→16.2) and display **×0.90 at ≥100px** (240→216 · 200→180 · 160→144), ×0.95 below. The variable layer and the style layer now agree, so a style that binds `lineHeight` inherits the correct number. AR mode is ×1.5 at every size.
 
 ### AR tracking — pinned to 0
 

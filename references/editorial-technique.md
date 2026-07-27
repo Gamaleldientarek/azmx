@@ -456,7 +456,7 @@ Resolved pixel values `[M]`:
 | 16 | 18.56 | **21.6** |
 | 12 | 13.92 | **16.2** |
 
-⚠️ **The variable layer is stale.** `Typography/line-height/*` still resolves to ×1.16 in EN mode. The style layer is ratified at ×1.35. Until the variables are re-pointed, a style that binds `lineHeight` to the variable inherits the wrong number — set the styles' leading literally, or fix the variables first. See `arabic-modes` notes in `figma-tokens.md`.
+✅ **The variable layer was repaired 2026-07-27.** `Typography/line-height/*` resolves to ×1.35 in EN mode and ×1.5 in AR mode, matching the style layer. Binding a style's `lineHeight` to the variable is now safe and is the preferred construction — it inherits both modes for free. See `figma-tokens.md` § EN/AR modes.
 
 **Arabic is not ×1.35.** AR mode is **×1.5** at every size, and that is a floor, not a target. Never share a line-height token across EN and AR.
 
