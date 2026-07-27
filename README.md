@@ -34,6 +34,7 @@ references/
   layout-archetypes.md            14 slide recipes, vertical anchors, motif construction, pass gate
   report-template.md              The componentized usability-report system
   rtl-arabic.md                   Arabic/RTL build system — mirror law, auto-layout, bidi, motif
+  slide-library.md                36 measured EN slides + the AR derivation rules
   icons.md                        Hugeicons house rules, the 43-icon working set, colour + RTL
   icon-index.md                   Every vendored icon with its download link (sharded a–z)
   research-notes.md               Hugeicons, bilingual EN/AR, category conventions
@@ -106,7 +107,7 @@ git clone https://github.com/Gamaleldientarek/colab-design-skill.git ~/.claude/s
 cd ~/.claude/skills/colab-design && git pull
 
 # pin to a specific release
-cd ~/.claude/skills/colab-design && git checkout v3.1.0
+cd ~/.claude/skills/colab-design && git checkout v3.2.0
 ```
 
 Claude Code discovers the skill automatically. No restart needed — the next invocation picks up the change.
@@ -125,6 +126,7 @@ Claude Code discovers the skill automatically. No restart needed — the next in
 | A Plugin API trap or a build-safety rule | `references/figma-workflow.md` |
 | A report pattern or a research-reporting convention | `references/report-template.md` |
 | Anything Arabic, RTL, mirroring, or bilingual | `references/rtl-arabic.md` |
+| A slide layout, its geometry, its motif spec, its ground | `references/slide-library.md` |
 
 `SKILL.md` is loaded on **every** invocation. A rule earns a place there only if a designer would produce failing work without it. Everything else goes in a reference and gets a pointer.
 
@@ -162,7 +164,7 @@ The step that matters most is **4**. Two false statements — "letter-spacing is
 7. **CHANGELOG entry** — `Added` / `Changed` / `Fixed` / `Corrected`, with the numbers and the reason. `Corrected` is for claims that were previously wrong, and it is not optional
 8. **Commit and tag**
    ```bash
-   git add -A && git commit && git tag -a v3.1.0 -m "..." && git push origin main --tags
+   git add -A && git commit && git tag -a v3.2.0 -m "..." && git push origin main --tags
    ```
 
 ### Regenerating the vendored assets

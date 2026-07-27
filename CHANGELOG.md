@@ -1,5 +1,30 @@
 # Changelog
 
+## 3.2.0 — 2026-07-27
+
+Release 3.2. Adds the **slide library** — 36 measured, reviewed layouts with their exact geometry, motif spec and ground — and folds in what a slide-by-slide review of the Arabic deck taught. The governing finding is that a mirrored motif fails in **four distinct ways**, only one of which is visible without measuring, and that the naive fix for the commonest one destroys the band's proportions.
+
+### Added
+- **`references/slide-library.md`** — new reference, and the largest addition since the icon set. All 36 `Report Template` slides catalogued by job (openers, contents, framing, KPI, tables, findings, device evidence, statement) with `[x,y,w,h]` for every element, the motif spec including its measured **fill**, the ground, and the AR derivation notes per slide. Extracted from the live file, not authored
+- **The motif distribution across a real deck** — 31 of 36 slides carry a field, **5 carry none**, 6 are full-height, fill spans 0.11–0.39 with median 0.19. Absence is part of the composition; a rebuild that fields every slide is wrong at the composition level regardless of its density curve
+- **Ground rotation, measured** — Pine ×19, Deep Jade ×9, White ×6, Electric ×2, never more than four consecutive slides on one ground, with the per-ground motif ink and opacity floor beside it
+- **`rtl-arabic.md` §8.3.1 — clip width, never height.** When the Arabic title is wider than the English, it intrudes on the field's box; the naive clip resolves that by losing height. Five slides lost 45–67% of their band that way (08, 10, 13, 16, 22). Give up width at the sparse end, where the faintest cells are
+- **`rtl-arabic.md` §8.3.2 — the four failure modes of a rebuilt field**: over-dense, height-clipped, wrong-anchor, missing. With the match-by-nearest-mirror caveat: matching AR fields to EN by array index reports false mismatches on any slide with two fields
+- **`rtl-arabic.md` §8.3.3 — snap to the module after placement**, covering both EN's own off-module positions (`y150 / y350 / y673`) and auto-layout placement (a field parented into a row lands at `x923`, not 920)
+- **`rtl-arabic.md` §9.1 — the master is shared; check before you edit it.** The reflex to fix a wrong instance at its master is dangerous when the frozen side instantiates it too. The severity legend resolved to a master with **6 EN consumers**; reversing it for RTL would have reversed the English deck. Ships the consumer-count probe
+- **R-09 … R-13** — kashida is a client preference and stays · ratio numerals reverse so the value reads first · a unit glyph attached to a display numeral sets smaller than the digits · an English gloss of an Arabic quote is dropped rather than translated · progress fills anchor right with the notch at the far end. Plus §12.1, the sweeps for the last two, both invisible in a thumbnail
+
+### Changed
+- **`SKILL.md` and `README.md`** — pointer and routing row for the slide library; "reach for a layout before inventing a composition" is now the stated default
+- **`rtl-arabic.md` §12** extended from 8 recorded decisions to 13
+
+### Fixed
+- **The AR deck itself**, across a full slide-by-slide pass: 4 field anchors wrong (15, 17, 21, 27/27d), 5 height-clipped (08, 10, 13, 16, 22), 2 missing (14, 24), 25 over-dense, 1 wrong shape (17 — an 80×600 uniform divider strip rebuilt as a 1480×340 band), the severity legend un-reversed on 6 slides, the progress bar filling leftward on 12, and 415 motif cells below the 3:1 contrast floor. Final state passes all twelve predicates with the EN section byte-identical
+
+### Notes
+- **Two flags in this pass were wrong on inspection and are recorded as such** — 25a's descending staircase is deliberate (EN steps numerals 100→980 with every rule ending at 1820), and a field sitting behind a device panel is what EN does. Both are now documented in the library so they are not "fixed" later
+- The library documents **EN quirks not to inherit** — tables overflowing their own margin by 14, off-module motif y-positions, and slide 03 labelling both `08` and `24` as "Participants". Mirroring faithfully propagates a violation; the table says which ones to drop
+
 ## 3.1.0 — 2026-07-27
 
 Release 3.1. The skill gains a full **Arabic/RTL build system**, measured against a complete 36-slide `Report Template - AR` built from the English original in a live Figma session. The governing finding is that **RTL is not right-alignment**: it is a coordinate transform on x, a reversal of every auto-layout reading order, and a *re-fitted* vertical rhythm — and only the first of those three is a mirror. The second governing finding is that the motif must be **re-solved against Arabic content, never mirrored**, and solved **last**.

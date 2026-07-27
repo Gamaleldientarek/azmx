@@ -279,6 +279,46 @@ A non-zero floor scatters isolated cells all the way to the content edge, so the
 3. **Fall back** to largest-free-rectangle (§4.6) with the same ramp if clipping leaves < 4 cols or < 3 rows
 4. Density rises toward the **left** canvas edge in RTL — but **derive this from geometry**, not from reading direction. The solver already picks the nearest canvas edge; there is no direction parameter to pass
 
+### 8.3.1 Clip **width**, never height `[M]`
+
+Step 2 above has a failure mode that cost five slides. When the Arabic title is wider than the English one, it intrudes on the field's box — and a naive clip resolves that by **losing height**, which destroys the band's proportions:
+
+| Slide | EN band | After naive clip | After correct clip |
+|---|---|---|---|
+| 08 | 1400 × **220** | 1400 × **120** | **1060** × 220 |
+| 10 | 1440 × **220** | 1440 × **120** | **1180** × 220 |
+| 13 | 880 × **360** | 880 × **120** | **640** × 360 |
+| 16 | 1500 × **360** | 1500 × **120** | **1380** × 360 |
+| 22 | 1460 × **320** | 1460 × **120** | **1340** × 320 |
+
+**Give up width at the sparse end.** That end holds the faintest cells, so almost nothing is lost visually; height is the band's signature and must be preserved.
+
+```js
+const W = Math.min(EN_W, Math.floor((leftMostHeadX - 40) / 20) * 20);   // keep EN_H
+```
+
+### 8.3.2 The four ways a rebuilt field goes wrong `[M]`
+
+Check all four on every slide. Each showed up repeatedly, and only the first is visible without measuring:
+
+| # | Failure | Symptom | Test |
+|---|---|---|---|
+| 1 | **Over-dense** | reads as a slab | fill vs the EN counterpart's fill; 25 of 30 fields were 0.23–0.27 against EN's 0.11–0.21 |
+| 2 | **Height-clipped** | band looks like a stripe | `h` vs EN's `h` (§8.3.1) |
+| 3 | **Wrong anchor** | field floats mid-canvas instead of hugging an edge | mirrored `x,y` vs actual; slide 15's field sat top-middle where EN has it bottom-right |
+| 4 | **Missing** | nothing there | field **count** vs EN; slides 14 and 24 each lost one |
+
+Audit all four in one pass — match each AR field to its **nearest** expected mirror rather than by array index, or a slide with two fields reports false mismatches purely from ordering.
+
+### 8.3.3 Snap to the module *after* placement
+
+Two things put cells off the 20px grid:
+
+- **EN's own off-module positions.** Fields at `y150 / y350 / y673` in the source; mirroring inherits the offence. Snap to the nearest 20.
+- **Auto-layout placement.** A field parented into an auto-layout row (slide 17) lands wherever the layout computes — `x923`, not 920. Move the *row* until the field lands on the module.
+
+Re-run the off-grid predicate after every structural change, not just after building.
+
 ### 8.4 Motif is the last step, not the first
 
 The occupancy grid is a function of **final** content geometry. Solving before alignment and translation guarantees solving again — this build re-solved three times before the ordering was made explicit. Sequence: **translate → align → re-fit vertical → solve motif**.
@@ -308,6 +348,23 @@ for (const sq of field.children) {
 
 - Build **AR sibling components** rather than overriding instances — positional properties are not overridable (§3), so there is no override path for a mirror.
 - Record `x_AR + w_AR == 1920 − x_EN` in each component description.
+
+### 9.1 The master is shared — check before you edit it `[M]`
+
+The reflex when an instance is wrong is to fix its master. **Check who else instantiates it first.** The AR deck's severity legend resolved to `V1 — INLINE TAG` on `02 · Molecules` — and the EN deck had **6 instances of the same master**. Reversing its child order for RTL would have silently reversed the English deck too.
+
+```js
+// before editing any master, count its consumers on the frozen side
+const mc = await inst.getMainComponentAsync();
+let enUsers = 0;
+for (const f of enSection.children)
+  for (const i of f.findAll(n => n.type === 'INSTANCE'))
+    if ((await i.getMainComponentAsync())?.id === mc.id) enUsers++;
+```
+
+If `enUsers > 0`, clone the set, rename it `AR / …`, fix the clone, and `swapComponent()` the AR instances onto it. Remember §3: **the swap discards text overrides**, so put the Arabic strings in the AR master's defaults before swapping, not after.
+
+Masters that turned out to be shared in this build: `V1 — INLINE TAG`, `Cat Chip`. Masters that were already AR-only and safe to edit: `AR / Feedback Block`, `AR / Meta Field`, `AR / Finding Card`, `AR / Footer Bar`.
 - **Verify which master the deck actually instantiates.** This deck used `Footer Bar` (1840×73), not `Footer Bar / Canonical` (1720×56). An AR sibling was built for the wrong one first, and the two later needed fixing separately — the canonical variant surfaced only as a single leftover defect on one slide.
 - **A master fix propagates everywhere at once.** Repairing the AR footer cleared the same defect on **30 slides** in one write. When a defect appears on many slides with identical geometry, stop fixing slides.
 
@@ -386,6 +443,22 @@ Recorded so they are not re-litigated:
 | R-06 | Quadrant/direction references in copy are reworded to be direction-free rather than mirrored, so the sentence survives either layout |
 | R-07 | Counted fields keep their EN colour semantics; only geometry mirrors |
 | R-08 | Where an EN master overflows its own margin, the AR mirror is clamped to the margin rather than inheriting the overflow |
+| **R-09** | **Kashida is wanted.** Tatweel elongation in display titles is a client preference, not a defect — do not strip it. Distinguish it from the single tatweel that carries the definite article before a numeral (`الـ130`), which is orthography and also stays |
+| **R-10** | **Ratio numerals reverse** so the measured value reads first: `5.1/7` → `7/5.1`, `6/8` → `8/6`. The accent colour follows the value, not the position |
+| **R-11** | **A unit glyph attached to a display numeral sets smaller than the digits** — 64px against 160px — so it reads as a unit rather than part of the number. Latin units (`h`, `s`) are narrow enough to skip this; Arabic ones (`س`, `ث`) are not |
+| **R-12** | **An English gloss of an Arabic quote is dropped** in the AR deck, not translated — it would restate the line above it |
+| **R-13** | **Progress and bar fills anchor to the right**, and any target/limit notch moves to the far (left) end |
+
+### 12.1 Sweep for R-10 and R-13 rather than eyeballing
+
+Both are invisible in a thumbnail and easy to miss on one slide while fixing another:
+
+```js
+// bars: a fill narrower than its track must share the track's RIGHT edge
+const leftAnchored = Math.abs(X(fill) - X(track)) < 3 && fill.width < track.width - 2;
+
+// ratios: any "a/b" numeral where the accent-coloured run is not the last run
+```
 
 ---
 
