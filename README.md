@@ -60,7 +60,7 @@ scripts/
 | Olive Green | `#5B6B3E` | Medium severity |
 | Pale Sky Blue | `#B1D9E8` | Low severity |
 
-**Type —** Inter (EN) · Alexandria (AR). Display 240/200/160/60/40 at ×0.95. Body 40/36/28/24/20/16 at ×1.16. Arabic overrides to a 1.5 line-height floor.
+**Type —** Inter (EN) · Alexandria (AR). Display 240/200/160/60/40 at **×0.90 at ≥100px, ×0.95 below**. Body 40/36/28/24/20/16 at **×1.35**. Arabic overrides to a **×1.5** floor via the AR mode of the `numbers` collection — a mode, not a parallel token set.
 
 **Grid —** 1920×1080. 8 columns × 180px, 40px gutters, 100px side margins, 50px bleed-safe, 98px footer band, 932px live content height.
 
@@ -83,6 +83,87 @@ scripts/
 Decks go to CEOs. Default backgrounds are dark green or white; electric green is reserved for covers, dividers, and minimal-text moments.
 
 Ratios are computed with the WCAG 2.x relative-luminance formula, not estimated.
+
+---
+
+## Updating the skill
+
+### Install or update
+
+```bash
+# first install
+git clone https://github.com/Gamaleldientarek/colab-design-skill.git ~/.claude/skills/colab-design
+
+# update to the latest release
+cd ~/.claude/skills/colab-design && git pull
+
+# pin to a specific release
+cd ~/.claude/skills/colab-design && git checkout v3.0.0
+```
+
+Claude Code discovers the skill automatically. No restart needed — the next invocation picks up the change.
+
+### Where new knowledge goes
+
+| Kind of knowledge | File |
+|---|---|
+| A client decision, or a rule the client can overrule | `references/decision-law.md` |
+| A colour, ramp, or contrast measurement | `references/colors.md` |
+| A Figma variable, style, mode, or token | `references/figma-tokens.md` |
+| How the variable **layer** is governed or repaired | `references/variable-architecture.md` |
+| A typographic technique with a source or a derivation | `references/editorial-technique.md` |
+| Where an edge goes on a slide — anchors, gates, motif construction | `references/layout-archetypes.md` |
+| A component's anatomy, variants, or legal overrides | `references/components.md` |
+| A Plugin API trap or a build-safety rule | `references/figma-workflow.md` |
+| A report pattern or a research-reporting convention | `references/report-template.md` |
+
+`SKILL.md` is loaded on **every** invocation. A rule earns a place there only if a designer would produce failing work without it. Everything else goes in a reference and gets a pointer.
+
+### Evidence discipline
+
+`editorial-technique.md` and `layout-archetypes.md` mark every claim:
+
+- `[S]` **sourced** — from published typographic or design literature
+- `[D]` **derived** — reasoned from a sourced principle onto this grid
+- `[M]` **measured** — computed from the live Figma file or the WCAG formula
+
+Keep the marks. They are why a reader can tell a brand preference from an accessibility fact, and dropping them makes the whole file equally arguable.
+
+### Versioning
+
+| Bump | When |
+|---|---|
+| **Major** | A published value changes, so work built to the previous release now fails. v3.0.0 changed body leading ×1.16 → ×1.35 and the motif module 24px → 20px |
+| **Minor** | New references, new rules, new assets — nothing previously correct becomes wrong |
+| **Patch** | Corrections, typos, broken links |
+
+### Release checklist
+
+The step that matters most is **4**. Two false statements — "letter-spacing is `0` at every size" and display "×0.95 throughout" — survived the v2.0.0 release because the correction was *added* while the falsehood was left in place. A reader hitting the old line first has no way to know it lost.
+
+1. **Measure before writing.** A rule without a number is an opinion. Ratios come from the WCAG relative-luminance formula, geometry from `absoluteBoundingBox`, counts from a real traversal
+2. **Ratify open conflicts, once.** If two documents disagree, decide and record the decision — do not restate both and let the reader pick
+3. **Write to the destination file** per the table above
+4. **⚠️ Delete what the change supersedes.** Grep the whole skill for the old value and remove or explicitly mark every instance. Adding a correction beside a falsehood leaves both true-looking:
+   ```bash
+   grep -rn "OLD_VALUE" SKILL.md README.md references/*.md
+   ```
+5. **Sweep for residual contradictions** before tagging — the same grep, expecting zero hits
+6. **Update the affected numbers in the Figma file too.** A skill that documents a state the file contradicts recreates the defect it is describing
+7. **CHANGELOG entry** — `Added` / `Changed` / `Fixed` / `Corrected`, with the numbers and the reason. `Corrected` is for claims that were previously wrong, and it is not optional
+8. **Commit and tag**
+   ```bash
+   git add -A && git commit && git tag -a v3.1.0 -m "..." && git push origin main --tags
+   ```
+
+### Regenerating the vendored assets
+
+```bash
+python3 scripts/vendor-hugeicons.py      # re-vendor Hugeicons at a pinned version
+python3 scripts/rebuild-icon-index.py    # rebuild the index from assets/icons/
+```
+
+Logos and shapes are exported from the Figma component sets by hand; `assets/figma-export-manifest.json` records the source variant, size and colour of every SVG so an export can be verified against its origin.
 
 ---
 
