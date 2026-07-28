@@ -1,7 +1,7 @@
 # AZMX Design System
 
 **The official AZMX brand and presentation design handbook.**
-Editorial brand-book system for AZMX — a Saudi UX / innovation design studio — as encoded in the *New Direction Library* Figma file and applied to the 66-slide PIF "StudioSpace" proposal.
+Editorial brand-book system for AZMX — a leading Saudi digital consultancy — as encoded in the *New Direction Library* Figma file and applied to the 66-slide PIF "StudioSpace" proposal.
 
 > One-line ethos: Deep navy, electric blue, generous white space, serif personality, the chevron as the only recurring graphic device. **Restraint is the luxury.**
 
@@ -415,7 +415,7 @@ The deck composes from ~21 reusable archetypes. Each lists its surface and a one
 | D | **Two-card Exec Summary** | White | Two parallel points — top-rule + numeral + title + body, no boxes. |
 | E | **Methodology Split + placeholder** | White (7/5) | A phase with a (client-supplied) image — text left, masked grey image right. |
 | F | **3-column Values** | White | Three values side by side — staggered numbered columns. |
-| G | **About intro + image** | White (5/7) | Studio story — text + chevron-masked group photo + a serif pull-phrase. |
+| G | **About intro + image** | White (5/7) | Company story — text + chevron-masked group photo + a serif pull-phrase. |
 | H | **Full-page Bio** | Navy | A leader — masked duotone portrait right third + giant "NN+ years" stat. |
 | I | **Team Grid** | White | The whole team — 4×3 duotone tiles with chevron-notch corners; CEO at 1.15×. |
 | J | **Logo Wall** | White / Blue-50 | Clients or qualifications — monochrome logos at equal *visual* mass. |

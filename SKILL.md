@@ -1,15 +1,17 @@
 ---
 name: azmx-brand
-description: Apply the official AZMX brand identity to any deliverable. Use whenever work involves AZMX branding, AZMX presentations, proposals, emails, newsletters, reports, social graphics, web pages, documents, printed A4 documents, fillable PDF forms, or copywriting in the AZMX voice, or when the user mentions AZMX colors, the chevron, Dark Navy, Electric blue, thmanyah serif, or Azm X fonts. Provides the full color palette, typography rules, logo files, web fonts, the email design system, the Figma-to-fillable-PDF form pipeline, and the voice and tone guide.
+description: Apply the official AZMX brand identity to any deliverable. Use whenever work involves AZMX branding, AZMX presentations, proposals, emails, newsletters, reports, social graphics, web pages, documents, printed A4 documents, fillable PDF forms, or copywriting in the AZMX voice, or when the user mentions AZMX colors, the chevron, Dark Navy, Electric blue, thmanyah serif, or Azm X fonts. Also covers the unified communication strategy: communication planning, content plans and editorial calendars, social posts and captions for LinkedIn, Instagram or Twitter/X, blog articles, messaging and positioning, audience personas and segments, B2G/B2B/B2C motions, creative briefs, tone of voice, English-to-Arabic localization, and the AZM X brands Colab, Majarah, Clix and Anatomi. Provides the full color palette, typography rules, logo files, web fonts, the email design system, the Figma-to-fillable-PDF form pipeline, the voice and tone guide, and the channel, governance and content-prompt references.
 ---
 
 # AZMX Brand Skill
 
-AZMX is a Saudi UX and innovation design studio. This skill encodes its official brand system so every deliverable comes out on-brand without re-briefing.
+AZMX is a leading Saudi digital consultancy, and the parent house for four brands: Colab, Majarah, Clix, and Anatomi. Its philosophy line is **"Designing the Future of Experience."** This skill encodes its official brand and communication system so every deliverable comes out on-brand without re-briefing. Never describe AZMX as a studio, an agency, or a boutique.
 
 One-line ethos: deep navy, electric blue, generous white space, serif personality, the chevron as the only recurring graphic device. **Restraint is the luxury.**
 
 For the complete handbook (component specs, slide archetypes, Figma implementation), read `references/design-system.md`. For every color tone, read `references/colors.md`. For the exact live Figma variables (all 233: colors with dark mode, fonts, type scale, spacing, radii, opacity), read `references/figma-tokens.md`. For any HTML email or newsletter, read `references/email-design-system.md` and start from `assets/templates/email-starter-skeleton.html`. For any written copy, follow `references/voice-and-tone.md`. When a deliverable needs imagery, pick from the 242 brand images catalogued in `references/image-library.md` (selection and colour-pairing rules) and `references/image-index.md` (every file with its three concept tags, dominant colour, safe text colour, and direct download link). To convert an image to another colour theme, use the tested prompts in `references/recolor-prompts.md`. For icons, read `references/icons.md`. For any printed A4 document or fillable PDF form, follow `references/pdf-forms.md` — it documents the validated Figma → export → pdf-lib pipeline and the `scripts/build-pdf-form.mjs` tool that stamps form fields at exact coordinates.
+
+For any communication planning, channel ownership, or governance question, read `references/communication-strategy.md`. Before writing a single line of copy, load `references/audiences-and-messaging.md` for the audience and its verbatim core message, then `references/voice-and-tone.md` for AZM X's voice or `references/sub-brand-voices.md` for Colab, Majarah, Clix, and Anatomi. For cadence, weekly themes, optimal posting times, and the nineteen internal initiatives, read `references/editorial-calendar.md`. For ready-made article, social, and English-to-Arabic prompts, use `references/content-prompts.md`.
 
 Images are dark surfaces. Every section except White measures below 0.18 luminance, so text over them follows the Navy row of the text-colour table: White title, Blue 100 body, Light Blue eyebrow. Never Electric for text on an image; Electric appears over imagery only as a chevron tick or a single active rule. The White section is the one exception, taking Navy text with Electric accents.
 
@@ -62,6 +64,30 @@ Locked usage: weight Regular (Light on dark where Regular reads heavy), size 20 
 ## Human-craft guardrails
 
 These read as AI or template tells; never do them: rounded-corner cards with drop shadows everywhere, centered everything, equal-length padded columns, plain numerals in default sans, scattered decorative icon rows standing in for content, Electric as a large text background, gradients behind paragraphs, uniform 16 px spacing everywhere, scattered chevrons.
+
+## Communication and content
+
+Any copy task, on any surface, starts by fixing three things: the brand, the audience, the surface.
+
+| Brand | What it is | Motions | Voice |
+|---|---|---|---|
+| AZM X | The consultancy | B2G · B2B · Internal | Visionary Expert and Strategic Partner |
+| Colab | UX research platform | B2G · B2B · B2C | The Empathetic Analyst |
+| Majarah | Community and event hub | B2C | The Inclusive Mentor |
+| Clix | ERP for SMEs | B2B | The Trusted Operator |
+| Anatomi | Design benchmark library | B2G · B2B · B2C | The Analyst–Curator |
+
+**This skill's visual system is AZM X only.** No palette, logo, font, or layout rule here belongs to the other four. Apply a sub-brand's voice freely; before applying visuals to a sub-brand deliverable, ask the user which visual system to use. Colab has its own skill, `colab-design`.
+
+**Never invent a message.** Three internal segments, three external motions, and eight personas each carry a verbatim core message in `references/audiences-and-messaging.md`. Quote it, or write a tighter line that keeps the same claim. Do not soften it, and do not move a message between brands.
+
+**House voice beats the strategy deck.** The deck permits 3 to 5 hashtags per post, 5 to 10 on Instagram, encourages emojis, and mandates a CTA on every post. All three are superseded: **three hashtags maximum at the end, no emojis in copy, no mandatory CTA**, on every channel and every brand. Never restore the deck's figures. The one emoji carve-out is the email design system's section-header and digest chip glyph (C03, C04, C07, C16), which is a visual component rather than copy.
+
+**The creative bar is level 5, "Strategically Creative"**: right brand, right audience, builds equity, earns attention. Level 3, a decent idea decently made that does not build the brand, is a fail. The riskiest idea is the one nobody notices.
+
+**Brief before you make.** Every brief needs a clear objective, a real audience insight, honest success criteria, and the three-sentence story: the audience wants ______, the obstacle is ______, our brand can facilitate it because ______. If those three will not close cleanly, the strategy is not ready and craft will not save it.
+
+For channel roles, the POEM model, the RACI matrix, the content and social workflows, the three operating rituals, and the full creative evaluation framework, read `references/communication-strategy.md`.
 
 ## Assets
 
@@ -131,5 +157,6 @@ Rules for this step:
 6. Apply one chevron gesture maximum, pointing right.
 7. Ask the user whether they want icons on this deliverable (see "Icons" above). Ask once, before placing the first one. Never decide either way silently — this applies to decks and reports exactly as it applies to product UI.
 8. For emails and newsletters: follow `references/email-design-system.md` (Arabic RTL rules are non-negotiable) and build from the email skeleton template.
-9. For all written copy: apply `references/voice-and-tone.md`, including its no-AI-tells mechanics.
+9. For all written copy, in this order: identify the brand and audience and take the verbatim core message from `references/audiences-and-messaging.md`; load the voice — `references/voice-and-tone.md` for AZM X, `references/sub-brand-voices.md` for Colab, Majarah, Clix, or Anatomi — and apply its no-AI-tells mechanics; for an article, a social adaptation, or an English-to-Arabic localization, start from a tested prompt in `references/content-prompts.md`.
 10. Check the guardrails table above before delivering. When in doubt, remove decoration. Restraint is the luxury.
+11. For anything that will be published, run the 6-point pre-publish checklist in `references/voice-and-tone.md` last. Three hashtags maximum, no emojis in copy (the email chip glyph is the one exception), and no CTA unless a genuine next step exists.

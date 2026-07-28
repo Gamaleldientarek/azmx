@@ -2,9 +2,11 @@
 
 # AZMX Brand Skill
 
-The official AZMX brand system, packaged as an Agent Skill for Claude Code and other AI agents. Install it once and every deliverable (decks, emails, reports, web pages, social graphics, documents) comes out in the AZMX identity without re-briefing the agent.
+The official AZMX brand and communication system, packaged as an Agent Skill for Claude Code and other AI agents. Install it once and every deliverable (decks, emails, reports, web pages, social graphics, documents, articles, campaigns) comes out in the AZMX identity without re-briefing the agent.
 
 Deep navy, electric blue, generous white space, serif personality, the chevron as the only graphic device. Restraint is the luxury.
+
+As of v1.4.0 the skill also encodes the AZM X Unified Communication Strategy: five brand voices, eight audience personas with their approved core messages, seven channels with owners and metrics, the editorial cadence, and ready-to-run content prompts.
 
 **[Browse the image library →](https://gamaleldientarek.github.io/azmx-brand-skill/)** — all 242 brand images, click any one to download. No account needed.
 
@@ -15,12 +17,18 @@ Deep navy, electric blue, generous white space, serif personality, the chevron a
 - `references/colors.md`: every color tone (primary, blue ramp 50 to 1000, neutrals, RAG, surfaces, text-by-surface)
 - `references/figma-tokens.md`: the complete live Figma variable export, 233 tokens across Colors (with Dark Mode), Fonts, and Numbers (type scale, spacing, radii, opacity)
 - `references/email-design-system.md`: the AZMX Email Design System v1 (RTL rules, 3-layer fonts, themes, components)
-- `references/voice-and-tone.md`: how AZMX sounds, EN and AR, plus the no-AI-tells writing mechanics
+- `references/voice-and-tone.md`: how AZMX sounds, EN and AR — the Four Dimensions, universal writing principles, the 6-point pre-publish checklist, and the no-AI-tells writing mechanics
+- `references/communication-strategy.md`: the strategy spine — guiding principles, POEM, all seven channels, the RACI matrix, workflows, the three operating rituals, the creative effectiveness scale, and the briefing checklist
+- `references/audiences-and-messaging.md`: three internal segments, three external motions, eight personas, each with its approved verbatim core message
+- `references/sub-brand-voices.md`: voice profiles for Colab, Majarah, Clix, and Anatomi (voice only — the visual system in this skill is AZM X's alone)
+- `references/editorial-calendar.md`: weekly themes, per-brand cadence, optimal posting times, the monthly SEO and PPC initiatives, and the 19 Arabic internal initiatives
+- `references/content-prompts.md`: five tested prompts — long-form article, LinkedIn, Instagram, Twitter/X, and English-to-Arabic localisation
 - `references/image-library.md`: catalogue, selection rules, and measured colour pairings for the image library
 - `references/image-index.md`: every image with its three concept tags, dominant colour, safe text colour, and a direct download link
 - `references/recolor-prompts.md`: tested prompts for converting an image to another colour theme, copyable from the gallery
 - `references/icons.md`: the Phosphor icon system, the ask-before-you-use-icons rule, locked weights, sizes, and colours by surface
 - `references/pdf-forms.md`: the validated Figma → export → pdf-lib pipeline for printed A4 documents and fillable PDF forms
+- `scripts/brand-check.py`: an automated brand QA linter. It parses the legal palette out of `references/colors.md` at runtime, then checks deliverables for off-palette colours, non-brand fonts, and off-scale spacing
 - `scripts/build-pdf-form.mjs`: stamps AcroForm fields onto a designed PDF at exact coordinates, with the brand font embedded
 - `scripts/extract-figma-fields.js`: reads the field rectangles out of a Figma design and emits the JSON spec
 - `assets/images/`: 242 AZMX-generated brand images in 8 sections (gradients, abstract blue, and recolored variants)
@@ -84,4 +92,4 @@ Fields land at exact coordinates with readable names, so Acrobat's "Prepare Form
 
 The AZMX logo, brand assets, and the thmanyah serif display and Azm X font files are the property of AZMX and its licensors, and are licensed for AZMX work only. Viewing this repo does not grant any right to use them in non-AZMX projects or to redistribute the fonts.
 
-Built by [gamaleldien.com](https://gamaleldien.com). Skill v1.3.0, design system v1.1, encoded from the New Direction Library Figma file. Release notes in [CHANGELOG.md](CHANGELOG.md).
+Built by [gamaleldien.com](https://gamaleldien.com). Skill v1.4.0, design system v1.1, encoded from the New Direction Library Figma file and the AZM X Unified Communication Strategy. Release notes in [CHANGELOG.md](CHANGELOG.md).
