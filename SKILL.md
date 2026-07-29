@@ -137,7 +137,10 @@ Availability matters and will bite you:
 |---|---|---|
 | Light · Regular · Medium · Bold | yes | yes |
 | SemiBold | yes | **no — fall back to Medium** |
-| Black · ExtraLight | **no** | no |
+| ExtraLight | yes | yes |
+| Thin · ExtraBold · Black | **no** | yes |
+
+Oswald is the narrower family at the extremes, and Oswald is the display font — so treat Black and Thin as body-only weights in EN. Full verified matrix in `references/typography.md`.
 
 Headline sizes by slide role — display type is the composition, so these run large:
 

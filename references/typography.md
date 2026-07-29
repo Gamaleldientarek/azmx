@@ -25,20 +25,28 @@ Recorded as D-02 in `decision-log.md`.
 
 ## Weight availability
 
+Verified against `listAvailableFontsAsync()` on the build machine, 2026-07-30.
+
 | Weight | Oswald | Helvetica Now Display |
 |---|---|---|
-| ExtraLight / Thin | no | no |
+| Hairline | no | yes |
+| Thin | no | yes |
+| ExtraLight | **yes** | yes (`Extra Light`) |
 | Light | yes | yes |
 | Regular | yes | yes |
 | Medium | yes | yes |
-| SemiBold | **yes** | **no** |
+| SemiBold | **yes** | **no — the one real gap** |
 | Bold | yes | yes |
-| Black | no | no |
+| ExtraBold | no | yes (`Extra Bold`) |
+| Black | no | yes |
+| ExtraBlack | no | yes (`Extra Black`) |
+
+Helvetica Now Display also ships italics for most weights. The deck uses none — Majarah has no italic convention, and introducing one would be a new decision, not an application of this system.
 
 Two traps:
 
-1. **`Helvetica Now Display SemiBold` is not installed.** Fall back to `Medium`. The `font-weights/Semibold` variable exists and resolves to the string `semibold`, which will fail on the Helvetica family and silently fall back. If a body-font node renders lighter than expected, this is why.
-2. **Neither family has Black or ExtraLight**, yet `font-weights/Black` (`black`) and `font-weights/Extralight` (`thin`) exist as variables. They are unusable in EN. In AR they both resolve to real faces (Bold / Book). Do not reach for them in an English deliverable.
+1. **`Helvetica Now Display SemiBold` is the single missing face.** Fall back to `Medium`. The `font-weights/Semibold` variable resolves to the string `semibold`, which fails on Helvetica and silently falls back. If a body node renders lighter than expected, this is why. `Oswald SemiBold` does exist and is used for card titles.
+2. **Oswald is the narrower family at the extremes.** It has no Black, ExtraBold or Thin. So `font-weights/Black` (`black`) works on Helvetica but not Oswald, and `font-weights/Extralight` (`thin`) works on Helvetica but resolves to nothing usable on Oswald, whose thin cut is named `ExtraLight`. Because the display font *is* Oswald, treat Black and Thin as body-font-only weights in EN.
 
 ## Size scale
 
