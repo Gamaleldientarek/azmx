@@ -1,0 +1,69 @@
+{
+  "source": {
+    "file": "Majarah Library",
+    "fileKey": "AH4vTz9MkdX6QNA6uYNfYA",
+    "componentsPage": "Components",
+    "deckPage": "Playground",
+    "auditedAt": "2026-07-29",
+    "brandBook": "Majarh-Brand-book.pdf (MUD Creative House, 11pp)"
+  },
+  "vendored": {
+    "logo": {
+      "format": "svg",
+      "note": "Single-path SVGs exported via exportAsync. Byte-verified against Figma. Colour variants share identical path data; only the fill differs.",
+      "files": [
+        { "file": "majarah-primary-white.svg",         "node": "1:343", "size": [334, 111], "fill": "#FFFFFF" },
+        { "file": "majarah-primary-main-purple.svg",   "node": "1:345", "size": [334, 111], "fill": "#4B0AA0" },
+        { "file": "majarah-primary-grey.svg",          "node": "1:348", "size": [334, 111], "fill": "#231F20" },
+        { "file": "majarah-secondary-white.svg",       "node": "1:371", "size": [520, 111], "fill": "#FFFFFF" },
+        { "file": "majarah-secondary-main-purple.svg", "node": "1:378", "size": [520, 111], "fill": "#4B0AA0" },
+        { "file": "majarah-secondary-grey.svg",        "node": "1:374", "size": [520, 111], "fill": "#231F20" }
+      ]
+    }
+  },
+  "notVendored": {
+    "note": "Roughly 6 MB of rasters. Pull with scripts/export-figma-assets.py — requires a fresh Figma personal access token.",
+    "componentSets": {
+      "Galaxy Bks": {
+        "set": "1:487",
+        "variants": {
+          "1:483": { "slug": "galaxy-01-vortex",       "onPalette": true },
+          "1:484": { "slug": "galaxy-02-nebula",       "onPalette": true },
+          "1:485": { "slug": "galaxy-03-holographic",  "onPalette": false },
+          "1:486": { "slug": "galaxy-04-iridescent",   "onPalette": false }
+        }
+      },
+      "Planets": {
+        "set": "1:494",
+        "variants": {
+          "1:493": { "slug": "planet-subtle-blue",     "onPalette": true },
+          "1:492": { "slug": "planet-main-purple",     "onPalette": true },
+          "1:491": { "slug": "planet-blue-vivid",      "onPalette": true },
+          "1:490": { "slug": "planet-moon",            "onPalette": true },
+          "1:489": { "slug": "planet-orange-white",    "onPalette": false },
+          "1:488": { "slug": "planet-mars",            "onPalette": false },
+          "2:35":  { "slug": "planet-earth-blue",      "onPalette": true },
+          "2:33":  { "slug": "planet-earth-dark",      "onPalette": true },
+          "2:32":  { "slug": "planet-earth-violet",    "onPalette": true },
+          "2:34":  { "slug": "planet-earth-magenta",   "onPalette": false },
+          "2:36":  { "slug": "planet-earth-cyan",      "onPalette": false },
+          "2:38":  { "slug": "planet-purple-glow",     "onPalette": true },
+          "2:39":  { "slug": "planet-purple-vector",   "onPalette": true },
+          "2:45":  { "slug": "planet-venus",           "onPalette": true },
+          "2:46":  { "slug": "planet-detailed",        "onPalette": true }
+        }
+      },
+      "Space": {
+        "set": "2:42",
+        "variants": {
+          "2:41": { "slug": "space-01-fullbleed", "size": [1920, 1080], "onPalette": true }
+        }
+      }
+    }
+  },
+  "variableCollections": {
+    "Color": { "id": "VariableCollectionId:1:341", "modes": ["Mode 1"], "count": 11, "published": true },
+    "Font":  { "id": "VariableCollectionId:1:427", "modes": ["EN", "AR"], "count": 9, "published": false }
+  },
+  "styles": { "paint": 0, "text": 0, "effect": 0, "grid": 0 }
+}
