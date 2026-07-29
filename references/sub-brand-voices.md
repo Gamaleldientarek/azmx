@@ -2,7 +2,16 @@
 
 How the four brands under AZM X sound. Read this whenever the deliverable carries a sub-brand name rather than AZM X. Source: the AZM X Unified Communication Strategy tone-of-voice appendix.
 
-**This file is voice only. It carries no visual system.** Every palette, logo, font, and layout rule in this skill is AZM X's. There is no Colab, Majarah, Clix, or Anatomi visual system here. If asked for a sub-brand deliverable, apply that brand's voice and **ask the user which visual system to use**. Never silently dress a Colab or Majarah piece in AZM X navy and Electric. Colab has its own installed skill, `colab-design` — use it for anything Colab-visual.
+**This file is voice only. It carries no visual system.** Every palette, logo, font, and layout rule in this skill is AZM X's. There is no Colab, Majarah, Clix, or Anatomi visual system here. If asked for a sub-brand deliverable, apply that brand's voice and **ask the user which visual system to use**. Never silently dress a Colab or Majarah piece in AZM X navy and Electric.
+
+Two sub-brands now have their own installed skills — use them for anything visual in that brand:
+
+| Brand | Visual skill | Signature |
+|---|---|---|
+| Colab | `colab-design` | Dark green ground, Electric Green accent, pixel/dither motif |
+| Majarah | `majarah-design` | Deep purple ground, Electric Purple accent, Oswald display type |
+
+Clix and Anatomi have no visual skill yet. For those, ask which system applies.
 
 AZM X's own voice and Four Dimensions live in `voice-and-tone.md`, not here.
 
@@ -160,4 +169,4 @@ Sub-brand copy is typically English, with Arabic for market-facing work. Majarah
 4. AZM X copy about a sub-brand is AZM X voice. Sub-brand copy about itself is the sub-brand's voice. Parent-house announcements naming several brands are AZM X voice.
 5. Ask which visual system applies. This file does not answer that question.
 
-Cross-references: `voice-and-tone.md` (AZM X voice, mechanics, checklist) · `audiences-and-messaging.md` (personas and core messages per brand) · `colab-design` skill (Colab visual system).
+Cross-references: `voice-and-tone.md` (AZM X voice, mechanics, checklist) · `audiences-and-messaging.md` (personas and core messages per brand) · `colab-design` skill (Colab visual system) · `majarah-design` skill (Majarah visual system).

@@ -4,6 +4,19 @@ All notable changes to the AZMX Brand Skill.
 
 ---
 
+## v1.4.1 — 2026-07-30
+
+**Majarah gains a visual system.** `majarah-design` is now an installed skill, so two of the four sub-brands have their own visual layer instead of borrowing AZM X's.
+
+### Changed
+
+- `SKILL.md` — the visual-system guardrail now names both sub-brand skills (Colab → `colab-design`, Majarah → `majarah-design`) and states explicitly that Clix and Anatomi still have none, so the answer there is to ask rather than to improvise.
+- `references/sub-brand-voices.md` — the voice-only guardrail now carries a table mapping each sub-brand to its visual skill and signature. Cross-reference footer updated.
+
+Voice ownership is unchanged: this skill remains the single source for all five voices, including Majarah's *Inclusive Mentor*. `majarah-design` carries a short voice summary that points back here rather than restating the calibration examples.
+
+---
+
 ## v1.4.0 — 2026-07-28
 
 **The communication system.** The skill now covers what AZMX says, and to whom, not only how it looks. Encoded from the official 126-page AZM X Unified Communication Strategy: five brand voices, eight personas with their approved core messages, seven channels, governance, workflows, and the creative bar.

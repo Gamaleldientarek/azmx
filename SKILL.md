@@ -77,7 +77,7 @@ Any copy task, on any surface, starts by fixing three things: the brand, the aud
 | Clix | ERP for SMEs | B2B | The Trusted Operator |
 | Anatomi | Design benchmark library | B2G · B2B · B2C | The Analyst–Curator |
 
-**This skill's visual system is AZM X only.** No palette, logo, font, or layout rule here belongs to the other four. Apply a sub-brand's voice freely; before applying visuals to a sub-brand deliverable, ask the user which visual system to use. Colab has its own skill, `colab-design`.
+**This skill's visual system is AZM X only.** No palette, logo, font, or layout rule here belongs to the other four. Apply a sub-brand's voice freely; before applying visuals to a sub-brand deliverable, ask the user which visual system to use. Two sub-brands have their own installed skills: Colab → `colab-design`, Majarah → `majarah-design`. Use them for anything visual in those brands. Clix and Anatomi have no visual skill yet — ask.
 
 **Never invent a message.** Three internal segments, three external motions, and eight personas each carry a verbatim core message in `references/audiences-and-messaging.md`. Quote it, or write a tighter line that keeps the same claim. Do not soften it, and do not move a message between brands.
 
