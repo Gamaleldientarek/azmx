@@ -96,6 +96,22 @@ system_profiler SPFontsDataType | grep -E "^\s+Full Name:.*Oswald" | sort -u
 
 Six lines, no `Oswald Regular <weight>` entries. `system_profiler` caches — if you just changed what is installed and the output looks stale, it is. Inside Figma, confirm with `listAvailableFontsAsync()` before a batch run, per `figma-workflow.md`.
 
+### The two commercial families
+
+Helvetica Now Display and FF Shamel Family are Monotype licences and are **not vendored here** — this repository is public, and neither font may be redistributed. Install them from your own licence. Verified present on the build machine, 2026-07-30:
+
+```bash
+ls ~/Library/Fonts | grep -iE "helveticanowdisplay|shamel"
+```
+
+| Family | Faces found | Note |
+|---|---|---|
+| Helvetica Now Display | 20 — Hairline, Thin, ExtLt, Light, Regular, Medium, Bold, ExtraBold, ExtBlk, Black, each with an italic | **No SemiBold.** Confirms the gap above — fall back to Medium |
+| `FF Shamel Family` | `Sans One Bold`, `Sans One Book` | The brand-book pair. The compliant AR baseline |
+| `ShamelFamily Sans` | `Bold`, `Medium` | A **different family name.** The third AR tier proposed by the Arabic spec — see `rtl-arabic.md` |
+
+That last row is a trap worth naming: `ShamelFamily-Sans*` and `FFShamelFamily-SansOne*` are separate families, not extra styles of one family. A variable bound to `FF Shamel Family` will never reach `Medium`, because `Medium` lives in the other family. Adding it as a third AR weight tier is a variable-architecture change, not a font-picker change.
+
 ## Size scale
 
 Display type is the composition in this system, so the top of the scale runs further than most brands.

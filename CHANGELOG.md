@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.2.0 — 2026-07-30
+
+Closes the two gaps 1.1.0 left open: the commercial fonts were undocumented, and the skill could not see the Arabic spec.
+
+### `references/typography.md` — the two commercial families
+
+Helvetica Now Display and FF Shamel stay un-vendored. This repository is public and neither font may be redistributed, so the section documents sourcing and verification instead, with the faces confirmed present on the build machine.
+
+Helvetica Now Display resolves to **20 faces and no SemiBold**, independently confirming the gap the weight matrix already claimed.
+
+**The trap now named:** `ShamelFamily-Sans*` and `FFShamelFamily-SansOne*` are *separate families*, not extra styles of one. A variable bound to `FF Shamel Family` can never reach `Medium`, because `Medium` lives in the other family. Adding it as a third Arabic weight tier — which the Arabic spec proposes — is a variable-architecture change, not a font-picker change.
+
+### `references/rtl-arabic.md` — points at the parent spec
+
+`specs/001-arabic-system/spec.md` (Draft, 2026-07-30) decides at parent level what this file only describes: the Arabic tier ladder, the mirroring law, bidi and numerals, copy governance, verification predicates. Five children inherit from it, social first — the brand book has three real Arabic Instagram posts and one real agenda screen, so social validates the parent's rules against *observed* artwork before sixteen slides inherit them.
+
+The spec wins over this file once it leaves Draft. Until then this file is the working reference and the spec is the direction of travel. Its §2.1 sharpens the central problem: Arabic loses **two** differentiators, not one — letter-spacing is unavailable outright (a connected script; tracking breaks the joins) and case does not exist. Size and colour carry nearly the whole hierarchy.
+
 ## 1.1.0 — 2026-07-30
 
 Vendors the display font. The v1 skill documented Oswald thoroughly and shipped none of it.

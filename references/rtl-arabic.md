@@ -4,6 +4,14 @@ Majarah is a Saudi community and its name, logo and tagline are Arabic. The bran
 
 **No Arabic Majarah deck exists yet.** This file is what you need to know before building one, not a record of one that was built.
 
+> ### ⚠ A parent spec is in flight — read it before building anything Arabic
+>
+> `specs/001-arabic-system/spec.md`, in the Majarah project working folder (not in this repo). Status: **Draft, awaiting review**, dated 2026-07-30.
+>
+> It decides, at parent level, matters this file only describes: the Arabic tier ladder, the mirroring law, bidi and numeral handling, copy governance and the untranslatable list, and the verification predicates. Five children inherit from it — `002-arabic-social`, `003-arabic-event-screens`, `004-arabic-deck`, `005-arabic-web`, `006-arabic-email` — and social is deliberately first, because the brand book contains three real Arabic Instagram posts and one real agenda screen. Those are *observed* Arabic layout; every rule the deck would need is *derived*.
+>
+> **Where the spec and this file disagree, the spec wins once it leaves Draft.** Until then treat this file as the working reference and the spec as the direction of travel. Its §2.1 sharpens the central problem beyond what is written below: Arabic loses not one differentiator but two — letter-spacing is unavailable outright, because Arabic is a connected script and tracking breaks the joins, and case does not exist at all. That leaves size and colour carrying nearly the whole hierarchy.
+
 ## What the file already gives you
 
 The `Font` collection has two modes and every text node in the v1 deck is bound to it. Flipping to `AR` retypesets all eighteen frames in one action:
