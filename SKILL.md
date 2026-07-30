@@ -142,6 +142,8 @@ Availability matters and will bite you:
 
 Oswald is the narrower family at the extremes, and Oswald is the display font — so treat Black and Thin as body-only weights in EN. Full verified matrix in `references/typography.md`.
 
+⛔ **Oswald ships with no operating system, and Figma hides that.** Figma serves it from its own Google Fonts library, so a deck renders correctly in the browser while the font is absent from the machine — then every build path that leaves Figma falls back silently and the display layer is wrong at 180pt. It is vendored here in `assets/fonts/oswald/` (SIL OFL). Install the **six statics only, never the variable font alongside them** — they share the PostScript name `Oswald-Regular` and collide. Sourcing, the rebuild recipe and the verification command are in `references/typography.md`.
+
 Headline sizes by slide role — display type is the composition, so these run large:
 
 | Role | Size |

@@ -31,6 +31,7 @@ references/
   voice.md                        Inclusive Mentor — short version, points at azmx-brand
   decision-log.md                 standing decisions + twelve known defects. Overrides everything
 assets/logo/                      six logo variants as single-path SVGs
+assets/fonts/oswald/              Oswald (OFL) — six statics, six WOFF2, variable font
 scripts/
   brand-check.py                  contrast checker and off-palette hex scanner
   export-figma-assets.py          pulls the raster library from Figma

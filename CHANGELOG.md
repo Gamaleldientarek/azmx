@@ -1,5 +1,30 @@
 # Changelog
 
+## 1.1.0 — 2026-07-30
+
+Vendors the display font. The v1 skill documented Oswald thoroughly and shipped none of it.
+
+### What changed
+
+- **`assets/fonts/oswald/`** — six static TTFs, six WOFF2, `Oswald[wght].ttf`, and `OFL.txt`
+- **`references/typography.md`** — new *Getting the fonts* section: sourcing, a rebuild recipe, the variable-font collision, and a verification command
+
+### Why
+
+Oswald was **not installed on the build machine** — not in `~/Library/Fonts`, `/Library/Fonts`, `/System/Library/Fonts`, or Adobe's font support directory. Helvetica Now Display (20 faces) and FF Shamel (4 faces) were both present; the display font, which carries every headline from 130pt to 200pt, was not.
+
+Figma hid it. Oswald is a Google Font, so Figma serves it from its own library and the deck renders correctly in the browser. Every build path that leaves Figma — HTML, pdfmake, python-pptx, any local render — falls back silently. The skill's own rule in `rtl-arabic.md` covers exactly this case: *"A variable pointing at an uninstalled face fails silently and falls back. Never assume."* The display font was violating it.
+
+### The collision worth knowing
+
+`Oswald[wght].ttf` declares PostScript name **`Oswald-Regular`** — identical to the static Regular. Installing both registers a phantom second family enumerating as `Oswald Regular Bold`, `Oswald Regular Medium`, `Oswald Regular SemiBold`, and the resolver picks between colliding faces nondeterministically. Install the six statics only. The variable font stays vendored for web use.
+
+Statics were cut from the variable font with `updateFontNames=True`, which sets `ID16 = Oswald` on the four non-RIBBI weights so the family resolves as one Oswald with six styles. Verified: `system_profiler` reports exactly six faces, no phantom entries.
+
+### Still not vendored
+
+Helvetica Now Display and FF Shamel Family are commercial Monotype licences and remain install-from-your-own-licence. The `azmx-brand` skill vendors AzmX and thmanyah; whether to do the same here is an open call, not an oversight.
+
 ## 1.0.0 — 2026-07-30
 
 First release. Built from a live audit of `Majarah Library` rather than from the prose build guides, which turned out to matter.

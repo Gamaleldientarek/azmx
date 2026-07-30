@@ -48,6 +48,54 @@ Two traps:
 1. **`Helvetica Now Display SemiBold` is the single missing face.** Fall back to `Medium`. The `font-weights/Semibold` variable resolves to the string `semibold`, which fails on Helvetica and silently falls back. If a body node renders lighter than expected, this is why. `Oswald SemiBold` does exist and is used for card titles.
 2. **Oswald is the narrower family at the extremes.** It has no Black, ExtraBold or Thin. So `font-weights/Black` (`black`) works on Helvetica but not Oswald, and `font-weights/Extralight` (`thin`) works on Helvetica but resolves to nothing usable on Oswald, whose thin cut is named `ExtraLight`. Because the display font *is* Oswald, treat Black and Thin as body-font-only weights in EN.
 
+## Getting the fonts
+
+**Oswald is not installed by default on any machine, and Figma hides that from you.** Figma serves Oswald from its own Google Fonts library, so the deck renders correctly in the browser while the font is absent from the OS. Every build path that leaves Figma — HTML, pdfmake, python-pptx, any local render — then falls back silently to a default grotesque, and the whole display layer is wrong at 180pt. This was the state of the build machine on 2026-07-30: full Helvetica Now Display, full FF Shamel, **no Oswald anywhere.**
+
+| Family | Vendored here | Licence | Where it comes from |
+|---|---|---|---|
+| **Oswald** | ✅ `assets/fonts/oswald/` | SIL OFL 1.1 | `github.com/google/fonts` → `ofl/oswald` |
+| Helvetica Now Display | ❌ | Commercial (Monotype) | Install from your own licence |
+| FF Shamel Family | ❌ | Commercial (Monotype) | Install from your own licence |
+
+Vendored set: six static TTFs, six WOFF2 for web, `Oswald[wght].ttf`, and `OFL.txt`.
+
+### Rebuilding the statics
+
+`fonts.google.com/download?family=Oswald` returns an HTML page, not a zip — the endpoint needs a browser now. Pull from the repo instead, which ships **only** the variable font:
+
+```bash
+curl -sSL -o "Oswald[wght].ttf" \
+  "https://raw.githubusercontent.com/google/fonts/main/ofl/oswald/Oswald%5Bwght%5D.ttf"
+```
+
+The `wght` axis runs 200–700 and its named instances are ExtraLight, Light, Regular, Medium, SemiBold, Bold — exactly the six weights this system uses. Cut them with `updateFontNames=True`, which sets `ID16 = Oswald` on the four non-RIBBI weights so the family resolves as one Oswald with six styles rather than six separate families:
+
+```python
+from fontTools.ttLib import TTFont
+from fontTools.varLib import instancer
+
+for wght, name in [(200,"ExtraLight"),(300,"Light"),(400,"Regular"),
+                   (500,"Medium"),(600,"SemiBold"),(700,"Bold")]:
+    f = TTFont("Oswald[wght].ttf")
+    instancer.instantiateVariableFont(f, {"wght": wght}, inplace=True, updateFontNames=True)
+    f.save(f"Oswald-{name}.ttf")
+```
+
+### ⛔ Never install the variable font alongside the statics
+
+`Oswald[wght].ttf` declares PostScript name **`Oswald-Regular`** — byte-identical to the static Regular. Install both and macOS registers a second, phantom family whose members enumerate as `Oswald Regular Bold`, `Oswald Regular Medium`, `Oswald Regular SemiBold`. Font menus show duplicates and the resolver picks between colliding faces nondeterministically. Install the **six statics only**; the variable font stays vendored for web use, where `font-variation-settings` is worth having.
+
+### Verify before you build
+
+Never assume the font took. On macOS:
+
+```bash
+system_profiler SPFontsDataType | grep -E "^\s+Full Name:.*Oswald" | sort -u
+```
+
+Six lines, no `Oswald Regular <weight>` entries. `system_profiler` caches — if you just changed what is installed and the output looks stale, it is. Inside Figma, confirm with `listAvailableFontsAsync()` before a batch run, per `figma-workflow.md`.
+
 ## Size scale
 
 Display type is the composition in this system, so the top of the scale runs further than most brands.
