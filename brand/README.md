@@ -8,7 +8,7 @@ Deep navy, electric blue, generous white space, serif personality, the chevron a
 
 As of v1.4.0 the skill also encodes the AZM X Unified Communication Strategy: five brand voices, eight audience personas with their approved core messages, seven channels with owners and metrics, the editorial cadence, and ready-to-run content prompts.
 
-**[Browse the image library →](https://gamaleldientarek.github.io/azmx-brand-skill/)** — all 242 brand images, click any one to download. No account needed.
+**[Browse the image library →](https://gamaleldientarek.github.io/azmx/brand/)** — all 242 brand images, click any one to download. No account needed.
 
 ## What's inside
 
@@ -42,7 +42,8 @@ As of v1.4.0 the skill also encodes the AZM X Unified Communication Strategy: fi
 You need [Claude Code](https://claude.com/claude-code) or any agent that supports Agent Skills.
 
 ```bash
-npx skills add Gamaleldientarek/azmx-brand-skill -g
+git clone https://github.com/Gamaleldientarek/azmx.git
+cp -r azmx/brand ~/.claude/skills/azmx-brand
 ```
 
 That's it. Next time you ask Claude for anything AZMX-branded, the skill kicks in automatically. You can also invoke it directly with `/azmx-brand`.
@@ -50,7 +51,8 @@ That's it. Next time you ask Claude for anything AZMX-branded, the skill kicks i
 To update to the latest version later:
 
 ```bash
-npx skills update azmx-brand
+cd azmx && git pull
+cp -r brand ~/.claude/skills/azmx-brand
 ```
 
 ## Quick palette reference

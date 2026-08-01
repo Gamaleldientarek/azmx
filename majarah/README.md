@@ -2,12 +2,12 @@
 
 The Majarah design system as an Agent Skill: the eleven-variable palette with a measured contrast matrix, the Oswald/Helvetica type system, the 1920×1080 slide grid, twelve layout archetypes, sixteen measured reference slides, and the EN/AR variable architecture.
 
-**Majarah** (مجرة — Arabic for *galaxy*) is the UX, design and digital-innovation community of Saudi Arabia, and one of four brands under [AZM X](https://github.com/Gamaleldientarek/azmx-brand-skill). Brand authorship: MUD Creative House.
+**Majarah** (مجرة — Arabic for *galaxy*) is the UX, design and digital-innovation community of Saudi Arabia, and one of four brands under [AZM X](https://github.com/Gamaleldientarek/azmx/tree/main/brand). Brand authorship: MUD Creative House.
 
 ## Install
 
 ```bash
-git clone https://github.com/Gamaleldientarek/majarah-design-skill.git \
+git clone https://github.com/Gamaleldientarek/azmx/tree/main/majarah.git \
   ~/.claude/skills/majarah-design
 ```
 
@@ -61,8 +61,8 @@ That mattered. The audit found **twelve defects**, including two headlines set a
 
 | Skill | Scope |
 |---|---|
-| [`azmx-brand`](https://github.com/Gamaleldientarek/azmx-brand-skill) | AZM X parent brand + the communication strategy that owns Majarah's **voice** |
-| [`colab-design`](https://github.com/Gamaleldientarek/colab-design-skill) | Colab, the sibling UX research lab — its own visual system |
+| [`azmx-brand`](https://github.com/Gamaleldientarek/azmx/tree/main/brand) | AZM X parent brand + the communication strategy that owns Majarah's **voice** |
+| [`colab-design`](https://github.com/Gamaleldientarek/azmx/tree/main/colab) | Colab, the sibling UX research lab — its own visual system |
 
 Voice lives in `azmx-brand`. Visuals live here. Never dress a Majarah deliverable in AZM X navy and Electric blue, or the reverse.
 

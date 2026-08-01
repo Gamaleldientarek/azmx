@@ -6,7 +6,7 @@ For best results converting an image from one theme colour to another, feed the 
 
 Feed the source image to the model together with the prompt for the colour you want. Every prompt holds the same things constant: lighting direction, grain, the frosted highlight, composition, camera angle, and pure white staying pure white. That is what keeps a recoloured image recognisably part of the same set.
 
-Browse and copy these from the gallery too: https://gamaleldientarek.github.io/azmx-brand-skill/#recolor
+Browse and copy these from the gallery too: https://gamaleldientarek.github.io/azmx/brand/#recolor
 
 ---
 

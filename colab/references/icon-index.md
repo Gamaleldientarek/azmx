@@ -15,18 +15,18 @@ For the house rules — Rounded-only, Stroke-default, the colour law, sizes, and
 Every URL is derivable from the icon name. There is no need to look a name up in the tables below if you already know it:
 
 ```text
-https://raw.githubusercontent.com/Gamaleldientarek/colab-design-skill/main/assets/icons/stroke-rounded/<icon-name>.svg
+https://raw.githubusercontent.com/Gamaleldientarek/azmx/main/colab/assets/icons/stroke-rounded/<icon-name>.svg
 ```
 
 ```bash
-curl -L -O "https://raw.githubusercontent.com/Gamaleldientarek/colab-design-skill/main/assets/icons/stroke-rounded/arrow-right-02.svg"
+curl -L -O "https://raw.githubusercontent.com/Gamaleldientarek/azmx/main/colab/assets/icons/stroke-rounded/arrow-right-02.svg"
 ```
 
 Grab several at once:
 
 ```bash
 for i in arrow-right-02 checkmark-circle-01 information-circle; do
-  curl -sL -O "https://raw.githubusercontent.com/Gamaleldientarek/colab-design-skill/main/assets/icons/stroke-rounded/$i.svg"
+  curl -sL -O "https://raw.githubusercontent.com/Gamaleldientarek/azmx/main/colab/assets/icons/stroke-rounded/$i.svg"
 done
 ```
 

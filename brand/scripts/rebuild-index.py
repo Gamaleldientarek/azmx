@@ -19,8 +19,8 @@ except ImportError:
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMG = os.path.join(ROOT, "assets", "images")
-RAW = "https://raw.githubusercontent.com/Gamaleldientarek/azmx-brand-skill/main/assets/images"
-GALLERY = "https://gamaleldientarek.github.io/azmx-brand-skill/"
+RAW = "https://raw.githubusercontent.com/Gamaleldientarek/azmx/main/brand/assets/images"
+GALLERY = "https://gamaleldientarek.github.io/azmx/brand/"
 
 TITLES = {"gradient": "Gradients", "blue": "Abstract Blue", "orange": "Orange",
           "purple": "Purple", "green": "Green", "yellow": "Yellow",
@@ -215,7 +215,7 @@ def sidebar(secs):
                      f'<span class="n">{len(secs[s])}</span></a>')
     h.append('<p class="navsep">Tools</p>')
     h.append('<a href="#recolor"><span>Recolour prompts</span></a>')
-    h.append('<a href="https://github.com/Gamaleldientarek/azmx-brand-skill"><span>The brand skill</span></a>')
+    h.append('<a href="https://github.com/Gamaleldientarek/azmx/tree/main/brand"><span>The brand skill</span></a>')
     h.append("</nav></aside>")
     return "\n".join(h)
 
@@ -290,15 +290,15 @@ def write_gallery(secs, total):
 <meta property="og:site_name" content="AZMX Brand Skill">
 <meta property="og:title" content="AZMX Image Library">
 <meta property="og:description" content="AZMX brand image library. Gradients, abstract blue, and recoloured brand imagery, free to download.">
-<meta property="og:url" content="https://gamaleldientarek.github.io/azmx-brand-skill/">
-<meta property="og:image" content="https://gamaleldientarek.github.io/azmx-brand-skill/assets/cover-social-1280x640.jpg">
+<meta property="og:url" content="https://gamaleldientarek.github.io/azmx/brand/">
+<meta property="og:image" content="https://gamaleldientarek.github.io/azmx/brand/assets/cover-social-1280x640.jpg">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="640">
 <meta property="og:image:alt" content="AZMX Brand Skill">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="AZMX Image Library">
 <meta name="twitter:description" content="AZMX brand image library. Gradients, abstract blue, and recoloured brand imagery, free to download.">
-<meta name="twitter:image" content="https://gamaleldientarek.github.io/azmx-brand-skill/assets/cover-social-1280x640.jpg">
+<meta name="twitter:image" content="https://gamaleldientarek.github.io/azmx/brand/assets/cover-social-1280x640.jpg">
 <style>
 :root{--navy:#040038;--electric:#001AFF;--lightblue:#5D8FFF;--blue100:#DDE8FF;--blue200:#BFD5FF}
 *{box-sizing:border-box}
@@ -425,7 +425,7 @@ letter-spacing:.4px;cursor:pointer;transition:background .18s,border-color .18s,
         h.append("</div></section>")
     h.append(f'<footer>Download one image:<br><code>curl -L -O "{RAW}/blue/blue-001.jpg"</code>'
              f'<br><br>Full brand skill and install instructions: '
-             f'<a class="link" href="https://github.com/Gamaleldientarek/azmx-brand-skill">github.com/Gamaleldientarek/azmx-brand-skill</a>'
+             f'<a class="link" href="https://github.com/Gamaleldientarek/azmx/tree/main/brand">github.com/Gamaleldientarek/azmx/tree/main/brand</a>'
              f'<br><br>Built by <a class="link" href="https://gamaleldien.com">gamaleldien.com</a></footer></main>')
     h.append(TAG_SCRIPT)
     with open(os.path.join(ROOT, "index.html"), "w") as fh:
