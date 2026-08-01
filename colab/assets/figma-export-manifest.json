@@ -1,0 +1,692 @@
+[
+  {
+    "path": "assets/logo/colab-mark-pine-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Mark, Colour=Pine Green",
+    "w": 200,
+    "h": 200,
+    "bytes": 486,
+    "hexes": [
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-mark-electric-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Mark, Colour=Electric Green",
+    "w": 200,
+    "h": 200,
+    "bytes": 486,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-mark-white.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Mark, Colour=White",
+    "w": 200,
+    "h": 200,
+    "bytes": 482,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wordmark-pine-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wordmark, Colour=Pine Green",
+    "w": 497,
+    "h": 92,
+    "bytes": 1495,
+    "hexes": [
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wordmark-electric-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wordmark, Colour=Electric Green",
+    "w": 497,
+    "h": 92,
+    "bytes": 1495,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wordmark-white.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wordmark, Colour=White",
+    "w": 497,
+    "h": 92,
+    "bytes": 1483,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wordmark-plus-tagline-en-pine-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wordmark + Tagline EN, Colour=Pine Green",
+    "w": 497,
+    "h": 208,
+    "bytes": 16125,
+    "hexes": [
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wordmark-plus-tagline-en-electric-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wordmark + Tagline EN, Colour=Electric Green",
+    "w": 497,
+    "h": 208,
+    "bytes": 16125,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wordmark-plus-tagline-en-white.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wordmark + Tagline EN, Colour=White",
+    "w": 497,
+    "h": 208,
+    "bytes": 16065,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wordmark-plus-tagline-ar-pine-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wordmark + Tagline AR, Colour=Pine Green",
+    "w": 497,
+    "h": 220,
+    "bytes": 22378,
+    "hexes": [
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wordmark-plus-tagline-ar-electric-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wordmark + Tagline AR, Colour=Electric Green",
+    "w": 497,
+    "h": 220,
+    "bytes": 22378,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wordmark-plus-tagline-ar-white.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wordmark + Tagline AR, Colour=White",
+    "w": 497,
+    "h": 220,
+    "bytes": 22320,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wide-compact-pine-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wide — Compact, Colour=Pine Green",
+    "w": 673,
+    "h": 92,
+    "bytes": 1872,
+    "hexes": [
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wide-compact-electric-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wide — Compact, Colour=Electric Green",
+    "w": 673,
+    "h": 92,
+    "bytes": 1872,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wide-compact-white.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wide — Compact, Colour=White",
+    "w": 673,
+    "h": 92,
+    "bytes": 1856,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wide-tagline-pine-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wide — Tagline, Colour=Pine Green",
+    "w": 895,
+    "h": 92,
+    "bytes": 16125,
+    "hexes": [
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wide-tagline-electric-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wide — Tagline, Colour=Electric Green",
+    "w": 895,
+    "h": 92,
+    "bytes": 16125,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wide-tagline-white.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wide — Tagline, Colour=White",
+    "w": 895,
+    "h": 92,
+    "bytes": 16065,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wide-full-pine-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wide — Full, Colour=Pine Green",
+    "w": 1071,
+    "h": 92,
+    "bytes": 16504,
+    "hexes": [
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wide-full-electric-green.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wide — Full, Colour=Electric Green",
+    "w": 1071,
+    "h": 92,
+    "bytes": 16504,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/logo/colab-wide-full-white.svg",
+    "set": "Colab Logo",
+    "variant": "Lockup=Wide — Full, Colour=White",
+    "w": 1071,
+    "h": 92,
+    "bytes": 16440,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-square-dark-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Square Dark, Colour=Brand",
+    "w": 72,
+    "h": 72,
+    "bytes": 148,
+    "hexes": [
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-square-dark-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Square Dark, Colour=White",
+    "w": 72,
+    "h": 72,
+    "bytes": 146,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-square-green-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Square Green, Colour=Brand",
+    "w": 72,
+    "h": 72,
+    "bytes": 148,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-square-green-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Square Green, Colour=White",
+    "w": 72,
+    "h": 72,
+    "bytes": 146,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-plus-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Plus, Colour=Brand",
+    "w": 72,
+    "h": 72,
+    "bytes": 298,
+    "hexes": [
+      "#103A21",
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-plus-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Plus, Colour=White",
+    "w": 72,
+    "h": 72,
+    "bytes": 256,
+    "hexes": [
+      "#D9D9D9"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-cross-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Cross, Colour=Brand",
+    "w": 72,
+    "h": 72,
+    "bytes": 366,
+    "hexes": [
+      "#103A21",
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-cross-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Cross, Colour=White",
+    "w": 72,
+    "h": 72,
+    "bytes": 352,
+    "hexes": [
+      "#D9D9D9"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-ring-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Ring, Colour=Brand",
+    "w": 72,
+    "h": 72,
+    "bytes": 583,
+    "hexes": [
+      "#34FF67",
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-ring-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Ring, Colour=White",
+    "w": 72,
+    "h": 72,
+    "bytes": 563,
+    "hexes": [
+      "#D9D9D9"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-outline-green-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Outline Green, Colour=Brand",
+    "w": 72,
+    "h": 72,
+    "bytes": 196,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-outline-green-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Outline Green, Colour=White",
+    "w": 72,
+    "h": 72,
+    "bytes": 194,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-outline-dark-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Outline Dark, Colour=Brand",
+    "w": 72,
+    "h": 72,
+    "bytes": 196,
+    "hexes": [
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-outline-dark-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Outline Dark, Colour=White",
+    "w": 72,
+    "h": 72,
+    "bytes": 194,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-plus-small-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Plus Small, Colour=Brand",
+    "w": 36,
+    "h": 36,
+    "bytes": 339,
+    "hexes": [
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-marker-plus-small-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Marker / Plus Small, Colour=White",
+    "w": 36,
+    "h": 36,
+    "bytes": 337,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-arrow-chevron-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Arrow / Chevron, Colour=Brand",
+    "w": 36,
+    "h": 61,
+    "bytes": 242,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-arrow-chevron-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Arrow / Chevron, Colour=White",
+    "w": 36,
+    "h": 61,
+    "bytes": 246,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-dither-block-green-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Dither / Block Green, Colour=Brand",
+    "w": 130,
+    "h": 72,
+    "bytes": 5357,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-dither-block-green-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Dither / Block Green, Colour=White",
+    "w": 130,
+    "h": 72,
+    "bytes": 5213,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-dither-block-dark-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Dither / Block Dark, Colour=Brand",
+    "w": 130,
+    "h": 72,
+    "bytes": 5357,
+    "hexes": [
+      "#34FF67",
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-dither-block-dark-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Dither / Block Dark, Colour=White",
+    "w": 130,
+    "h": 72,
+    "bytes": 5213,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-dither-strip-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Dither / Strip, Colour=Brand",
+    "w": 64.36,
+    "h": 106.42,
+    "bytes": 669,
+    "hexes": [
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-dither-strip-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Dither / Strip, Colour=White",
+    "w": 64.36,
+    "h": 106.42,
+    "bytes": 653,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-dither-grid-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Dither / Grid, Colour=Brand",
+    "w": 100,
+    "h": 100,
+    "bytes": 718,
+    "hexes": [
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-dither-grid-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Dither / Grid, Colour=White",
+    "w": 100,
+    "h": 100,
+    "bytes": 692,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-tile-cross-small-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Tile / Cross Small, Colour=Brand",
+    "w": 165,
+    "h": 165,
+    "bytes": 433,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-tile-cross-small-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Tile / Cross Small, Colour=White",
+    "w": 165,
+    "h": 165,
+    "bytes": 429,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-tile-cross-large-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Tile / Cross Large, Colour=Brand",
+    "w": 253,
+    "h": 253,
+    "bytes": 431,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-tile-cross-large-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Tile / Cross Large, Colour=White",
+    "w": 253,
+    "h": 253,
+    "bytes": 427,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-tile-cross-stack-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Tile / Cross Stack, Colour=Brand",
+    "w": 165,
+    "h": 330,
+    "bytes": 778,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-tile-cross-stack-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Tile / Cross Stack, Colour=White",
+    "w": 165,
+    "h": 330,
+    "bytes": 770,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-tile-checker-corner-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Tile / Checker Corner, Colour=Brand",
+    "w": 254,
+    "h": 310,
+    "bytes": 1430,
+    "hexes": [
+      "#34FF67"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-tile-checker-corner-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Tile / Checker Corner, Colour=White",
+    "w": 254,
+    "h": 310,
+    "bytes": 1422,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-frame-square-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Frame / Square, Colour=Brand",
+    "w": 267,
+    "h": 267,
+    "bytes": 1216,
+    "hexes": [
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-frame-square-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Frame / Square, Colour=White",
+    "w": 267,
+    "h": 267,
+    "bytes": 1212,
+    "hexes": [],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-frame-wide-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Frame / Wide, Colour=Brand",
+    "w": 479,
+    "h": 267,
+    "bytes": 1279,
+    "hexes": [
+      "#103A21",
+      "#34FF67"
+    ],
+    "opacity": true
+  },
+  {
+    "path": "assets/shapes/shape-frame-wide-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Frame / Wide, Colour=White",
+    "w": 479,
+    "h": 267,
+    "bytes": 1273,
+    "hexes": [],
+    "opacity": true
+  },
+  {
+    "path": "assets/shapes/shape-frame-composite-brand.svg",
+    "set": "Shapes",
+    "variant": "Shape=Frame / Composite, Colour=Brand",
+    "w": 267,
+    "h": 377,
+    "bytes": 3354,
+    "hexes": [
+      "#34FF67",
+      "#103A21"
+    ],
+    "opacity": false
+  },
+  {
+    "path": "assets/shapes/shape-frame-composite-white.svg",
+    "set": "Shapes",
+    "variant": "Shape=Frame / Composite, Colour=White",
+    "w": 267,
+    "h": 377,
+    "bytes": 3264,
+    "hexes": [],
+    "opacity": false
+  }
+]

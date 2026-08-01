@@ -1,0 +1,11 @@
+.DS_Store
+*.log
+node_modules/
+.venv/
+__pycache__/
+
+# icon vendoring scratch. scripts/vendor-hugeicons.py works in a temp dir, but
+# never let a downloaded npm tarball or package tree land in the repo.
+*.tgz
+/package/
+package-lock.json
