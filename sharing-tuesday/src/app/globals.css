@@ -1,0 +1,611 @@
+@import "tailwindcss";
+
+/*
+ * AZMX Design System — web tokens
+ * "Restraint is the luxury." Navy + two blues + white. Chevron is the only motif.
+ */
+
+/* `dark:` utilities key off the resolved theme attribute, never the media
+ * query directly — the inline head script resolves auto/light/dark first. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  /* Brand color tokens */
+  --color-navy: #040038; /* Dark Navy — premium dark surface */
+  --color-electric: #001aff; /* Electric — accent / punctuation only */
+  --color-light-blue: #5d8fff; /* dark-surface accent partner */
+  --color-white: #ffffff;
+
+  --color-blue-50: #f0f5ff;
+  --color-blue-100: #dde8ff;
+  --color-blue-200: #bfd5ff;
+  --color-blue-700: #0200d3;
+  --color-blue-900: #01006e;
+  --color-blue-950: #010040;
+
+  --color-neutral-500: #6c737f;
+  --color-neutral-900: #111927;
+
+  /* RAG semantic dots ONLY (AZMX §2.4) — e.g. the joining open/closed state. */
+  --color-green: #22c36f;
+  --color-red: #ff2b3c;
+
+  /* Hairline colors (§5.7) — 1px rules. Light = Neutral-900 @12%, Dark = White @14% */
+  --color-hairline-light: rgba(17, 25, 39, 0.12);
+  --color-hairline-dark: rgba(255, 255, 255, 0.14);
+
+  /* Type families (bound in layout via next/font variables) */
+  --font-display: var(--font-display); /* thmanyah serif display */
+  --font-body: var(--font-body); /* Azm X Variable */
+
+  /* Spacing scale — the ONLY permitted step values (8px baseline) */
+  --spacing-az-1: 8px;
+  --spacing-az-2: 16px;
+  --spacing-az-3: 24px;
+  --spacing-az-4: 40px;
+  --spacing-az-5: 64px;
+  --spacing-az-6: 96px;
+  --spacing-az-7: 128px;
+  --spacing-az-8: 160px;
+}
+
+/* =========================================================================
+ * THEME ROLES — the light surfaces are theme-driven; the navy/gradient
+ * surfaces ARE the dark aesthetic and never change. Brand tokens above stay
+ * immutable; only these role variables flip under [data-theme="dark"].
+ * ========================================================================= */
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --surface: var(--color-white); /* .surface-white */
+  --surface-raised: var(--color-blue-50); /* .surface-blue-50 */
+
+  /* Ink */
+  --ink: var(--color-navy); /* headings, strong text */
+  --ink-body: var(--color-neutral-900); /* body copy */
+  --ink-meta: var(--color-neutral-500); /* captions, meta */
+
+  /* Accent (two-blues rule): Electric punctuates light; Light Blue on dark. */
+  --accent: var(--color-electric);
+
+  /* Hairline on the themed surface */
+  --hairline: var(--color-hairline-light);
+
+  --background: var(--surface);
+  --foreground: var(--ink-body);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Deep navy-tinted dark, one step apart from brand Navy #040038 so the
+   * navy CTA panel still reads as a panel (with a hairline outline). */
+  --surface: #0a0a2e;
+  --surface-raised: #12123f; /* the "quiet panel" step of the dark ramp */
+
+  --ink: var(--color-white);
+  --ink-body: var(--color-blue-100);
+  --ink-meta: #8a9bc9; /* navy-tinted meta — AA at caption size on --surface */
+
+  --accent: var(--color-light-blue); /* never Electric small text on dark */
+
+  --hairline: var(--color-hairline-dark);
+}
+
+/* Themed utility tokens (`inline` so utilities emit var() and follow the
+ * data-theme swap at runtime): text-ink, text-ink-body, text-ink-meta,
+ * text-accent, bg-surface, bg-surface-raised, border-hairline, bg-hairline. */
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-ink: var(--ink);
+  --color-ink-body: var(--ink-body);
+  --color-ink-meta: var(--ink-meta);
+  --color-accent: var(--accent);
+  --color-hairline: var(--hairline);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+/* Serif = personality. Applied via .font-display utility or headings as needed. */
+.font-display {
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+}
+
+/* =========================================================================
+ * SURFACE ROLES (§2.5) — four surfaces, each with a job.
+ * The gradient is an EVENT surface only: landing hero + the reveal moment.
+ * ========================================================================= */
+
+/* Navy → Electric, 145°, with a Blue-900 mid-stop to deepen the middle. */
+.surface-event {
+  background-image: linear-gradient(
+    145deg,
+    var(--color-navy) 0%,
+    var(--color-blue-900) 55%,
+    var(--color-electric) 100%
+  );
+  color: var(--color-white);
+}
+
+.surface-navy {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+}
+
+/* Opt-in depth for the navy screens that carry no background element (the
+ * login gate, the room's three no-session states, the 404). Deliberately NOT
+ * .surface-event: no Electric, no diagonal hero sweep — the event gradient
+ * stays reserved for the landing and the reveal. This is Navy with two
+ * off-canvas pools of Blue-900 drifting underneath on a ~26s/34s traverse:
+ * alive, never something you watch move. It is the sanctioned replacement for
+ * the retired background chevron art (2026-07-20) — do not reintroduce those.
+ *
+ * Cost: two composited pseudo-elements animating transform/opacity only.
+ * No filter: blur() (the falloff is in the gradient), no background-position
+ * animation (that repaints the whole surface every frame), no will-change
+ * (a running transform animation self-promotes; forcing it would pin two
+ * large layers in memory for the whole session on a projector). */
+.surface-navy-ambient {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--color-navy);
+  /* The still base — a whisper between two neighbouring darks. Carries the
+   * surface on its own when motion is off. */
+  background-image: linear-gradient(
+    168deg,
+    var(--color-blue-900) 0%,
+    var(--color-blue-950) 42%,
+    var(--color-navy) 100%
+  );
+  color: var(--color-white);
+}
+
+.surface-navy-ambient::before,
+.surface-navy-ambient::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  /* Promote to a compositor layer. Without this the browser re-rasterizes a
+   * multi-megapixel radial gradient every frame, which presents as flicker
+   * rather than as slowness. */
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Top-right pool. */
+.surface-navy-ambient::before {
+  top: -18vmax;
+  right: -10vmax;
+  width: 52vmax;
+  height: 52vmax;
+  background: radial-gradient(
+    circle at center,
+    rgba(2, 0, 168, 0.62) 0%,
+    rgba(1, 0, 110, 0.4) 40%,
+    rgba(1, 0, 110, 0) 72%
+  );
+  animation: az-ambient-a 13s linear infinite alternate;
+}
+
+/* Bottom-left pool — a touch of Light Blue at the shoulder, very low alpha,
+ * so the two pools aren't the same note twice. */
+.surface-navy-ambient::after {
+  bottom: -20vmax;
+  left: -12vmax;
+  width: 58vmax;
+  height: 58vmax;
+  background: radial-gradient(
+    circle at center,
+    rgba(1, 0, 110, 0.58) 0%,
+    rgba(93, 143, 255, 0.14) 44%,
+    rgba(1, 0, 110, 0) 74%
+  );
+  animation: az-ambient-b 17s linear infinite alternate;
+}
+
+/* Theme-driven: white in light, deep navy-tinted dark under [data-theme="dark"]. */
+.surface-white {
+  background-color: var(--surface);
+  color: var(--ink-body);
+}
+
+.surface-blue-50 {
+  background-color: var(--surface-raised);
+  color: var(--ink-body);
+}
+
+/* In dark the raised/navy panels sit close to the page value — a hairline
+ * (a rule, not a shadow) restores the panel edge. Scoped so full-bleed navy
+ * pages (login, projection, identity hero) are untouched. */
+[data-theme="dark"] .surface-blue-50 {
+  border: 1px solid var(--color-hairline-dark);
+}
+
+/* =========================================================================
+ * TYPE SCALE — AZMX projection px (§3.3) mapped to responsive rem/clamp.
+ * Serif = personality (titles, numerals). Sans = information (body, labels).
+ * All heads left-aligned/top-weighted; only the reveal moment centers.
+ * ========================================================================= */
+
+/* Eyebrow — UPPERCASE micro-label, +tracking (§3.3). 16px @ +2.4px ≈ 0.15em. */
+.eyebrow {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.8125rem;
+  line-height: 1.25;
+}
+
+/* Serif display scale ------------------------------------------------------ */
+
+/* Cover / reveal hero (168–220px on canvas). The biggest voice. */
+.az-hero {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.75rem, 8.5vw, 6.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+/* Divider / big section title (120px). */
+.az-display {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+}
+
+/* Split-panel display (landing hero) — the az-display voice, sized so each
+ * sentence of the two-line lockup keeps to one line inside the start panel
+ * column (full-width below lg; minmax(30rem, 40%) from lg up). */
+.az-display-split {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(2.25rem, 11vw - 0.5rem, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+@media (min-width: 1024px) {
+  .az-display-split {
+    /* The sentence lines run ~9.8em; panel content is ~40vw minus padding,
+     * capped at max-w-xl — this keeps each sentence to one line throughout. */
+    font-size: clamp(2.25rem, 4vw - 0.75rem, 3.5rem);
+  }
+}
+
+/* Slide title / page H1 (64px). */
+.az-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(1.85rem, 4.5vw, 3.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+}
+
+/* Section / card title H2 (36px). */
+.az-h2 {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+/* Sans information scale ---------------------------------------------------- */
+
+/* Lead / intro body (26px, Light). */
+.az-lead {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 300;
+  font-size: clamp(1.125rem, 2.2vw, 1.625rem);
+  line-height: 1.46;
+  letter-spacing: 0;
+}
+
+/* Body (22px, Regular). NEVER serif. */
+.az-body {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 400;
+  font-size: clamp(1rem, 1.4vw, 1.1875rem);
+  line-height: 1.55;
+}
+
+/* Sub-label / role title (22px, SemiBold). */
+.az-sublabel {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.0625rem, 1.6vw, 1.375rem);
+  line-height: 1.3;
+  letter-spacing: 0.002em;
+}
+
+/* Caption / meta (14px, Medium). */
+.az-caption {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+}
+
+/* Projection scale — legible at 3–5m. vw-led, big and high-contrast. -------- */
+
+.az-proj-hero {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(3.5rem, 8.5vw, 10rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+/* The human room code on the projection — big tabular sans. */
+.az-proj-code {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.5rem, 6.5vw, 6.5rem);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Panel-scale room code — same tabular-sans identity as .az-proj-code (code
+ * = information, sans per rules), sized to lead the control panel without
+ * fighting the serif page title or the single Electric CTA. */
+.az-code {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.az-proj-label {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: clamp(0.875rem, 1.5vw, 1.625rem);
+  line-height: 1.25;
+}
+
+/* =========================================================================
+ * CHEVRON — the only graphic device. Auto-direction flips for a future RTL.
+ * ========================================================================= */
+[dir="rtl"] .az-chevron-auto {
+  transform: scaleX(-1);
+}
+
+/* =========================================================================
+ * MOTION — one easing family, three durations, transform/opacity only.
+ *
+ * Personality: PREMIUM. Decelerating entrances, ZERO overshoot, nothing
+ * bouncy. The projection wheel is the hero; the panel and the phone speak the
+ * same language one notch quieter.
+ *
+ * Every animation in this block has a reduced-motion branch at the bottom
+ * that lands on the settled state. Nothing here animates a layout property.
+ * JS-side counterparts live in src/components/motion/timing.ts.
+ * ========================================================================= */
+:root {
+  /* Signature curve — expo-out. Entrances, settles, landings. */
+  --az-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Starts and ends in place — FLIP reorders, travelling bands. */
+  --az-ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --az-dur-quick: 180ms; /* press / micro-feedback */
+  --az-dur-base: 420ms; /* state change */
+  --az-dur-slow: 620ms; /* entrance / landing */
+}
+
+/* Entrance — the house cascade. Used with staggered animation-delay. */
+@keyframes az-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.az-rise {
+  animation: az-rise 520ms var(--az-ease-out) both;
+}
+
+/* Landing — an element that arrives with weight. Scale settles inward, no
+ * overshoot: the number feels set down, not sprung. */
+@keyframes az-land {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.az-land {
+  animation: az-land var(--az-dur-slow) var(--az-ease-out) both;
+}
+
+/* Lock-in — for an element already on screen (the ticker's final value).
+ * Scale only, never opacity, so the numeral never blinks out of existence. */
+@keyframes az-lock {
+  from {
+    transform: scale(1.09);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.az-lock {
+  animation: az-lock var(--az-dur-slow) var(--az-ease-out) both;
+}
+
+/* Indeterminate rail — a band travelling under the Electric CTA while a draw
+ * is in flight. A moving hairline, not a spinner: no icon, no glow. */
+@keyframes az-rail {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(400%);
+  }
+}
+
+.az-rail-band {
+  animation: az-rail 1150ms var(--az-ease-inout) infinite;
+}
+
+/* Shuffle scan — a highlight travelling down the roster while the selector
+ * runs. Staggered per row via animation-delay. Opacity only. */
+@keyframes az-scan {
+  0%,
+  100% {
+    opacity: 0.42;
+  }
+  22% {
+    opacity: 1;
+  }
+}
+
+.az-scan {
+  animation: az-scan 1200ms var(--az-ease-inout) infinite;
+}
+
+/* A rule drawing itself in — the "earned" underline under a result. */
+@keyframes az-rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.az-rule-draw {
+  transform-origin: left center;
+  animation: az-rule-draw var(--az-dur-slow) var(--az-ease-out) both;
+}
+
+/* Ambient waiting breath — the only looping motion on an idle surface. */
+@keyframes az-breathe {
+  0%,
+  100% {
+    /* Shallow on purpose: a breath, not a blink. Deep enough to read as
+     * alive on a hero name without looking like it is disappearing. */
+    opacity: 0.68;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.az-breathe {
+  animation: az-breathe 1800ms var(--az-ease-inout) infinite;
+}
+
+/* Ambient drift — the slowest thing in the system. Paired with `alternate` so
+ * each pool ping-pongs (26s and 34s one-way: no shared beat, nothing to catch
+ * the eye on a loop). Amplitude is deliberately smaller than the pools' own
+ * falloff, so the edge of a pool never sweeps past a line of text. */
+@keyframes az-ambient-a {
+  from {
+    opacity: 0.5;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(-14vmax, 9vmax, 0);
+  }
+}
+
+@keyframes az-ambient-b {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0.5;
+    transform: translate3d(12vmax, -11vmax, 0);
+  }
+}
+
+/* Press response — anticipation on the primary action. Transform only, so it
+ * costs nothing and never nudges neighbours. */
+.az-press {
+  transition: transform var(--az-dur-quick) var(--az-ease-out);
+}
+
+.az-press:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+/* -------------------------------------------------------------------------
+ * REDUCED MOTION — every animation above resolves to its settled state.
+ * Non-negotiable: the result must be fully legible with all motion off.
+ * ---------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .az-rise,
+  .az-rise *,
+  .az-land,
+  .az-lock,
+  .az-scan,
+  .az-breathe,
+  .az-rule-draw,
+  .az-rail-band {
+    animation: none !important;
+  }
+
+  /* Settled end-states for the keyframes that start from a transformed or
+   * dimmed value — without these, "animation: none" would strand them. */
+  .az-rule-draw {
+    transform: scaleX(1) !important;
+  }
+
+  .az-scan,
+  .az-breathe {
+    opacity: 1 !important;
+  }
+
+  /* The travelling band is pure decoration with motion off; the static rail
+   * underneath stays and carries the in-flight state on its own. */
+  .az-rail-band {
+    display: none;
+  }
+
+  .az-press:active:not(:disabled) {
+    transform: none;
+  }
+
+  /* The ambient pools stop where they sit — no transform, full opacity. The
+   * static base gradient plus two settled pools is the intended still
+   * composition, not a fallback: the surface still has depth with motion off. */
+  .surface-navy-ambient::before,
+  .surface-navy-ambient::after {
+    animation: none !important;
+    will-change: auto !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

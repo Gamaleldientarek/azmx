@@ -1,0 +1,18 @@
+{
+  // Cloudflare Worker: games.gamaleldien.com → Vercel origin proxy
+  // Custom domain attachment auto-creates the DNS record for `games`.
+  "name": "games-gamaleldien",
+  "main": "src/index.js",
+  "compatibility_date": "2026-07-01",
+  "routes": [
+    {
+      "pattern": "games.gamaleldien.com",
+      "custom_domain": true
+    }
+  ],
+  "vars": {
+    // The Vercel production origin the proxy forwards to.
+    // Updated at deploy time once the Vercel project exists.
+    "ORIGIN_HOST": "sharing-tuesday.vercel.app"
+  }
+}
