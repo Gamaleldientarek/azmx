@@ -259,13 +259,13 @@ The Hugeicons Figma library exposes `Type` and `Style` as variant properties on 
 Vendored SVGs are bare: a 24 × 24 `viewBox`, `stroke="currentColor"`, no metadata, no editor cruft, single line, averaging ~1 KB.
 
 ```bash
-curl -L -O "https://raw.githubusercontent.com/Gamaleldientarek/colab-design-skill/main/assets/icons/stroke-rounded/arrow-right-02.svg"
+curl -L -O "https://raw.githubusercontent.com/Gamaleldientarek/azmx/main/colab/assets/icons/stroke-rounded/arrow-right-02.svg"
 ```
 
 The URL is a pure function of the icon name:
 
 ```text
-https://raw.githubusercontent.com/Gamaleldientarek/colab-design-skill/main/assets/icons/stroke-rounded/<icon-name>.svg
+https://raw.githubusercontent.com/Gamaleldientarek/azmx/main/colab/assets/icons/stroke-rounded/<icon-name>.svg
 ```
 
 The working set in one call:
@@ -274,7 +274,7 @@ The working set in one call:
 for i in arrow-down-01 arrow-left-02 arrow-right-02 square-arrow-move-left-up \
          checkmark-circle-01 multiplication-sign-circle information-circle \
          add-01 remove-01 cancel-01 tick-02 alert-02 calendar-03 user; do
-  curl -sL -O "https://raw.githubusercontent.com/Gamaleldientarek/colab-design-skill/main/assets/icons/stroke-rounded/$i.svg"
+  curl -sL -O "https://raw.githubusercontent.com/Gamaleldientarek/azmx/main/colab/assets/icons/stroke-rounded/$i.svg"
 done
 ```
 

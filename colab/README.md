@@ -13,7 +13,7 @@ Colab is a bilingual English/Arabic **User Experience Research Lab** operating i
 ## Install
 
 ```bash
-git clone https://github.com/Gamaleldientarek/colab-design-skill.git ~/.claude/skills/colab-design
+git clone https://github.com/Gamaleldientarek/azmx.git ~/.claude/skills/colab-design
 ```
 
 Claude Code discovers it automatically. Invoke with `/colab-design`, or just mention Colab, Electric Green, the pixel motif, or the Advanced Presentation grid and it activates on its own.
@@ -101,7 +101,7 @@ Ratios are computed with the WCAG 2.x relative-luminance formula, not estimated.
 
 ```bash
 # first install
-git clone https://github.com/Gamaleldientarek/colab-design-skill.git ~/.claude/skills/colab-design
+git clone https://github.com/Gamaleldientarek/azmx.git ~/.claude/skills/colab-design
 
 # update to the latest release
 cd ~/.claude/skills/colab-design && git pull

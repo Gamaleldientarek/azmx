@@ -113,11 +113,11 @@ Any visual deliverable that needs imagery **uses this library** rather than gene
 **How to reference them, by deliverable type:**
 
 - **HTML, email, or web page**: use the public URL so the file works for anyone who opens it —
-  `https://raw.githubusercontent.com/Gamaleldientarek/azmx-brand-skill/main/assets/images/blue/blue-014.jpg`
+  `https://raw.githubusercontent.com/Gamaleldientarek/azmx/main/brand/assets/images/blue/blue-014.jpg`
   Local relative paths only when the deliverable ships alongside the skill folder.
 - **Word, PowerPoint, PDF, or any document build**: embed the local file from `assets/images/<section>/`.
 - **Figma**: upload the local file as an image fill, and prefer the chevron photo mask over a plain rectangle.
-- **Anything the user will hand-edit later**: give them the filename and the gallery link, https://gamaleldientarek.github.io/azmx-brand-skill/
+- **Anything the user will hand-edit later**: give them the filename and the gallery link, https://gamaleldientarek.github.io/azmx/brand/
 
 **Recolouring an image to another theme:** the library ships tested prompts in `references/recolor-prompts.md` that convert an image between colour themes while holding lighting, grain, frosted highlights, composition, and pure white constant. Use the matching prompt with the Seeddance Edit V5 model, and never hand-write a recolour prompt when one exists. Recoloured output belongs in the section it was converted to, added through `scripts/add-images.py`.
 

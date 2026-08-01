@@ -7,7 +7,7 @@ Source: Figma file `Colab Design System`, page `02 · Design System`, component 
 Download any asset directly:
 
 ```bash
-curl -L -O "https://raw.githubusercontent.com/Gamaleldientarek/colab-design-skill/main/assets/logo/colab-wordmark-pine-green.svg"
+curl -L -O "https://raw.githubusercontent.com/Gamaleldientarek/azmx/main/colab/assets/logo/colab-wordmark-pine-green.svg"
 ```
 
 Machine-readable dimensions, byte sizes and per-file colour lists are in `assets/figma-export-manifest.json`.
