@@ -1,0 +1,111 @@
+/* AZMX brand web fonts.
+   thmanyah serif display: titles, stats, quotes, numerals. No italic exists.
+   Azm X: body, labels, tables, UI. Supports English and Arabic. */
+
+@font-face {
+  font-family: "thmanyah serif display";
+  src: url("fonts/thmanyah/thmanyahserifdisplay-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "thmanyah serif display";
+  src: url("fonts/thmanyah/thmanyahserifdisplay-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "thmanyah serif display";
+  src: url("fonts/thmanyah/thmanyahserifdisplay-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "thmanyah serif display";
+  src: url("fonts/thmanyah/thmanyahserifdisplay-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "thmanyah serif display";
+  src: url("fonts/thmanyah/thmanyahserifdisplay-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Azm X";
+  src: url("fonts/azmx/AzmX-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Azm X";
+  src: url("fonts/azmx/AzmX-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Azm X";
+  src: url("fonts/azmx/AzmX-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Azm X";
+  src: url("fonts/azmx/AzmX-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Azm X";
+  src: url("fonts/azmx/AzmX-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Azm X";
+  src: url("fonts/azmx/AzmX-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Azm X";
+  src: url("fonts/azmx/AzmX-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Azm X";
+  src: url("fonts/azmx/AzmX-Heavy.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --azmx-electric: #001AFF;
+  --azmx-dark-navy: #040038;
+  --azmx-light-blue: #5D8FFF;
+  --azmx-white: #FFFFFF;
+  --azmx-blue-50: #F0F5FF;
+  --azmx-blue-100: #DDE8FF;
+  --azmx-blue-200: #BFD5FF;
+  --azmx-blue-900: #01006E;
+  --azmx-neutral-900: #111927;
+  --azmx-font-display: "thmanyah serif display", Georgia, serif;
+  --azmx-font-body: "Azm X", -apple-system, "Segoe UI", Tahoma, sans-serif;
+  --azmx-gradient: linear-gradient(145deg, #040038 0%, #01006E 55%, #001AFF 100%);
+}

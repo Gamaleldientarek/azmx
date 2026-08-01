@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><!-- [SLOT: email title — نوع البريد + الفترة] -->بريد عزم إكس — عنوان</title>
+<!--
+  AZMX EMAIL STARTER SKELETON — default blue theme.
+  Built from the AZMX Email Design System (EMAIL-DESIGN-SYSTEM.md).
+  Rules: all styles INLINE (this <style> is browser/ESP polish only) · dir="rtl" on every
+  table AND td · chevrons ‹ inside <span dir="ltr"> · file < ~100KB · send via Brevo
+  "Code your own" · {{ unsubscribe }} stays in the footer.
+  Theming: this file uses the DEFAULT BLUE hexes — re-theme a COPY via the find-replace
+  map in EMAIL-DESIGN-SYSTEM.md §B4.
+-->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* AZMX brand webfonts via CDN — load in Spark/Apple Mail/browser preview; Gmail falls back to system stacks */
+  @font-face { font-family:'Thmanyah Serif Display'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/serif-regular.woff2') format('woff2'); font-weight:400; font-display:swap; }
+  @font-face { font-family:'Thmanyah Serif Display'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/serif-medium.woff2') format('woff2'); font-weight:500; font-display:swap; }
+  @font-face { font-family:'Thmanyah Serif Display'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/serif-bold.woff2') format('woff2'); font-weight:700; font-display:swap; }
+  @font-face { font-family:'Azm X'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/sans-regular.woff2') format('woff2'); font-weight:400; font-display:swap; }
+  @font-face { font-family:'Azm X'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/sans-medium.woff2') format('woff2'); font-weight:500; font-display:swap; }
+  @font-face { font-family:'Azm X'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/sans-semibold.woff2') format('woff2'); font-weight:600; font-display:swap; }
+  @font-face { font-family:'Azm X'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/sans-bold.woff2') format('woff2'); font-weight:700; font-display:swap; }
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+  body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body, td { font-family: 'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; }
+  /* Browser-preview hover layer — stripped by Gmail, never load-bearing */
+  .hov-chip { transition: background-color .18s ease; }
+  .hov-chip:hover { background-color: #DDE8FF !important; }
+  .hov-agenda { transition: background-color .18s ease; }
+  .hov-agenda:hover { background-color: #F0F5FF !important; }
+  a { transition: color .18s ease; }
+  a:hover { color: #01006E !important; }
+  .soc:hover { border-color: #5D8FFF !important; color: #FFFFFF !important; }
+  .lnk-on-dark:hover { color: #FFFFFF !important; }
+  /* THE STANDARD AZMX RESPONSIVE KIT — ships in every email (honored via ESP send) */
+  @media only screen and (max-width:480px) {
+    .rs-hero  { font-size:36px !important; line-height:1.25 !important; }
+    .rs-sec   { font-size:22px !important; }
+    .rs-big   { font-size:22px !important; }
+    .rs-quote { font-size:20px !important; }
+    .rs-ghost { font-size:52px !important; }
+    .rs-col   { display:block !important; width:100% !important; padding:0 4px 8px 4px !important; }
+    .rs-chip  { font-size:12px !important; padding-right:8px !important; }
+    .rs-agd   { display:block !important; width:100% !important; padding:0 0 10px 0 !important; }
+    .rs-agt   { display:block !important; width:100% !important; }
+    .rs-ftlogo  { display:block !important; width:100% !important; text-align:center !important; }
+    .rs-ftlogo img { margin:0 auto !important; }
+    .rs-ftico   { display:block !important; width:100% !important; text-align:center !important; padding-top:16px !important; }
+    .rs-ftmeta  { text-align:center !important; }
+    .rs-ftmade  { display:block !important; width:100% !important; text-align:center !important; }
+    .rs-ftunsub { display:block !important; width:100% !important; text-align:center !important; padding-top:12px !important; }
+  }
+</style>
+</head>
+<body style="margin:0; padding:0; background-color:#EDF2FB;">
+
+<center>
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#EDF2FB" style="width:100%; background-color:#EDF2FB;">
+<tr>
+<td dir="rtl" align="center" style="padding:24px 32px; text-align:center;">
+
+<!-- ============ THE ROUNDED WHITE SHEET (640px fluid) ============ -->
+<table role="presentation" dir="rtl" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF" style="width:100%; max-width:640px; margin:0 auto; background-color:#FFFFFF; border-radius:24px; box-shadow:0 2px 8px rgba(4,0,56,.06);">
+
+<!-- ================================================== HERO (C01 image-bg / C02 typographic) -->
+<!-- [SLOT: to use a cover photo (C01), add background="URL" + background-image:url('URL'); background-size:cover; background-position:center; to the td below] -->
+<tr>
+<td dir="rtl" align="right" style="padding:20px 20px 0 20px; text-align:right;">
+  <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+    <tr>
+      <td dir="rtl" align="right" bgcolor="#040038" style="background-color:#040038; background:linear-gradient(135deg, #040038, #001AFF); border-radius:20px; box-shadow:0 2px 8px rgba(4,0,56,.06); padding:56px 24px; text-align:right;">
+        <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <tr>
+            <td dir="rtl" align="right" valign="middle" style="text-align:right; vertical-align:middle;">
+              <img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/logo-white.png" width="94" height="28" alt="عزم إكس AZMX" style="display:block; border:0; width:94px; height:28px; max-width:100%; margin:0 0 0 auto;">
+            </td>
+          </tr>
+          <tr>
+            <!-- [SLOT: email-type eyebrow — e.g. نشرة عزم إكس الداخلية / تقرير ربع سنوي] -->
+            <td dir="rtl" align="right" style="padding:12px 0 0 0; text-align:right; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:11px; font-weight:300; color:#5D8FFF; line-height:1.6;">نوع البريد</td>
+          </tr>
+        </table>
+        <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <tr>
+            <!-- [SLOT: masthead title — serif 56px; kashida wordmarks must be copy-pasted, never retyped] -->
+            <td dir="rtl" align="right" class="rs-hero" style="padding:40px 0 0 0; text-align:right; font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:56px; font-weight:700; color:#FFFFFF; line-height:1.15;">العنوان الرئيسي</td>
+          </tr>
+          <tr>
+            <!-- [SLOT: subtitle — period/date line; Latin numerals in <span dir="ltr">] -->
+            <td dir="rtl" align="right" style="padding:16px 0 0 0; text-align:right; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:16px; font-weight:400; color:#DDE8FF; line-height:1.8;">الفترة <span dir="ltr">2026</span> — سطر تعريفي</td>
+          </tr>
+          <tr>
+            <td dir="rtl" align="right" style="padding:24px 0 0 0; text-align:right;">
+              <span dir="ltr" style="font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:26px; font-weight:700; color:#5D8FFF; letter-spacing:4px;">&#8249;&nbsp;&#8249;&nbsp;&#8249;</span>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</td>
+</tr>
+
+<!-- ===== separator A (hairline + chevron trio) — copy verbatim between sections ===== -->
+<tr>
+<td dir="rtl" style="padding:32px 32px; text-align:center;">
+  <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+    <tr>
+      <td dir="rtl" valign="middle" style="vertical-align:middle;"><table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr><td dir="rtl" height="1" bgcolor="#D2D6DB" style="height:1px; background-color:#D2D6DB; font-size:1px; line-height:1px;">&nbsp;</td></tr></table></td>
+      <td dir="rtl" width="110" align="center" valign="middle" style="width:110px; text-align:center; vertical-align:middle;"><span dir="ltr" style="font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:16px; font-weight:700; letter-spacing:6px;"><span style="color:#5D8FFF;">&#8249;</span>&nbsp;<span style="color:#001AFF;">&#8249;</span>&nbsp;<span style="color:#5D8FFF;">&#8249;</span></span></td>
+      <td dir="rtl" valign="middle" style="vertical-align:middle;"><table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr><td dir="rtl" height="1" bgcolor="#D2D6DB" style="height:1px; background-color:#D2D6DB; font-size:1px; line-height:1px;">&nbsp;</td></tr></table></td>
+    </tr>
+  </table>
+</td>
+</tr>
+
+<!-- ================================================== EXAMPLE SECTION (C03 header + C05 body + C06 image) -->
+<!-- Duplicate this whole <tr> block (plus a separator) per section. -->
+<tr>
+<td dir="rtl" align="right" style="padding:0 32px 8px 32px; text-align:right;">
+  <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+    <tr>
+      <!-- [SLOT: section numeral] -->
+      <td dir="rtl" align="right" style="text-align:right; padding:0 0 14px 0;"><span dir="ltr" style="display:inline-block; background-color:#F0F5FF; color:#001AFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:14px; font-weight:700; padding:6px 14px; border-radius:999px;">01</span></td>
+    </tr>
+  </table>
+  <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+    <tr>
+      <!-- [SLOT: section emoji + title] -->
+      <td dir="rtl" width="44" height="44" align="center" valign="middle" bgcolor="#F0F5FF" style="width:44px; height:44px; background-color:#F0F5FF; border-radius:12px; text-align:center; vertical-align:middle; font-size:22px; line-height:44px;">📌</td>
+      <td dir="rtl" align="right" valign="middle" class="rs-sec" style="padding:0 14px 0 0; text-align:right; font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:28px; font-weight:700; color:#040038; line-height:1.4;">عنوان القسم</td>
+    </tr>
+  </table>
+  <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+    <tr>
+      <!-- [SLOT: body copy — paste verbatim Arabic; Latin fragments in <span dir="ltr">] -->
+      <td dir="rtl" align="right" style="text-align:right; padding:18px 0 24px 0; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:17px; font-weight:400; color:#111927; line-height:1.8;">نص القسم يوضع هنا. فقرة أو فقرتان بإيقاع هادئ وواضح.</td>
+    </tr>
+    <tr>
+      <!-- [SLOT: full-width image — CDN URL pinned to commit sha; JPEG progressive q70–75 at 2× display width] -->
+      <td dir="rtl" align="center" style="border-radius:16px;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@a060aa8/bank-visit.jpg" width="100%" alt="وصف الصورة" style="display:block; width:100%; height:auto; border:0; border-radius:16px;"></td>
+    </tr>
+  </table>
+</td>
+</tr>
+
+<!-- ===== separator A ===== -->
+<tr>
+<td dir="rtl" style="padding:32px 32px 24px 32px; text-align:center;">
+  <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+    <tr>
+      <td dir="rtl" valign="middle" style="vertical-align:middle;"><table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr><td dir="rtl" height="1" bgcolor="#D2D6DB" style="height:1px; background-color:#D2D6DB; font-size:1px; line-height:1px;">&nbsp;</td></tr></table></td>
+      <td dir="rtl" width="110" align="center" valign="middle" style="width:110px; text-align:center; vertical-align:middle;"><span dir="ltr" style="font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:16px; font-weight:700; letter-spacing:6px;"><span style="color:#5D8FFF;">&#8249;</span>&nbsp;<span style="color:#001AFF;">&#8249;</span>&nbsp;<span style="color:#5D8FFF;">&#8249;</span></span></td>
+      <td dir="rtl" valign="middle" style="vertical-align:middle;"><table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr><td dir="rtl" height="1" bgcolor="#D2D6DB" style="height:1px; background-color:#D2D6DB; font-size:1px; line-height:1px;">&nbsp;</td></tr></table></td>
+    </tr>
+  </table>
+</td>
+</tr>
+
+<!-- ================================================== FOOTER (C19 — fixed; only the period line changes) -->
+<tr>
+<td dir="rtl" align="center" style="padding:0 20px 20px 20px; text-align:center;">
+  <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+    <tr>
+      <td dir="rtl" bgcolor="#040038" style="background-color:#040038; border-radius:20px; box-shadow:0 2px 8px rgba(4,0,56,.06); padding:30px 28px 24px 28px;">
+        <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+          <tr>
+            <td dir="rtl" align="right" valign="middle" width="100%" class="rs-ftlogo" style="width:100%; text-align:right;">
+              <img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/logo-white.png" width="94" height="28" alt="عزم إكس AZMX" style="display:block; border:0; width:94px; height:28px; margin:0 0 0 auto;">
+            </td>
+            <td dir="ltr" align="left" valign="middle" class="rs-ftico" style="text-align:left; white-space:nowrap;">
+              <a href="https://x.com/byazmx" target="_blank" rel="noopener" style="display:inline-block; margin:0 8px 0 0;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@168be60/icon-x.png" width="29" height="29" alt="X" style="display:block; width:29px; height:29px; border:0;"></a><a href="https://www.instagram.com/byazmx/" target="_blank" rel="noopener" style="display:inline-block; margin:0 8px 0 0;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@7af78db/icon-instagram.png" width="29" height="29" alt="Instagram" style="display:block; width:29px; height:29px; border:0;"></a><a href="https://www.linkedin.com/company/azmx" target="_blank" rel="noopener" style="display:inline-block;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@168be60/icon-linkedin.png" width="29" height="29" alt="LinkedIn" style="display:block; width:29px; height:29px; border:0;"></a>
+            </td>
+          </tr>
+          <tr>
+            <!-- [SLOT: footer meta — email type/period] -->
+            <td dir="rtl" colspan="2" class="rs-ftmeta" align="right" style="text-align:right; padding:26px 0 0 0; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:12px; font-weight:400; color:#5D8FFF; line-height:1.5;">عزم إكس — <span dir="ltr">2026</span></td>
+          </tr>
+          <tr>
+            <td dir="rtl" align="right" class="rs-ftmade" style="text-align:right; padding:10px 0 0 0; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:12px; font-weight:400; color:#BFD5FF; line-height:1.5;">صُنعت بحب في الرياض ❤️</td>
+            <td dir="rtl" align="left" class="rs-ftunsub" valign="bottom" style="text-align:left; padding:10px 0 0 0;">
+              <!-- Brevo merge tag — MUST remain in every sent email -->
+              <a href="{{ unsubscribe }}" target="_blank" rel="noopener" style="white-space:nowrap; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:11px; font-weight:400; color:#8FA3D8; text-decoration:underline;">إلغاء الاشتراك من النشرة</a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+</center>
+
+</body>
+</html>

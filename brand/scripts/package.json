@@ -1,0 +1,11 @@
+{
+  "name": "azmx-brand-scripts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Tooling for the AZMX brand skill. build-pdf-form.mjs stamps AcroForm fields onto a designed PDF — see references/pdf-forms.md.",
+  "dependencies": {
+    "@pdf-lib/fontkit": "^1.1.1",
+    "pdf-lib": "^1.17.1"
+  }
+}

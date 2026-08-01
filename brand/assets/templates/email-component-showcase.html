@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AZMX Email Design System — Component Showcase (default blue theme)</title>
+<!--
+  INTERNAL CATALOG — not an email. Each component's markup inside the grey frames IS the
+  real email-safe snippet (copy the whole inner table/td). Default blue theme; re-theme
+  via EMAIL-DESIGN-SYSTEM.md §B4. Extracted from Newsletter/June/AZMX-Newsletter-June-EMAIL.html.
+-->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @font-face { font-family:'Thmanyah Serif Display'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/serif-regular.woff2') format('woff2'); font-weight:400; font-display:swap; }
+  @font-face { font-family:'Thmanyah Serif Display'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/serif-medium.woff2') format('woff2'); font-weight:500; font-display:swap; }
+  @font-face { font-family:'Thmanyah Serif Display'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/serif-bold.woff2') format('woff2'); font-weight:700; font-display:swap; }
+  @font-face { font-family:'Azm X'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/sans-regular.woff2') format('woff2'); font-weight:400; font-display:swap; }
+  @font-face { font-family:'Azm X'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/sans-medium.woff2') format('woff2'); font-weight:500; font-display:swap; }
+  @font-face { font-family:'Azm X'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/sans-semibold.woff2') format('woff2'); font-weight:600; font-display:swap; }
+  @font-face { font-family:'Azm X'; src:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/sans-bold.woff2') format('woff2'); font-weight:700; font-display:swap; }
+  body { margin:0; padding:32px 16px; background-color:#EDF2FB; font-family:'Azm X','IBM Plex Sans Arabic',-apple-system,BlinkMacSystemFont,'Segoe UI',Tahoma,Arial,sans-serif; }
+  .hov-chip { transition: background-color .18s ease; } .hov-chip:hover { background-color:#DDE8FF !important; }
+  .hov-agenda { transition: background-color .18s ease; } .hov-agenda:hover { background-color:#F0F5FF !important; }
+  .lnk-on-dark:hover { color:#FFFFFF !important; }
+  /* catalog chrome (NOT part of the email snippets) */
+  .cat-title { direction:ltr; text-align:left; max-width:640px; margin:0 auto 24px auto; font-size:22px; font-weight:700; color:#040038; }
+  .lbl { direction:ltr; text-align:left; max-width:640px; margin:36px auto 10px auto; font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#6C737F; }
+  .frame { max-width:640px; margin:0 auto; background:#FFFFFF; border:1px dashed #C7D4F2; border-radius:12px; padding:16px; }
+  @media only screen and (max-width:480px) {
+    .rs-hero  { font-size:36px !important; line-height:1.25 !important; }
+    .rs-sec   { font-size:22px !important; }
+    .rs-big   { font-size:22px !important; }
+    .rs-quote { font-size:20px !important; }
+    .rs-ghost { font-size:52px !important; }
+    .rs-col   { display:block !important; width:100% !important; padding:0 4px 8px 4px !important; }
+    .rs-chip  { font-size:12px !important; padding-right:8px !important; }
+    .rs-agd   { display:block !important; width:100% !important; padding:0 0 10px 0 !important; }
+    .rs-agt   { display:block !important; width:100% !important; }
+    .rs-ftlogo  { display:block !important; width:100% !important; text-align:center !important; }
+    .rs-ftlogo img { margin:0 auto !important; }
+    .rs-ftico   { display:block !important; width:100% !important; text-align:center !important; padding-top:16px !important; }
+    .rs-ftmeta  { text-align:center !important; }
+    .rs-ftmade  { display:block !important; width:100% !important; text-align:center !important; }
+    .rs-ftunsub { display:block !important; width:100% !important; text-align:center !important; padding-top:12px !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cat-title">AZMX Email Design System — Component Showcase <span style="font-weight:400; color:#6C737F;">(default blue · v1)</span></div>
+
+<!-- ============================================================ C01 -->
+<div class="lbl">C01 — Hero cover card (image background + overlaid title)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" align="right" bgcolor="#040038" background="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@c266d5d/cover-june.jpg" style="background-color:#040038; background-image:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@c266d5d/cover-june.jpg'); background-size:cover; background-position:center; border-radius:20px; box-shadow:0 2px 8px rgba(4,0,56,.06); padding:56px 24px; text-align:right;">
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr><td dir="rtl" align="right" valign="middle" style="text-align:right; vertical-align:middle;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/logo-white.png" width="94" height="28" alt="عزم إكس AZMX" style="display:block; border:0; width:94px; height:28px; max-width:100%; margin:0 0 0 auto;"></td></tr>
+        <tr><td dir="rtl" align="right" style="padding:12px 0 0 0; text-align:right; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:11px; font-weight:300; color:#5D8FFF; line-height:1.6;">نوع البريد</td></tr>
+      </table>
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr><td dir="rtl" align="right" class="rs-hero" style="padding:40px 0 0 0; text-align:right; font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:56px; font-weight:700; color:#FFFFFF; line-height:1.15;">العنوان الرئيسي</td></tr>
+        <tr><td dir="rtl" align="right" style="padding:16px 0 0 0; text-align:right; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:16px; font-weight:400; color:#DDE8FF; line-height:1.8;">الفترة <span dir="ltr">2026</span> — سطر تعريفي</td></tr>
+        <tr><td dir="rtl" align="right" style="padding:24px 0 0 0; text-align:right;"><span dir="ltr" style="font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:26px; font-weight:700; color:#5D8FFF; letter-spacing:4px;">&#8249;&nbsp;&#8249;&nbsp;&#8249;</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C02 -->
+<div class="lbl">C02 — Typographic hero variant (gradient background)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" align="right" bgcolor="#040038" style="background-color:#040038; background:linear-gradient(135deg, #040038, #001AFF); border-radius:20px; box-shadow:0 2px 8px rgba(4,0,56,.06); padding:56px 24px; text-align:right;">
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr><td dir="rtl" align="right" valign="middle" style="text-align:right; vertical-align:middle;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/logo-white.png" width="94" height="28" alt="عزم إكس AZMX" style="display:block; border:0; width:94px; height:28px; max-width:100%; margin:0 0 0 auto;"></td></tr>
+        <tr><td dir="rtl" align="right" style="padding:12px 0 0 0; text-align:right; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:11px; font-weight:300; color:#5D8FFF; line-height:1.6;">إعلان داخلي</td></tr>
+        <tr><td dir="rtl" align="right" class="rs-hero" style="padding:40px 0 0 0; text-align:right; font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:56px; font-weight:700; color:#FFFFFF; line-height:1.15;">عنوان دون صورة</td></tr>
+        <tr><td dir="rtl" align="right" style="padding:24px 0 0 0; text-align:right;"><span dir="ltr" style="font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:26px; font-weight:700; color:#5D8FFF; letter-spacing:4px;">&#8249;&nbsp;&#8249;&nbsp;&#8249;</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C03 -->
+<div class="lbl">C03 — Section header (numeral pill + emoji chip + title) + flipped variant</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr><td dir="rtl" align="right" style="text-align:right; padding:0 0 14px 0;"><span dir="ltr" style="display:inline-block; background-color:#F0F5FF; color:#001AFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:14px; font-weight:700; padding:6px 14px; border-radius:999px;">01</span></td></tr>
+</table>
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" width="44" height="44" align="center" valign="middle" bgcolor="#F0F5FF" style="width:44px; height:44px; background-color:#F0F5FF; border-radius:12px; text-align:center; vertical-align:middle; font-size:22px; line-height:44px;">📌</td>
+    <td dir="rtl" align="right" valign="middle" class="rs-sec" style="padding:0 14px 0 0; text-align:right; font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:28px; font-weight:700; color:#040038; line-height:1.4;">عنوان القسم</td>
+  </tr>
+</table>
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr><td dir="rtl" height="20" style="height:20px; font-size:13px; line-height:20px;">&nbsp;</td></tr></table>
+<!-- flipped variant (rhythm break — max once per email) -->
+<table role="presentation" dir="rtl" align="right" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td dir="rtl" align="right" valign="middle" class="rs-sec" style="text-align:right; font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:28px; font-weight:700; color:#040038; line-height:1.4;">عنوان معكوس</td>
+    <td dir="rtl" width="12" style="width:12px; font-size:1px; line-height:1px;">&nbsp;</td>
+    <td dir="rtl" width="44" height="44" align="center" valign="middle" bgcolor="#F0F5FF" style="width:44px; height:44px; background-color:#F0F5FF; border-radius:12px; text-align:center; vertical-align:middle; font-size:22px; line-height:44px;">🎉</td>
+  </tr>
+</table>
+<div style="clear:both;"></div>
+</div>
+
+<!-- ============================================================ C04 -->
+<div class="lbl">C04 — Digest / index chip grid (2-column, rs-col + rs-chip)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" align="right" bgcolor="#F0F5FF" style="background-color:#F0F5FF; border-radius:20px; box-shadow:0 2px 8px rgba(4,0,56,.06); padding:20px 16px; text-align:right;">
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr><td dir="rtl" align="right" style="text-align:right; padding:0 4px 14px 4px;"><span style="display:inline-block; background-color:#FFFFFF; color:#001AFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:13px; font-weight:700; padding:6px 14px; border-radius:999px;">في هذا العدد</span></td></tr>
+        <tr><td dir="rtl" align="right" style="text-align:right; padding:0 4px 12px 4px; font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:22px; font-weight:700; color:#040038; line-height:1.35;">لمحة سريعة</td></tr>
+      </table>
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr>
+          <td dir="rtl" width="50%" valign="top" class="rs-col" style="width:50%; padding:0 4px 8px 6px; vertical-align:top;">
+            <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr>
+              <td dir="rtl" align="right" bgcolor="#FFFFFF" class="hov-chip" style="background-color:#FFFFFF; border-radius:12px; padding:9px 12px; text-align:right;"><span dir="ltr" style="display:inline-block; background-color:#F0F5FF; color:#001AFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:11px; font-weight:400; padding:3px 10px; border-radius:999px;">01</span><span class="rs-chip" style="padding-right:10px; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:14px; font-weight:400; color:#040038; line-height:1.5;">📌 عنوان القسم الأول</span></td>
+            </tr></table>
+          </td>
+          <td dir="rtl" width="50%" valign="top" class="rs-col" style="width:50%; padding:0 6px 8px 4px; vertical-align:top;">
+            <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr>
+              <td dir="rtl" align="right" bgcolor="#FFFFFF" class="hov-chip" style="background-color:#FFFFFF; border-radius:12px; padding:9px 12px; text-align:right;"><span dir="ltr" style="display:inline-block; background-color:#F0F5FF; color:#001AFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:11px; font-weight:400; padding:3px 10px; border-radius:999px;">02</span><span class="rs-chip" style="padding-right:10px; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:14px; font-weight:400; color:#040038; line-height:1.5;">☕ عنوان القسم الثاني</span></td>
+            </tr></table>
+          </td>
+        </tr>
+        <tr>
+          <td dir="rtl" width="50%" valign="top" class="rs-col" style="width:50%; padding:0 4px 0 6px; vertical-align:top;">
+            <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr>
+              <td dir="rtl" align="right" bgcolor="#FFFFFF" class="hov-chip" style="background-color:#FFFFFF; border-radius:12px; padding:9px 12px; text-align:right;"><span dir="ltr" style="display:inline-block; background-color:#F0F5FF; color:#001AFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:11px; font-weight:400; padding:3px 10px; border-radius:999px;">03</span><span class="rs-chip" style="padding-right:10px; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:14px; font-weight:400; color:#040038; line-height:1.5;">🚀 عنوان القسم الثالث</span></td>
+            </tr></table>
+          </td>
+          <td dir="rtl" width="50%" valign="top" class="rs-col" style="width:50%; padding:0 6px 0 4px; vertical-align:top;">
+            <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr>
+              <td dir="rtl" align="right" bgcolor="#FFFFFF" class="hov-chip" style="background-color:#FFFFFF; border-radius:12px; padding:9px 12px; text-align:right;"><span dir="ltr" style="display:inline-block; background-color:#F0F5FF; color:#001AFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:11px; font-weight:400; padding:3px 10px; border-radius:999px;">04</span><span class="rs-chip" style="padding-right:10px; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:14px; font-weight:400; color:#040038; line-height:1.5;">📅 عنوان القسم الرابع</span></td>
+            </tr></table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C05 -->
+<div class="lbl">C05 — Body text block (+ bold highlight + parenthetical caption)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr><td dir="rtl" align="right" style="text-align:right; padding:18px 0 24px 0; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:17px; font-weight:400; color:#111927; line-height:1.8;">نص تجريبي للفقرة الأساسية، مع كلمة <span style="font-weight:700;">مميزة</span> داخل السياق <span style="display:block; padding-top:6px; font-size:13px; color:#6C737F;">(تعليق جانبي صغير بخط رمادي)</span></td></tr>
+</table>
+</div>
+
+<!-- ============================================================ C06 -->
+<div class="lbl">C06 — Full-width image card</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr><td dir="rtl" align="center" style="border-radius:16px;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@a060aa8/bank-visit.jpg" width="100%" alt="صورة تجريبية" style="display:block; width:100%; height:auto; border:0; border-radius:16px;"></td></tr>
+</table>
+</div>
+
+<!-- ============================================================ C07 -->
+<div class="lbl">C07 — Background-image card with overlay CTA (banner)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" align="center" bgcolor="#040038" background="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/handbook-bg.jpg" style="background-color:#040038; background-image:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/handbook-bg.jpg'); background-size:cover; background-position:center; border-radius:20px; padding:44px 28px; text-align:center;">
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr><td dir="rtl" align="center" style="text-align:center;"><span style="display:inline-block; border:1px solid #2A2560; border-color:rgba(93,143,255,.45); color:#5D8FFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:13px; font-weight:700; padding:6px 16px; border-radius:999px;">🚀 شارة الإعلان</span></td></tr>
+        <tr><td dir="rtl" align="center" style="text-align:center; padding:20px 0 0 0; font-size:44px; line-height:1;">💻</td></tr>
+        <tr><td dir="rtl" align="center" class="rs-big" style="text-align:center; padding:16px 0 0 0; font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:27px; font-weight:700; color:#FFFFFF; line-height:1.45;">عنوان الإعلان الكبير</td></tr>
+        <tr><td dir="rtl" align="center" style="text-align:center; padding:12px 12px 0 12px; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:16px; font-weight:400; color:#DDE8FF; line-height:1.8;">سطر وصفي قصير يجمع <span style="color:#FFFFFF; font-weight:700;">كل شي</span></td></tr>
+        <tr><td dir="rtl" align="center" style="text-align:center; padding:26px 0 0 0;"><a href="https://example.com/" target="_blank" rel="noopener" style="display:inline-block; background-color:#FFFFFF; color:#001AFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:16px; font-weight:700; text-decoration:none; padding:14px 36px; border-radius:999px; box-shadow:0 2px 10px rgba(0,0,0,.2);"><span dir="ltr" style="font-weight:700;">&#8249;</span>&nbsp;&nbsp;نص الزر</a></td></tr>
+        <tr><td dir="rtl" align="center" style="text-align:center; padding:14px 0 0 0;"><a href="https://example.com/" target="_blank" rel="noopener" style="font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:12px; color:#5D8FFF; text-decoration:none;"><span dir="ltr">example.com</span></a></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C08 -->
+<div class="lbl">C08 — Video box with play overlay (the whole box is the link)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" align="center" height="320" background="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/eid-video-thumb.jpg" bgcolor="#E5E7EB" style="background-color:#E5E7EB; background-image:url('https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/eid-video-thumb.jpg'); background-size:cover; background-position:center; height:320px; border-radius:16px; text-align:center; vertical-align:middle;">
+      <a href="https://example.com/video" target="_blank" rel="noopener" style="display:block; text-decoration:none; padding:100px 0;">
+        <span dir="ltr" style="display:inline-block; width:72px; height:72px; background-color:#FFFFFF; border-radius:50%; box-shadow:0 4px 16px rgba(4,0,56,.35); font-size:26px; line-height:72px; text-align:center; color:#001AFF;">&#9654;&#xFE0E;</span>
+        <span style="display:block; padding-top:16px;"><span style="display:inline-block; background-color:#FFFFFF; color:#040038; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:14px; font-weight:700; padding:8px 18px; border-radius:999px; box-shadow:0 2px 8px rgba(4,0,56,.25);">شاهد الفيديو</span></span>
+      </a>
+    </td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C09 -->
+<div class="lbl">C09 — Dark feature card (the "electric moment" — max ONE per email)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" align="right" bgcolor="#000000" style="background-color:#000000; border-top:4px solid #001AFF; border-radius:20px; box-shadow:0 2px 8px rgba(4,0,56,.06); padding:36px 24px; text-align:right;">
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr>
+          <td dir="rtl" align="right" valign="top" style="text-align:right; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:14px; font-weight:700; color:#5D8FFF; line-height:1.6;">🏆 عنوان تمهيدي</td>
+          <td dir="rtl" width="110" align="left" valign="top" style="width:110px; text-align:left;"><span dir="ltr" style="display:inline-block; background-color:#1A1553; color:#5D8FFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:12px; font-weight:700; padding:3px 10px; border-radius:999px;">05</span></td>
+        </tr>
+      </table>
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr><td dir="rtl" align="right" class="rs-big" style="text-align:right; padding:12px 0 0 0; font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:30px; font-weight:700; color:#FFFFFF; line-height:1.4;">عنوان الإنجاز الأبرز</td></tr>
+        <tr><td dir="rtl" align="right" style="text-align:right; padding:18px 0 0 0; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:17px; font-weight:400; color:#DDE8FF; line-height:1.8;">نص تعريفي عن الإنجاز مع اسم لاتيني <span dir="ltr" style="font-weight:600; color:#FFFFFF;">Event Name 2026</span>.</td></tr>
+        <tr>
+          <td dir="rtl" style="padding:24px 0 0 0;">
+            <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; border-collapse:separate;">
+              <tr><td dir="rtl" align="center" style="border-radius:12px;"><a href="https://example.com/" target="_blank" rel="noopener" style="display:block;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/summit-incarabia.jpg" width="100%" alt="صورة الإنجاز" style="display:block; width:100%; height:auto; border:0; border-radius:12px;"></a></td></tr>
+              <tr><td dir="rtl" align="center" style="padding:20px 0 0 0; text-align:center;"><a class="lnk-on-dark" href="https://example.com/" target="_blank" rel="noopener" style="font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:14px; font-weight:600; color:#DDE8FF; text-decoration:none;">اعرف أكثر&nbsp;&nbsp;<span dir="ltr" style="color:#5D8FFF; font-weight:700;">&#8249;</span></a></td></tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C10 -->
+<div class="lbl">C10 — Item row with side logo (project-row pattern, light 20px/300)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" align="right" bgcolor="#F0F5FF" style="background-color:#F0F5FF; border-radius:16px; padding:22px 20px; text-align:right;">
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr>
+          <td dir="rtl" width="32" align="right" valign="middle" style="width:32px; padding:0 0 0 10px; text-align:right;"><span dir="ltr" style="font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:20px; font-weight:300; color:#001AFF; line-height:1;">01</span></td>
+          <td dir="rtl" align="right" valign="middle" style="text-align:right; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:20px; font-weight:300; color:#040038; line-height:1.6;">اسم العميل <span style="color:#9DA4AE;">|</span> اسم المشروع</td>
+          <td dir="rtl" width="31" align="left" valign="middle" style="width:31px; text-align:left; padding:0 6px 0 0;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/logo-mobily.png" width="25" height="40" alt="شعار" style="display:block; width:25px; height:40px; border:0; margin:0 auto 0 0;"></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C11 -->
+<div class="lbl">C11 — Status-pill rows (اكتمل pattern — fixed semantic green)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" align="right" style="text-align:right; padding:22px 0 18px 0; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:18px; font-weight:700; color:#040038; line-height:1.7;">اسم البند الأول <span dir="ltr" style="display:block; padding-top:6px; font-size:13px; font-weight:400; color:#6C737F; text-align:right;">(English Sub-name One)</span></td>
+    <td dir="rtl" width="70" align="left" valign="top" style="width:70px; padding:22px 0 0 0; text-align:left;"><span style="display:inline-block; background-color:#E9F9F1; color:#22C36F; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:13px; font-weight:700; padding:4px 12px; border-radius:999px;">اكتمل</span></td>
+  </tr>
+  <tr>
+    <td dir="rtl" align="right" style="text-align:right; border-top:1px solid #E5E7EB; padding:18px 0 0 0; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:18px; font-weight:700; color:#040038; line-height:1.7;">اسم البند الثاني <span dir="ltr" style="display:block; padding-top:6px; font-size:13px; font-weight:400; color:#6C737F; text-align:right;">(English Sub-name Two)</span></td>
+    <td dir="rtl" width="70" align="left" valign="top" style="width:70px; border-top:1px solid #E5E7EB; padding:18px 0 0 0; text-align:left;"><span style="display:inline-block; background-color:#E9F9F1; color:#22C36F; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:13px; font-weight:700; padding:4px 12px; border-radius:999px;">اكتمل</span></td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C12 -->
+<div class="lbl">C12 — Avatar card (44px circle · name row · full-width text row) + gold variant</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" align="right" bgcolor="#FFFFFF" style="background-color:#FFFFFF; border:1px solid #E5E7EB; border-radius:14px; box-shadow:0 2px 8px rgba(4,0,56,.06); padding:16px 18px; text-align:right;">
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr>
+          <td dir="rtl" width="44" align="right" valign="top" style="width:44px; padding:2px 0 0 12px;"><table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;"><tr><td width="44" height="44" align="center" valign="middle" style="width:44px; height:44px;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/avatar-salman-alkhatib.jpg" width="44" height="44" alt="اسم الشخص" style="display:block; width:44px; height:44px; border-radius:50%; border:0;"></td></tr></table></td>
+          <td dir="rtl" align="right" valign="top" style="text-align:right; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif;"><span style="display:block; text-align:right; font-size:18px; font-weight:700; color:#040038; line-height:1.5;">اسم الشخص</span></td>
+        </tr>
+        <tr>
+          <td dir="rtl" colspan="2" align="right" valign="top" style="text-align:right; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif;"><span style="display:block; text-align:right; padding-top:4px; font-size:15px; font-weight:400; color:#111927; line-height:1.8;">نص الإنجاز مع شهادة <span dir="ltr">Certification Name.</span></span></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td dir="rtl" height="12" style="height:12px; font-size:12px; line-height:12px;">&nbsp;</td></tr>
+  <tr>
+    <td dir="rtl" align="right" bgcolor="#FFFFFF" style="background-color:#FFFFFF; border-top:3px solid #FED340; border-radius:14px; box-shadow:0 2px 8px rgba(4,0,56,.06); padding:16px 18px; text-align:right;">
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr>
+          <td dir="rtl" width="44" align="right" valign="top" style="width:44px; padding:2px 0 0 12px;"><table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;"><tr><td width="44" height="44" align="center" valign="middle" style="width:44px; height:44px;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/avatar-salman-alhasson.jpg" width="44" height="44" alt="اسم الشخص" style="display:block; width:44px; height:44px; border-radius:50%; border:0;"></td></tr></table></td>
+          <td dir="rtl" align="right" valign="top" style="text-align:right; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif;"><span style="display:block; text-align:right; font-size:18px; font-weight:700; color:#040038; line-height:1.5;">اسم الشخص</span></td>
+        </tr>
+        <tr>
+          <td dir="rtl" colspan="2" align="right" valign="top" style="text-align:right; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif;"><span style="display:block; text-align:right; padding-top:4px; font-size:15px; font-weight:400; color:#111927; line-height:1.8;">النسخة الذهبية: لقب <span style="color:#001AFF; font-weight:700;">مميز</span> مع قصة طريفة. 👑</span></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C13 -->
+<div class="lbl">C13 — Designed-image card (transparent PNG on a dark card — alpha is the design)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" align="right" bgcolor="#040038" style="background-color:#040038; border-radius:20px; box-shadow:0 2px 8px rgba(4,0,56,.06); padding:36px 24px; text-align:right;">
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr><td dir="rtl" align="center" style="border-radius:16px;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@2163db5/spotlight-tarfah.png" width="100%" alt="بطاقة مصممة — الاسم والدور مدموجان في التصميم" style="display:block; width:100%; height:auto; border:0; border-radius:16px;"></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C14 -->
+<div class="lbl">C14 — Pull-quote with side rule (straight quotes)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr><td dir="rtl" align="right" class="rs-quote" style="text-align:right; border-right:4px solid #001AFF; padding:4px 20px 4px 0; font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:26px; font-weight:700; color:#040038; line-height:1.55;">&quot;اقتباس تجريبي قصير وواضح&quot;</td></tr>
+</table>
+</div>
+
+<!-- ============================================================ C15 -->
+<div class="lbl">C15 — Q&amp;A labeled blocks (spotlight pattern, on dark card; includes quote-answer variant)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" align="right" bgcolor="#040038" style="background-color:#040038; border-radius:20px; box-shadow:0 2px 8px rgba(4,0,56,.06); padding:36px 24px; text-align:right;">
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr><td dir="rtl" align="right" style="text-align:right; padding:0 0 10px 0;"><span style="display:inline-block; background-color:#1A1553; color:#5D8FFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:13px; font-weight:700; padding:6px 14px; border-radius:999px;">تسمية أولى</span></td></tr>
+        <tr><td dir="rtl" align="right" style="text-align:right; padding:0 0 22px 0; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:17px; font-weight:400; color:#DDE8FF; line-height:1.8;">إجابة تجريبية بنص عادي على السطح الداكن، مع مصطلح <span dir="ltr">Latin Term</span> داخل السياق.</td></tr>
+        <tr><td dir="rtl" align="right" style="text-align:right; border-top:1px solid #2A2560; padding:20px 0 12px 0;"><span style="display:inline-block; background-color:#1A1553; color:#5D8FFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:13px; font-weight:700; padding:6px 14px; border-radius:999px;">تسمية ثانية</span></td></tr>
+        <tr><td dir="rtl" align="right" class="rs-big" style="text-align:right; border-right:4px solid #001AFF; padding:4px 20px 4px 0; font-family:'Thmanyah Serif Display', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:30px; font-weight:700; color:#FFFFFF; line-height:1.5;">إجابة على شكل اقتباس بارز.</td></tr>
+        <tr><td dir="rtl" height="22" style="height:22px; font-size:13px; line-height:22px;">&nbsp;</td></tr>
+        <tr><td dir="rtl" align="right" style="text-align:right; border-top:1px solid #2A2560; padding:20px 0 10px 0;"><span style="display:inline-block; background-color:#1A1553; color:#5D8FFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:13px; font-weight:700; padding:6px 14px; border-radius:999px;">تسمية ثالثة</span></td></tr>
+        <tr><td dir="rtl" align="right" style="text-align:right; padding:0; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:15px; font-weight:400; color:#BFD5FF; line-height:1.8;">إجابة خفيفة قصيرة كخاتمة. 😂</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C16 -->
+<div class="lbl">C16 — Agenda row-card (date pill + calendar-link button, rs-agd/rs-agt)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" align="right" bgcolor="#FFFFFF" class="hov-agenda" style="background-color:#FFFFFF; border:1px solid #E5E7EB; border-radius:14px; box-shadow:0 2px 8px rgba(4,0,56,.06); padding:16px; text-align:right;">
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr>
+          <td dir="rtl" width="95" align="right" valign="middle" class="rs-agd" style="width:95px; padding:0 0 0 12px; text-align:right;"><span dir="ltr" style="display:inline-block; background-color:#001AFF; color:#FFFFFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:14px; font-weight:400; padding:6px 14px; border-radius:999px; white-space:nowrap;">13 July</span></td>
+          <td dir="rtl" align="right" valign="middle" class="rs-agt" style="text-align:right; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:17px; font-weight:400; color:#040038; line-height:1.7;">📌 اسم الفعالية أو الموعد.<span style="display:block; padding-top:8px;"><a href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Event&amp;dates=20260713/20260714&amp;details=AZMX&amp;ctz=Asia/Riyadh" target="_blank" rel="noopener" style="display:inline-block; border:1px solid #C7D4F2; background-color:#F8FAFF; color:#001AFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:12px; font-weight:600; text-decoration:none; padding:5px 14px; border-radius:999px;">📅&nbsp;&nbsp;أضف للتقويم</a></span></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C17 -->
+<div class="lbl">C17 — Primary button pill + small arrow link (shown on dark strip)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" align="center" bgcolor="#040038" style="background-color:#040038; border-radius:20px; padding:28px 24px; text-align:center;">
+      <a href="https://example.com/" target="_blank" rel="noopener" style="display:inline-block; background-color:#FFFFFF; color:#001AFF; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:16px; font-weight:700; text-decoration:none; padding:14px 36px; border-radius:999px; box-shadow:0 2px 10px rgba(0,0,0,.2);"><span dir="ltr" style="font-weight:700;">&#8249;</span>&nbsp;&nbsp;زر أساسي</a>
+      <span style="display:block; padding-top:18px;"><a class="lnk-on-dark" href="https://example.com/" target="_blank" rel="noopener" style="font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:14px; font-weight:600; color:#DDE8FF; text-decoration:none;">رابط ثانوي بسهم&nbsp;&nbsp;<span dir="ltr" style="color:#5D8FFF; font-weight:700;">&#8249;</span></a></span>
+    </td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C18 -->
+<div class="lbl">C18 — Separators: A (hairline + chevron trio) and B (gradient bar)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" style="padding:32px 32px; text-align:center;">
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr>
+          <td dir="rtl" valign="middle" style="vertical-align:middle;"><table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr><td dir="rtl" height="1" bgcolor="#D2D6DB" style="height:1px; background-color:#D2D6DB; font-size:1px; line-height:1px;">&nbsp;</td></tr></table></td>
+          <td dir="rtl" width="110" align="center" valign="middle" style="width:110px; text-align:center; vertical-align:middle;"><span dir="ltr" style="font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:16px; font-weight:700; letter-spacing:6px;"><span style="color:#5D8FFF;">&#8249;</span>&nbsp;<span style="color:#001AFF;">&#8249;</span>&nbsp;<span style="color:#5D8FFF;">&#8249;</span></span></td>
+          <td dir="rtl" valign="middle" style="vertical-align:middle;"><table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr><td dir="rtl" height="1" bgcolor="#D2D6DB" style="height:1px; background-color:#D2D6DB; font-size:1px; line-height:1px;">&nbsp;</td></tr></table></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td dir="rtl" align="center" style="padding:0 32px 36px 32px; text-align:center;">
+      <table role="presentation" dir="rtl" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
+        <tr><td dir="rtl" width="96" height="4" bgcolor="#001AFF" style="width:96px; height:4px; background-color:#001AFF; background:linear-gradient(90deg, #001AFF, #5D8FFF); border-radius:999px; font-size:4px; line-height:4px;">&nbsp;</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+<!-- ============================================================ C19 -->
+<div class="lbl">C19 — Footer card (logo · icons · meta · unsubscribe; rs-ft* mobile centering)</div>
+<div class="frame">
+<table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+  <tr>
+    <td dir="rtl" bgcolor="#040038" style="background-color:#040038; border-radius:20px; box-shadow:0 2px 8px rgba(4,0,56,.06); padding:30px 28px 24px 28px;">
+      <table role="presentation" dir="rtl" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+        <tr>
+          <td dir="rtl" align="right" valign="middle" width="100%" class="rs-ftlogo" style="width:100%; text-align:right;">
+            <img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@9777d04/logo-white.png" width="94" height="28" alt="عزم إكس AZMX" style="display:block; border:0; width:94px; height:28px; margin:0 0 0 auto;">
+          </td>
+          <td dir="ltr" align="left" valign="middle" class="rs-ftico" style="text-align:left; white-space:nowrap;">
+            <a href="https://x.com/byazmx" target="_blank" rel="noopener" style="display:inline-block; margin:0 8px 0 0;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@168be60/icon-x.png" width="29" height="29" alt="X" style="display:block; width:29px; height:29px; border:0;"></a><a href="https://www.instagram.com/byazmx/" target="_blank" rel="noopener" style="display:inline-block; margin:0 8px 0 0;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@7af78db/icon-instagram.png" width="29" height="29" alt="Instagram" style="display:block; width:29px; height:29px; border:0;"></a><a href="https://www.linkedin.com/company/azmx" target="_blank" rel="noopener" style="display:inline-block;"><img src="https://cdn.jsdelivr.net/gh/Gamaleldientarek/azmx-brand-cdn@168be60/icon-linkedin.png" width="29" height="29" alt="LinkedIn" style="display:block; width:29px; height:29px; border:0;"></a>
+          </td>
+        </tr>
+        <tr>
+          <td dir="rtl" colspan="2" class="rs-ftmeta" align="right" style="text-align:right; padding:26px 0 0 0; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:12px; font-weight:400; color:#5D8FFF; line-height:1.5;">عزم إكس — <span dir="ltr">2026</span></td>
+        </tr>
+        <tr>
+          <td dir="rtl" align="right" class="rs-ftmade" style="text-align:right; padding:10px 0 0 0; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:12px; font-weight:400; color:#BFD5FF; line-height:1.5;">صُنعت بحب في الرياض ❤️</td>
+          <td dir="rtl" align="left" class="rs-ftunsub" valign="bottom" style="text-align:left; padding:10px 0 0 0;">
+            <a href="{{ unsubscribe }}" target="_blank" rel="noopener" style="white-space:nowrap; font-family:'Azm X', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-size:11px; font-weight:400; color:#8FA3D8; text-decoration:underline;">إلغاء الاشتراك من النشرة</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+<div class="lbl" style="margin-top:48px; color:#9DA4AE;">v1 — Arabic RTL only. EN/LTR would flip chevrons + alignment (out of scope). Source of truth: Newsletter/June/AZMX-Newsletter-June-EMAIL.html</div>
+
+</body>
+</html>
