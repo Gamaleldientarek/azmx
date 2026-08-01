@@ -1,0 +1,28 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*~
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node
+node_modules/
+
+# Large rasters pulled by scripts/export-figma-assets.py.
+# These live in the Figma library; the export script rebuilds them on demand.
+# Delete these three lines if you decide to vendor them.
+assets/planets/
+assets/space/
+assets/backgrounds/*@[34]x.png
+
+# Never commit a Figma token
+.env
+*.token
