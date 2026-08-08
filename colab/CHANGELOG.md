@@ -1,5 +1,29 @@
 # Changelog
 
+## 4.1.0 — 2026-08-08
+
+Minor. Completes the token migration on `03 · Template Components`, adds the three brand-constant logo tokens the four-mode system was missing, and **retracts one defect that never existed.**
+
+### Added
+- **`brand/logo/electric` · `brand/logo/pine` · `brand/logo/white`** — constant in all four modes. Semantic tier is now **91**, total **504**
+- **The reason they exist, as a rule (§9).** The logo is a **three-colourway component set**. Binding its vectors to the ground-responsive `logo/mark` collapses Pine, Electric and White into one colour and destroys the set — the §12.5 flattening trap in its most expensive form. The deck picks the colourway; the colourway then holds
+- **§12.7 — a hidden ancestor exports blank, and every node still reports `visible: true`.** A frame inside a hidden *section* exports as a uniform PNG while `visible`, `opacity`, `blendMode` and all 71 children read normal. This looks exactly like "the mode change blanked the slide", which invites reverting good work. A ~150-byte PNG is the tell. Corollary: a hidden section is usually a **pre-migration backup**, so its nodes are still on old bindings and do not respond to modes at all — setting modes on one is a no-op
+- **The specimen-sheet exemption (§13, §14).** Verification predicate #2 ("no node binds directly to a primitive") does **not** apply to `02 · Design System`. A swatch labelled Pine Green must read Pine Green in every mode, or the documentation lies about itself. Page 02 therefore needs a per-section policy, not a uniform pass — the brand and type specimen sections bind to primitives, the `UI · *` and component sections bind to semantics
+
+### Fixed — in the live file
+- **`03 · Template Components` is complete.** 603 legacy bindings re-pointed. Both verification slides came back **byte-identical** (44,715 and 96,964 bytes before and after) — the correct outcome for a colour-preserving hop, and better evidence than any resolved-value read
+- **Slide 18 recovered its name.** It had been reduced to a single space, which is why it read as missing from the EN section while the AR sibling and the backup both had it
+
+### Retracted
+- **"Slide 14's ground is off-palette `#9E948A`" was never a defect.** That colour is the **phone chassis in a device mockup** — 90% of the frame area, and pure artwork. The slide was always correct: frame Pine, mode Jade, renders perfectly. It sat on the open-defects list for weeks because a detection heuristic was trusted over the design
+- **§12.2 rewritten to say why.** The old rule — *the ground is the largest covering surface, not the frame fill* — is right about the failure it was written for (slides 04, 07, 16) and wrong in the other direction. **Neither the frame fill nor the largest surface is the ground. The ground is a design decision.** Detection can *draft* the answer on a deck that has none; it is never the authority
+- **"~271 legacy bindings and 47 unmapped electric tints on page 03" was a bad count.** The real figure was 716 colour bindings across 31 variables
+
+### Notes
+- **The 113 bindings left on page 03 are deliberate.** Every one is inside `⚠️ Old Slides — legacy, being replaced` (56 frames); **zero** remain anywhere in the live library. Rebinding a deprecated section is wasted work and makes dead slides look current
+- Those 113 are also where every off-palette colour is quarantined — `#F5C1DE` pink, `#A31236` crimson, `#FEDF89` yellow, `#40CD94` teal, `#EEEFFF` lavender. Colab has no red, pink, purple or teal. **None of them reach the live library**
+- **Page `02 · Design System` remains open** and is the last of it: 17,172 nodes, still entirely on legacy remote bindings, needing hop 1 *and* hop 2 under the specimen policy above
+
 ## 4.0.0 — 2026-08-08
 
 **Major.** The variable layer was rebuilt from scratch in the live file. `color 🎨`, `numbers 🔢` and `grids` are **deleted**; five collections replace them, and the deck's grounds are now **variable modes** rather than colours a designer picks. Anything bound to the old collections fails — hence the major bump.
