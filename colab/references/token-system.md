@@ -297,6 +297,10 @@ Two hops. Do them in order and never merge them.
 
 **Hop 1 — legacy → primitives.** Value-matched, pixel-identical, mechanical. Nothing changes on screen. This is the safe hop and can run in bulk over a whole page.
 
+Match on the **resolved paint colour**, never on the variable's name. Names lie across modes: `Text/Black` resolves to `#0D121C` on most of page 02 and to `#FFFFFF` inside the Buttons spec sheet, because those frames carry legacy mode overrides. Value-matching gives every node back its own colour and is why 16,035 rebindings on pages 01 and 02 left slide 05 byte-identical. Expect near-total coverage — 12,041 of 12,053 on page 02 — and **detach the remainder to a literal colour** rather than leaving a live dependency on a library that may unlink.
+
+⚠️ **Hop 1 is the terminal state for specimen and documentation pages.** Do not push them to hop 2 — see §14.
+
 **Hop 2 — primitives → semantics.** Role-driven and context-aware. This is where a colour stops being a colour and becomes a job. Runs **one slide at a time, screenshotted.**
 
 ### The mandatory order
@@ -428,15 +432,24 @@ Two are structural and will not be fixed by more binding — they are properties
 
 Those 113 are also where the off-palette colours live, and it is worth knowing they are contained: `Alart Error/Border #F5C1DE` pink, `Alart Error/Icon #A31236` crimson, `Alart Warning/Border #FEDF89` yellow, `Base/Primary #40CD94` teal, `Background/Primary Light #EEEFFF` lavender. **Colab has no red, no pink, no purple and no teal.** None of them reach the live library.
 
-**Still open — page `02 · Design System`.** 17,172 nodes, still entirely on legacy remote bindings; it needs hop 1 *and* hop 2. It also needs a decision that the other pages did not, because **it is a specimen sheet, and a specimen must not follow the ground**:
+**Pages `01 · Brand Book` and `02 · Design System` are done** (2026-08-08). 16,035 bindings value-matched onto local primitives and `brand/logo/*`. Slide 05 stayed **byte-identical** across the whole pass.
 
-| Section | Correct target |
-|---|---|
-| `Brand / Logo`, `Brand / Shapes`, `Brand / Backgrounds`, `Type Specimens` | **Primitives or `brand/logo/*`.** A swatch labelled Pine Green must read Pine Green in every mode, or the documentation lies about itself |
-| `Deck Components`, `Layout Containers`, `UI · Form Controls`, `UI · Feedback`, `UI · Navigation`, `UI · Buttons` | **Semantic / component**, like any other consumer |
-| `⚠️ Deprecated — retained for legacy instances` | Leave it |
+**Hop 1 is the correct terminal state for both of them — hop 2 is not.** This is worth stating because the instinct is to push every page to semantics, and here that would make things worse:
 
-This is the one place where verification predicate #2 ("no node binds directly to a primitive") does **not** apply. Documentation of a primitive binds to that primitive on purpose.
+- **A specimen must not follow the ground.** A swatch labelled Pine Green has to read Pine Green in all four modes. Binding it to `surface/*` would make the documentation contradict itself. Predicate #2 therefore does **not** apply to these pages — documenting a primitive means binding to that primitive.
+- **A spec-sheet section is not a slide.** Their section fills are `#444444` and `#F2F2F2` — **Figma canvas chrome**, not deck grounds. The UI kit's components sit on their own local surfaces (white cards, dark panels), so there is no page ground to derive a mode from. Setting one would be arbitrary.
+
+The UI kit (`UI · Form Controls`, `Feedback`, `Navigation`, `Buttons`) *could* become mode-responsive, but that is a **redesign, not a migration**: each component's own surface would have to become a `surface/*` token and its contents re-derived from it. It is also not used by the report deck, which draws from `03 · Template Components`. Treat it as separate work, scoped deliberately.
+
+**What is left, and why each is deliberate:**
+
+| Where | Count | Why it stays |
+|---|---|---|
+| `03` → `⚠️ Old Slides — legacy, being replaced` | 113 | Deprecated section. Rebinding it makes dead slides look current |
+| `04` → the hidden `Report Template - EN V3` backup | 7,583 | `visible: false` pre-migration restore point. Migrating a backup destroys what it is for |
+| Detached to literal colour | 17 | No primitive matched: a 10-step external green ramp documented in `Brand / Grid`, two off-palette reds `#B42318`, three near-neutrals, two opaque `#161616` axes. Literal is honest and cannot break; a remote binding can |
+
+**Every live surface in the file is at 100%** — Brand Book, Design System, Template Components (live), both live report sections, and the token docs page. **Zero remote-library dependencies remain on anything that ships.**
 
 ---
 

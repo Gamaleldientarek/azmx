@@ -1,5 +1,27 @@
 # Changelog
 
+## 4.2.0 — 2026-08-08
+
+Minor. Finishes the migration. **Every live surface in the file is now on the local token system, with zero remote-library dependencies.** The governing finding is a negative one, and it is the reason this release is not larger:
+
+> **Hop 1 is the correct terminal state for a specimen page. Pushing it to hop 2 makes the documentation lie.**
+
+### Fixed — in the live file
+- **`01 · Brand Book`** — was at **0%**, entirely on remote libraries and never migrated. It had not appeared on any open-items list. 3,994 bindings value-matched onto primitives and `brand/logo/*`
+- **`02 · Design System`** — 12,041 of 12,053 bindings migrated, severing all **seven** remote libraries (`Settings`, `Theme`, `Fonts`, `Font Family`, `Premitives`, `Colors`, `Spacing`)
+- **30 stragglers** in the live EN and AR report sections, plus the last 12 on page 02
+- **Verified byte-identical throughout.** Slide 05 measured 44,715 bytes before the work, after page 03, and after 16,035 further rebindings across pages 01 and 02
+
+### Added
+- **§10 — match on the resolved paint colour, never on the variable name.** Names lie across modes: `Text/Black` resolves to `#0D121C` on most of page 02 and `#FFFFFF` inside the Buttons spec sheet, because those frames carry legacy mode overrides. Value-matching returns every node its own colour, and is why a 16,035-binding pass changed nothing on screen
+- **Detach the unmatchable remainder to a literal colour.** A literal is honest and cannot break; a remote binding can. 17 nodes: a 10-step external green ramp documented in `Brand / Grid`, two off-palette reds `#B42318`, three near-neutrals, two opaque `#161616` axes
+- **§14 — why specimen pages stop at hop 1.** Two reasons, both structural. A swatch labelled Pine Green must read Pine Green in all four modes, so predicate #2 does not apply — documenting a primitive means binding to it. And **a spec-sheet section is not a slide**: those sections are filled `#444444` and `#F2F2F2`, which is Figma canvas chrome, not a deck ground. The UI kit's components sit on their own local surfaces, so there is no page ground to derive a mode from
+
+### Notes
+- **The UI kit could become mode-responsive, but that is a redesign, not a migration** — every component's own surface would have to become a `surface/*` token and its contents re-derived. It is also not used by the report deck, which draws from `03 · Template Components`. Scoped out deliberately, not overlooked
+- **What remains is deliberate and now tabulated in §14:** 113 bindings in `⚠️ Old Slides — legacy, being replaced`, and 7,583 in the hidden `visible: false` pre-migration backup on page 04. Migrating a backup destroys the thing a backup is for
+- Primitive hygiene re-verified after every bulk pass: **0** unhidden, **0** on `ALL_SCOPES`. Collections stand at 288 / 91 / 65 / 41 / 15 / 4 — **504** variables
+
 ## 4.1.0 — 2026-08-08
 
 Minor. Completes the token migration on `03 · Template Components`, adds the three brand-constant logo tokens the four-mode system was missing, and **retracts one defect that never existed.**
