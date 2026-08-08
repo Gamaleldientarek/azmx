@@ -26,13 +26,56 @@ Each skill is self-contained and follows the standard Agent Skill layout:
 └── scripts/        build and QA tooling
 ```
 
-Install one by copying it into your Claude Code skills directory:
+## Install
 
 ```bash
-cp -r brand   ~/.claude/skills/azmx-brand
-cp -r colab   ~/.claude/skills/colab-design
-cp -r majarah ~/.claude/skills/majarah-design
+git clone https://github.com/Gamaleldientarek/azmx.git
+cd azmx
+./install.sh
 ```
+
+That installs all three skills into `~/.claude/skills/`. For one only:
+
+```bash
+./install.sh brand
+```
+
+Restart Claude Code afterwards, or run `/doctor`, so it picks them up. Confirm with `/azmx-brand`.
+
+## Update
+
+Same command. Pull, then re-run:
+
+```bash
+cd azmx
+git pull
+./install.sh
+```
+
+It reports what changed per skill and says `already up to date` when there is nothing to do. To preview without writing anything:
+
+```bash
+./install.sh --dry-run
+```
+
+**Use the script rather than `cp -r`.** A plain copy leaves behind files that were deleted upstream, so a skill accumulates stale references — a real risk here, since `brand/` v2.0.0 replaced a token reference wholesale. The script uses `rsync --delete`, which removes them. It also skips `.git` and `node_modules`.
+
+Installing somewhere other than `~/.claude/skills`:
+
+```bash
+CLAUDE_SKILLS_DIR=/path/to/skills ./install.sh
+```
+
+### Manual install
+
+If you would rather not run a script, copy the directory and delete the old one first so nothing stale survives:
+
+```bash
+rm -rf ~/.claude/skills/azmx-brand
+cp -r brand ~/.claude/skills/azmx-brand
+```
+
+Skill directory names matter — they must match the `name:` field in each `SKILL.md`: `azmx-brand`, `colab-design`, `majarah-design`.
 
 ## Projects
 
