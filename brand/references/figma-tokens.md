@@ -1,334 +1,310 @@
-# AZMX Figma Tokens (live export)
+# AZM X Figma Tokens (live export)
 
-Complete variable export from the New Direction Library Figma file (fileKey `j8ugBpb1yUUyL8hfb6FHKR`), pulled via the Figma desktop bridge on 2026-07-20. 233 variables across 3 collections. This file is the exact live source of truth; `colors.md` is the curated usage guide.
+Complete variable export from the New Direction Library Figma file (fileKey `j8ugBpb1yUUyL8hfb6FHKR`), pulled via the Figma desktop bridge on 2026-08-08. **550 variables across five collections.** This file is the exact live source of truth; `colors.md` is the curated usage guide and `design-tokens-usage.md` is the how-to.
 
-Color values are hex; 8-digit hex means the last two digits are alpha. Variable IDs are shown in short form (`1:177` = `VariableID:1:177`).
+Colour values are hex; 8-digit hex means the last two digits are alpha. `@name` means the token aliases another token rather than holding a raw value.
 
-## Collection: Colors (72 variables, modes: Default, Dark Mode)
+> **Replaces the 233-variable, three-collection system** (`Colors`, `Fonts`, `Numbers`) documented here until v1.4.1. Those collections were deleted on 2026-08-08. **None of their names exist any more.** Anything still referencing `Primary/Electric`, `Neutral/900`, `Font-names/Body-Font`, `Typography/Font-size/*` or `padding-gap/*` is out of date.
 
-### Colors / Alert
+---
 
-| Variable | ID | Default | Dark Mode |
-|---|---|---|---|
-| `Alert/Blue/BG` | `1:133` | `#EDF5FF` | `#EDF5FF` |
-| `Alert/Blue/BGO` | `1:149` | `#0067DC08` | `#0067DC08` |
-| `Alert/Blue/Border` | `1:141` | `#97C3F4` | `#97C3F4` |
-| `Alert/Blue/Text` | `1:135` | `#0061CF` | `#0061CF` |
-| `Alert/Green/BG` | `1:151` | `#E5F4EE` | `#E5F4EE` |
-| `Alert/Green/BGO` | `1:134` | `#0FBC7708` | `#0FBC7708` |
-| `Alert/Green/Border` | `1:161` | `#88EFC7` | `#88EFC7` |
-| `Alert/Green/Text` | `1:162` | `#00A060` | `#00A060` |
-| `Alert/Orange/BG` | `1:132` | `#FFF7F1` | `#FFF7F1` |
-| `Alert/Orange/BGO` | `1:172` | `#CD520008` | `#CD520008` |
-| `Alert/Orange/Border` | `1:156` | `#DDAD8D` | `#DDAD8D` |
-| `Alert/Orange/Text` | `1:129` | `#CD5200` | `#CD5200` |
-| `Alert/Red/BG` | `1:124` | `#FDF2F3` | `#FDF2F3` |
-| `Alert/Red/BGO` | `1:123` | `#DB001508` | `#DB001508` |
-| `Alert/Red/Border` | `1:139` | `#EB808A` | `#EB808A` |
-| `Alert/Red/Text` | `1:125` | `#DB0015` | `#DB0015` |
-| `Alert/Yellow/BG` | `1:127` | `#FFFCF4` | `#FFFCF4` |
-| `Alert/Yellow/BGO` | `1:126` | `#BE8B0A08` | `#BE8B0A08` |
-| `Alert/Yellow/Border` | `1:128` | `#FEDF90` | `#FEDF90` |
-| `Alert/Yellow/Text` | `1:131` | `#BE8B0A` | `#BE8B0A` |
+## Architecture
 
-### Colors / Alpha
+```
+1. Primitives   285   one mode · hidden from publishing · zero scopes
+       ↓
+1b. Palette      19   six modes: Blue │ Orange │ Green │ Yellow │ Purple │ Red
+       ↓
+2. Semantic     186   two modes: Light │ Dark
+       ↓
+3. Component     56   one mode
+4. Canvas         4   one mode, outside the chain
+```
 
-| Variable | ID | Default | Dark Mode |
-|---|---|---|---|
-| `Alpha/DarkOrange-10` | `172:25046` | `#842C091A` | `#842C091A` |
-| `Alpha/LightOrange-8` | `172:25047` | `#F47A4814` | `#F47A4814` |
-| `Alpha/White-12` | `172:25038` | `#FFFFFF1F` | `#FFFFFF1F` |
-| `Alpha/White-16` | `172:25039` | `#FFFFFF29` | `#FFFFFF29` |
-| `Alpha/White-20` | `172:25040` | `#FFFFFF33` | `#FFFFFF33` |
-| `Alpha/White-30` | `172:25041` | `#FFFFFF4D` | `#FFFFFF4D` |
-| `Alpha/White-40` | `172:25042` | `#FFFFFF66` | `#FFFFFF66` |
-| `Alpha/White-48` | `172:25043` | `#FFFFFF7A` | `#FFFFFF7A` |
-| `Alpha/White-60` | `172:25044` | `#FFFFFF99` | `#FFFFFF99` |
-| `Alpha/White-72` | `172:25045` | `#FFFFFFB8` | `#FFFFFFB8` |
-| `Alpha/White-8` | `172:25037` | `#FFFFFF14` | `#FFFFFF14` |
+**Dependency rule, verified at zero violations:** Semantic aliases Primitives or Palette. Component aliases Semantic only. Palette and Canvas alias Primitives. Primitives alias nothing.
 
-### Colors / Bk
+**Bind to Semantic.** Primitives are hidden and unscoped so they cannot be picked. Component tokens are for use inside their main component only.
 
-| Variable | ID | Default | Dark Mode |
-|---|---|---|---|
-| `Bk/default` | `409:7156` | `#F2F6F8` | `#FFFFFF` |
+### Two independent switches
 
-### Colors / Blue Shades
+Figma resolves each collection's mode separately, so a frame carries both:
 
-| Variable | ID | Default | Dark Mode |
-|---|---|---|---|
-| `Blue Shades/100` | `1:164` | `#DDE8FF` | `#DDE8FF` |
-| `Blue Shades/1000` | `1:179` | `#040038` | `#040038` |
-| `Blue Shades/200` | `1:130` | `#BFD5FF` | `#BFD5FF` |
-| `Blue Shades/300` | `1:174` | `#93B6FF` | `#93B6FF` |
-| `Blue Shades/400` | `1:178` | `#5D8FFF` | `#5D8FFF` |
-| `Blue Shades/50` | `1:167` | `#F0F5FF` | `#F0F5FF` |
-| `Blue Shades/500` | `1:158` | `#2661FF` | `#2661FF` |
-| `Blue Shades/600*` | `1:153` | `#001AFF` | `#001AFF` |
-| `Blue Shades/700` | `1:169` | `#0200D3` | `#0200D3` |
-| `Blue Shades/800` | `1:159` | `#01009B` | `#01009B` |
-| `Blue Shades/900` | `1:157` | `#01006E` | `#01006E` |
-| `Blue Shades/950` | `1:154` | `#010040` | `#010040` |
-
-### Colors / Neutral
-
-| Variable | ID | Default | Dark Mode |
-|---|---|---|---|
-| `Neutral/100` | `1:142` | `#F3F4F6` | `#F3F4F6` |
-| `Neutral/200 2` | `1:160` | `#E5E7EB` | `#E5E7EB` |
-| `Neutral/25` | `1:143` | `#FCFCFD` | `#FCFCFD` |
-| `Neutral/300 2` | `1:146` | `#D2D6DB` | `#D2D6DB` |
-| `Neutral/400 2` | `1:137` | `#9DA4AE` | `#9DA4AE` |
-| `Neutral/50 2` | `1:180` | `#F9FAFB` | `#F9FAFB` |
-| `Neutral/500 2` | `1:175` | `#6C737F` | `#6C737F` |
-| `Neutral/600` | `1:155` | `#4D5761` | `#4D5761` |
-| `Neutral/700` | `1:165` | `#384250` | `#384250` |
-| `Neutral/800` | `1:140` | `#1F2A37` | `#1F2A37` |
-| `Neutral/900` | `1:138` | `#111927` | `#111927` |
-| `Neutral/950` | `1:136` | `#0D121C` | `#0D121C` |
-
-### Colors / Primary
-
-| Variable | ID | Default | Dark Mode |
-|---|---|---|---|
-| `Primary/Dark Navy` | `1:176` | `None` | `None` |
-| `Primary/Electric` | `1:177` | `None` | `None` |
-| `Primary/Light Blue` | `1:170` | `None` | `None` |
-| `Primary/White` | `1:166` | `#FFFFFF` | `#FFFFFF` |
-
-### Colors / Secondary
-
-| Variable | ID | Default | Dark Mode |
-|---|---|---|---|
-| `Secondary/Dark/Green` | `1:150` | `#012F02` | `#012F02` |
-| `Secondary/Dark/Orange` | `1:148` | `#842C09` | `#842C09` |
-| `Secondary/Dark/Purple` | `1:168` | `#2E0068` | `#2E0068` |
-| `Secondary/Dark/Red` | `1:163` | `#640000` | `#640000` |
-| `Secondary/Dark/Yellow` | `1:152` | `#693F02` | `#693F02` |
-| `Secondary/Light/Green` | `1:171` | `#22C36F` | `#22C36F` |
-| `Secondary/Light/Orange` | `1:144` | `#F47A48` | `#F47A48` |
-| `Secondary/Light/Purple` | `1:145` | `#C68FFF` | `#C68FFF` |
-| `Secondary/Light/Red` | `1:173` | `#FF2B3C` | `#FF2B3C` |
-| `Secondary/Light/Yellow` | `1:147` | `#FED340` | `#FED340` |
-
-### Colors / Text
-
-| Variable | ID | Default | Dark Mode |
-|---|---|---|---|
-| `Text/Primary` | `408:14884` | `#1E2028` | `#FFFFFF` |
-| `Text/secondary` | `408:14885` | `#6F758B` | `#EAEAEA` |
-
-## Collection: Fonts (9 variables, modes: Mode 1)
-
-### Fonts / Font-names
-
-| Variable | ID | Value |
+| Switch | Options | Controls |
 |---|---|---|
-| `Font-names/Body-Font` | `1:979` | `Azm X Variable` |
-| `Font-names/Display-Font` | `1:980` | `thmanyah serif display` |
+| `1b. Palette` | Blue · Orange · Green · Yellow · Purple · Red | Accents, dark grounds, the gradient |
+| `2. Semantic` | Light · Dark | Theme |
 
-### Fonts / font-weights
+Twelve combinations from one set of bindings. Blue resolves to the values that were already in use, so nothing built before this system changed.
 
-| Variable | ID | Value |
+---
+
+## 1. Primitives (285)
+
+Hidden from publishing, zero scopes. Never bind to these.
+
+### Six palettes, twelve steps each
+
+| Step | Blue | Orange | Green | Yellow | Purple | Red |
+|---|---|---|---|---|---|---|
+| 50 | `#F0F5FF` | `#FEF7F4` | `#F2FBF6` | `#FFFCF4` | `#FCF8FF` | `#FFF2F3` |
+| 100 | `#DDE8FF` | `#FDECE5` | `#E0F7EB` | `#FFF9E4` | `#F7EFFF` | `#FFE1E4` |
+| 200 | `#BFD5FF` | `#FCD7C8` | `#BDEDD4` | `#FFF2C6` | `#EEDDFF` | `#FFBFC4` |
+| 300 | `#93B6FF` | `#F9BAA0` | `#8CE0B4` | `#FEE89C` | `#E1C5FF` | `#FF919A` |
+| 400 | `#5D8FFF` | `#F79A74` | `#57D192` | `#FEDE6E` | `#D4AAFF` | `#FF5E6B` |
+| **500** | `#2661FF` | **`#F47A48`** | **`#22C36F`** | **`#FED340`** | **`#C68FFF`** | **`#FF2B3C`** |
+| **600** | **`#001AFF`** | `#C8643B` | `#1CA05B` | `#D3A92E` | `#9B66D4` | `#D12331` |
+| 700 | `#0200D3` | `#A1502F` | `#168049` | `#AD831E` | `#7341AD` | `#A81C27` |
+| 800 | `#01009B` | `#7B3E24` | `#116238` | `#895F0F` | `#4F1F88` | `#81161E` |
+| 900 | `#01006E` | `#5A2D1B` | `#0D4829` | `#693F02` | `#2E0068` | `#5E1016` |
+| 950 | `#010040` | `#3C1E12` | `#08301B` | `#392201` | `#190039` | `#3E0A0F` |
+| 1000 | `#040038` | `#2E170E` | `#062515` | `#251601` | `#100024` | `#30080B` |
+
+**Bold is the signature.** Blue's sits at 600 because Electric is a dark colour; every secondary's sits at 500 because they are vivid light tones. The Palette collection abstracts this away.
+
+### Role anchors — the palette board values, preserved exactly
+
+The five secondaries carry the original board values, never regenerated:
+
+| | tint | border | light | mid | deep |
+|---|---|---|---|---|---|
+| Orange | `#FFF7F1` | `#DDAD8D` | `#F47A48` | `#CD5200` | `#842C09` |
+| Green | `#E5F4EE` | `#88EFC7` | `#22C36F` | `#00A060` | `#012F02` |
+| Red | `#FDF2F3` | `#EB808A` | `#FF2B3C` | `#DB0015` | `#640000` |
+| Yellow | `#FFFCF4` ᵈ | `#FEDE6E` ᵈ | `#FED340` | `#D3A92E` ᵈ | `#693F02` |
+| Purple | `#FCF8FF` ᵈ | `#D4AAFF` ᵈ | `#C68FFF` | `#9B66D4` ᵈ | `#2E0068` |
+
+ᵈ **derived**, not board-supplied. Generated at ramp steps 50 / 400 / 600 — the median positions where orange, green and red place their real anchors. Replace if official values exist. Blue has no role anchors; its ramp serves directly.
+
+### Neutrals
+
+`color/neutral/25 50 100 200 300 400 500 600 700 800 900 950`
+`#FCFCFD` `#F9FAFB` `#F3F4F6` `#E5E7EB` `#D2D6DB` `#9DA4AE` `#6C737F` `#4D5761` `#384250` `#1F2A37` `#111927` `#0D121C`
+
+`color/base/white` `#FFFFFF` · `color/base/black` `#000000`
+
+### RAG data dots — the only sanctioned use of red, yellow, green outside a palette
+
+`color/rag/red` `#FF2B3C` · `color/rag/yellow` `#FED340` · `color/rag/green` `#22C36F`
+
+### UI feedback — state, not brand colour
+
+`color/feedback/{success|warning|danger|info|caution}/{tint|border|mid|deep}` (+ `caution/light`)
+
+| | tint | border | mid | deep |
+|---|---|---|---|---|
+| success | `#E5F4EE` | `#88EFC7` | `#007D4B` | `#012F02` |
+| warning | `#FFFCF4` | `#FEDF90` | `#946C08` | `#693F02` |
+| danger | `#FDF2F3` | `#EB808A` | `#DB0015` | `#430000` |
+| info | `#EDF5FF` | `#97C3F4` | `#0061CF` | `#01006E` |
+| caution | `#FFF7F1` | `#DDAD8D` | `#C14D00` | `#5F2006` |
+
+`success/mid`, `warning/mid`, `caution/mid` and `danger/deep`, `caution/deep` were darkened from their originals to clear 4.5:1. The original orange `#842C09` survives untouched at `color/orange/role-deep`.
+
+### Alpha (29)
+
+`color/alpha/white-{4,8,12,16,20,30,40,48,60,72,90}` · `black-{8,12,20,30,40,60,72}` · `navy-{40,72}` · `electric-{8,16}` · `{success,warning,danger,info,caution}-8` · `caution-bg-8` · `caution-dark-10`
+
+### Sub-brand — never on an AZM X surface
+
+`brand/colab/*` (8): electric-green `#34FF67` · pine-green `#103A21` · jade-green `#33FFC2` · deep-jade `#011E14` · olive-green `#5B6B3E` · vivid-orange `#FF5A32` · pale-sky-blue `#B1D9E8` · grey `#BCBEC0`
+
+`brand/majarah/*` (10): purple-900 `#210054` · purple-600 `#380089` · purple-500 `#4B0AA0` · purple-300 `#6500E8` · purple-200 `#B671FF` · subtle-grey `#D1D1D1` · grey `#231F20` · blue-300 `#010CFF` · blue-600 `#0000AD` · blue-900 `#020068`
+
+They live here so the sub-brand files share one source. Load `colab-design` or `majarah-design` for that work.
+
+### Numerics
+
+| Group | Values |
+|---|---|
+| `size/space/` | 0 · 4 · 8 · 16 · 24 · 40 · 64 · 96 · 128 · 160 |
+| `size/font/` | 10 12 14 16 18 20 24 28 30 36 40 48 60 72 80 100 120 160 200 240 |
+| `size/line/` | 16 18 20 22 24 28 29 30 34 36 38 42 46 50 57 64 76 84 95 106 114 126 152 168 190 210 228 252 |
+| `size/radius/` | 0 · 2 · 4 · 8 · 12 · 16 · 24 · full (9999) |
+| `size/border/` | 0 · 0.5 · 1 · 1.5 · 2 · 4 · 8 |
+| `size/opacity/` | 0 · 0.05 · 0.2 · 0.4 · 0.6 · 0.8 · 1 (**0–1, not 0–100**) |
+| `size/tracking/` | 0 · 0.5 · 1 · 2 · 3 |
+| `size/icon/` | 20 · 24 · 32 |
+| `size/doc/` | 100 · 120 · 1080 · 1920 |
+
+### Fonts
+
+`font/family/display` = `thmanyah serif display` · `font/family/body` = `Azm X Variable`
+`font/weight/` thin · extralight · light · regular · medium · semibold · bold · black · heavy
+
+**Azm X has Heavy, not Black. The serif has Black, not Heavy.** Do not cross them.
+
+---
+
+## 2. 1b. Palette (19) — six modes
+
+One accent ramp. Switching the mode re-themes every accent, ground and gradient.
+
+| Token | Blue | Orange | Green | Yellow | Purple | Red |
+|---|---|---|---|---|---|---|
+| `accent/tint` | 50 | 50 | 50 | 50 | 50 | 50 |
+| `accent/subtle` | 100 | 100 | 100 | 100 | 100 | 100 |
+| `accent/soft` | 300 | 300 | 300 | 300 | 300 | 300 |
+| `accent/on-dark` | 400 | 400 | 400 | 400 | 400 | 400 |
+| **`accent/base`** | **600** | **500** | **500** | **500** | **500** | **500** |
+| **`accent/text`** | **600** | **700** | **700** | **800** | **700** | **700** |
+| `accent/strong` | 700 | 700 | 700 | 800 | 700 | 700 |
+| `accent/deep` | 900 | 900 | 900 | 900 | 900 | 900 |
+| `accent/ground` | 1000 | 1000 | 1000 | 1000 | 1000 | 1000 |
+| `accent/ground-raised` | 900 | 900 | 900 | 900 | 900 | 900 |
+| `accent/ground-sunken` | 950 | 950 | 950 | 950 | 950 | 950 |
+| `accent/on-ground` | 100 | 100 | 100 | 100 | 100 | 100 |
+| `accent/on-ground-faint` | 200 | 200 | 200 | 200 | 200 | 200 |
+| `accent/on-ground-quiet` | 300 | 300 | 300 | 300 | 300 | 300 |
+| `accent/on-base` | white | 1000 | 1000 | 1000 | 1000 | 1000 |
+| `accent/on-deep` | white | white | white | white | white | white |
+| `accent/on-light` | 1000 | 1000 | 1000 | 1000 | 1000 | 1000 |
+| `accent/role-light` | 400 | role-light | role-light | role-light | role-light | role-light |
+| `accent/role-deep` | 1000 | role-deep | role-deep | role-deep | role-deep | role-deep |
+
+**`accent/base` vs `accent/text`.** Base is the signature — a fill colour. Text is the first step that clears 4.5:1 on white. Blue keeps Electric at both because Electric is dark; every secondary must drop, because white on yellow `#FED340` measures 1.44:1.
+
+**`accent/ground` is what makes dark mode work per palette.** Before it, `surface/page` in Dark was hardcoded to navy, so an orange deck went blue.
+
+**`accent/on-*` are computed, not chosen** — each is the higher-contrast of White or the palette's own step 1000, measured.
+
+---
+
+## 3. 2. Semantic (186) — Light │ Dark
+
+The only tier a layout binds to.
+
+### Surface
+`page` · `raised` · `sunken` · `inverse` · `accent` · `accent-deep` · `accent-light` · `accent-inverse` · `accent-subtle` · `accent-wash` · `accent-wash-light` · `muted` · `subtle` · `lightest` · `dark` · `deep` · `pale` · `neutral` · `tertiary` · `black` · `wash-light` · `wash-dark`
+
+| Token | Light | Dark |
 |---|---|---|
-| `font-weights/Black` | `1:981` | `Black` |
-| `font-weights/Bold` | `1:977` | `Bold` |
-| `font-weights/Extralight` | `1:978` | `ExtraLight` |
-| `font-weights/Medium` | `1:974` | `Medium` |
-| `font-weights/Regular` | `1:975` | `Regular` |
-| `font-weights/Semibold` | `1:973` | `SemiBold` |
-| `font-weights/light` | `1:976` | `Light` |
+| `surface/page` | white | `@accent/ground` |
+| `surface/raised` | `@accent/tint` | `@accent/deep` |
+| `surface/inverse` | `@accent/ground` | white |
+| `surface/accent` | `@accent/base` | `@accent/on-dark` |
+| `surface/accent-deep` | `@accent/role-deep` | `@accent/on-dark` |
+| `surface/accent-light` | `@accent/role-light` | `@accent/role-deep` |
 
-## Collection: Numbers (152 variables, modes: Mode 1)
+### Text
+`heading` · `primary` · `secondary` · `strong` · `heavy` · `muted` · `subtle` · `darkest` · `inverse` · `accent` · `accent-deep` · `accent-inverse` · `on-accent` · `on-accent-deep` · `on-accent-light` · `quiet-inverse` · `faint-inverse` · `on-image` · `on-image-body` · `on-image-eyebrow` · `on-dark-strong` · `on-dark-quiet`
 
-### Numbers / Font-size
-
-| Variable | ID | Value |
+| Token | Light | Dark |
 |---|---|---|
-| `Font-size/Heading Size/H1` | `76:3234` | `None` |
-| `Font-size/Heading Size/H2` | `76:3233` | `None` |
-| `Font-size/Heading Size/H3` | `76:3252` | `None` |
-| `Font-size/Heading Size/H4` | `76:3246` | `None` |
-| `Font-size/Heading Size/H5` | `76:3232` | `None` |
-| `Font-size/Text Size/2XL` | `76:3227` | `None` |
-| `Font-size/Text Size/3XL` | `76:3370` | `None` |
-| `Font-size/Text Size/4XL` | `76:3226` | `None` |
-| `Font-size/Text Size/5XL` | `76:3352` | `None` |
-| `Font-size/Text Size/6XL` | `76:3225` | `None` |
-| `Font-size/Text Size/7XL` | `76:3242` | `None` |
-| `Font-size/Text Size/Base` | `76:3318` | `None` |
-| `Font-size/Text Size/LG` | `76:3229` | `None` |
-| `Font-size/Text Size/SM` | `76:3230` | `None` |
-| `Font-size/Text Size/XL` | `76:3228` | `None` |
-| `Font-size/Text Size/XS` | `76:3231` | `None` |
-| `Font-size/Text Size/XXS` | `76:3321` | `None` |
+| `text/heading` | `@accent/ground` | white |
+| `text/primary` | neutral/900 | white |
+| `text/secondary` | neutral/600 | `@accent/on-ground` |
+| `text/muted` | neutral/500 | `@accent/on-ground-quiet` |
+| `text/accent` | `@accent/text` | `@accent/on-dark` |
+| `text/on-accent` | `@accent/on-base` | `@accent/on-light` |
 
-### Numbers / Opacity
+**Headlines are `text/heading`, not `text/primary`.** Heading is Dark Navy, primary is Neutral 900.
 
-| Variable | ID | Value |
-|---|---|---|
-| `Opacity/2x-Transparent-20` | `76:3350` | `20` |
-| `Opacity/3x-Transparent-5` | `76:3278` | `5` |
-| `Opacity/Hidden` | `76:3358` | `0` |
-| `Opacity/Hide` | `76:3346` | `False` |
-| `Opacity/Opaque-80` | `76:3329` | `80` |
-| `Opacity/Show` | `76:3269` | `True` |
-| `Opacity/Transparent-60` | `76:3275` | `60` |
-| `Opacity/full` | `76:3273` | `100` |
-| `Opacity/x-Transparent-40` | `76:3276` | `40` |
+### Border
+`subtle` · `default` · `strong` · `dark` · `faint` · `accent` · `accent-deep` · `accent-inverse` · `heading` · `inverse` · `wash-light`
 
-### Numbers / Radius
+All border tokens are also valid as **fills** — a hairline drawn as a 1px rectangle is still a border.
 
-| Variable | ID | Value |
-|---|---|---|
-| `Radius/radius_0` | `76:3363` | `None` |
-| `Radius/radius_12` | `76:3354` | `None` |
-| `Radius/radius_16` | `76:3295` | `None` |
-| `Radius/radius_2` | `76:3357` | `None` |
-| `Radius/radius_24` | `76:3339` | `None` |
-| `Radius/radius_4` | `76:3366` | `None` |
-| `Radius/radius_8` | `76:3374` | `None` |
-| `Radius/radius_9999` | `76:3343` | `None` |
+### Icon
+`default` · `accent` · `secondary` · `muted` · `inverse` · `on-image` · `size/inline` (20) · `size/standalone` (24) · `size/feature` (32)
 
-### Numbers / Slide-dimensions
+`icon/accent` uses `@accent/text`, and drops to `@accent/on-dark` on dark. Electric never appears as an icon on a dark ground.
 
-| Variable | ID | Value |
-|---|---|---|
-| `Slide-dimensions/Height` | `76:3349` | `None` |
-| `Slide-dimensions/Width` | `76:3330` | `None` |
+### Status
+`{success|warning|danger|info|caution}/{text|bg|border|wash}` · `dot/{red|yellow|green}`
 
-### Numbers / Typography
+Every text-on-bg pairing clears 4.5:1 in both themes. **`status/info/*` stays blue by definition and does not follow the palette** — otherwise an orange deck could not distinguish info from accent.
 
-| Variable | ID | Value |
-|---|---|---|
-| `Typography/Font-size/body/2xl` | `76:3325` | `None` |
-| `Typography/Font-size/body/2xs` | `76:3274` | `None` |
-| `Typography/Font-size/body/3xs` | `76:3364` | `None` |
-| `Typography/Font-size/body/l` | `76:3355` | `None` |
-| `Typography/Font-size/body/m` | `76:3371` | `None` |
-| `Typography/Font-size/body/s` | `76:3320` | `None` |
-| `Typography/Font-size/body/xl` | `76:3342` | `None` |
-| `Typography/Font-size/body/xs` | `76:3365` | `None` |
-| `Typography/Font-size/display/2s` | `166:47373` | `None` |
-| `Typography/Font-size/display/2xs` | `76:3298` | `None` |
-| `Typography/Font-size/display/3xs` | `76:3268` | `None` |
-| `Typography/Font-size/display/Text` | `76:3361` | `None` |
-| `Typography/Font-size/display/l` | `76:3319` | `None` |
-| `Typography/Font-size/display/m` | `76:3351` | `None` |
-| `Typography/Font-size/display/med2` | `166:47374` | `100` |
-| `Typography/Font-size/display/s` | `76:3334` | `80` |
-| `Typography/Font-size/display/xl` | `76:3353` | `None` |
-| `Typography/Font-size/display/xs` | `76:3280` | `None` |
-| `Typography/letter-spacing/body/2xl` | `76:3359` | `None` |
-| `Typography/letter-spacing/body/2xs` | `76:3291` | `None` |
-| `Typography/letter-spacing/body/l` | `76:3297` | `None` |
-| `Typography/letter-spacing/body/m` | `76:3296` | `None` |
-| `Typography/letter-spacing/body/s` | `76:3322` | `None` |
-| `Typography/letter-spacing/body/xl` | `76:3299` | `None` |
-| `Typography/letter-spacing/body/xs` | `76:3293` | `None` |
-| `Typography/letter-spacing/display/2xs` | `76:3345` | `None` |
-| `Typography/letter-spacing/display/l` | `76:3341` | `None` |
-| `Typography/letter-spacing/display/m` | `76:3305` | `None` |
-| `Typography/letter-spacing/display/s` | `76:3304` | `None` |
-| `Typography/letter-spacing/display/xl` | `76:3372` | `None` |
-| `Typography/letter-spacing/display/xs` | `76:3303` | `None` |
-| `Typography/line-height/body/2xl` | `76:3317` | `46.400001525878906` |
-| `Typography/line-height/body/2xsmall` | `76:3308` | `13.920000076293945` |
-| `Typography/line-height/body/l` | `76:3311` | `32.47999954223633` |
-| `Typography/line-height/body/m` | `76:3315` | `27.84000015258789` |
-| `Typography/line-height/body/s` | `76:3313` | `23.200000762939453` |
-| `Typography/line-height/body/xl` | `76:3347` | `41.7599983215332` |
-| `Typography/line-height/body/xs` | `76:3338` | `18.559999465942383` |
-| `Typography/line-height/display/2xs` | `76:3362` | `22.799999237060547` |
-| `Typography/line-height/display/3xs` | `76:3326` | `19` |
-| `Typography/line-height/display/l` | `76:3328` | `190` |
-| `Typography/line-height/display/m` | `76:3327` | `152` |
-| `Typography/line-height/display/s` | `76:3340` | `57` |
-| `Typography/line-height/display/text` | `76:3306` | `15.199999809265137` |
-| `Typography/line-height/display/xl` | `76:3294` | `228` |
-| `Typography/line-height/display/xs` | `76:3344` | `38` |
+### Action
+`primary/{default|hover|pressed|disabled}` · `secondary/{default|hover|pressed}` · `on-primary`
 
-### Numbers / border-width
+### Overlay
+`faint` · `subtle` · `medium` · `strong` · `scrim` · `glass` · `accent`
 
-| Variable | ID | Value |
-|---|---|---|
-| `border-width/0` | `76:3277` | `None` |
-| `border-width/0-25` | `76:3310` | `None` |
-| `border-width/0-5` | `76:3336` | `None` |
-| `border-width/0-75` | `76:3266` | `None` |
-| `border-width/1` | `76:3300` | `None` |
-| `border-width/1-5` | `76:3356` | `None` |
-| `border-width/2` | `76:3285` | `None` |
-| `border-width/4` | `76:3284` | `None` |
-| `border-width/8` | `76:3283` | `None` |
+### Gradient — follows the palette
+`gradient/start` → `mid` → `mid-alt` → `end`
 
-### Numbers / padding-gap
+| Palette | Stops |
+|---|---|
+| Blue | `#040038` → `#01006E` → `#0200D3` → `#001AFF` |
+| Orange | `#2E170E` → `#5A2D1B` → `#A1502F` → `#F47A48` |
+| Green | `#062515` → `#0D4829` → `#168049` → `#22C36F` |
+| Yellow | `#251601` → `#693F02` → `#895F0F` → `#FED340` |
+| Purple | `#100024` → `#2E0068` → `#7341AD` → `#C68FFF` |
+| Red | `#30080B` → `#5E1016` → `#A81C27` → `#FF2B3C` |
 
-| Variable | ID | Value |
-|---|---|---|
-| `padding-gap/content/2xl` | `76:3235` | `None` |
-| `padding-gap/content/2xs` | `76:3312` | `None` |
-| `padding-gap/content/3xl` | `76:3288` | `None` |
-| `padding-gap/content/3xs` | `76:3237` | `None` |
-| `padding-gap/content/4xs` | `76:3243` | `None` |
-| `padding-gap/content/l` | `76:3282` | `None` |
-| `padding-gap/content/m*` | `76:3337` | `None` |
-| `padding-gap/content/s` | `76:3309` | `None` |
-| `padding-gap/content/xl` | `76:3258` | `None` |
-| `padding-gap/content/xs` | `76:3236` | `None` |
-| `padding-gap/slide/Gap` | `76:3238` | `None` |
-| `padding-gap/slide/Horizontal-padding` | `76:3324` | `None` |
-| `padding-gap/slide/Veritcal-padding` | `76:3239` | `None` |
+145°, event surfaces only: covers, dividers, closings. Never behind body copy.
 
-### Numbers / primatives
+### Spacing, radius, border width
+`space/` none 0 · 4xs 4 · 3xs 8 · 2xs 16 · xs 24 · sm 40 · md 64 · lg 96 · xl 128 · 2xl 160
+`radius/` none 0 · xs 2 · sm 4 · md 8 · lg 12 · xl 16 · 2xl 24 · pill
+`border-width/` none 0 · thin 0.5 · hairline 1 · medium 2 · thick 4 · heavy 8
 
-| Variable | ID | Value |
-|---|---|---|
-| `primatives/base-4/0` | `76:3267` | `0` |
-| `primatives/base-4/0-25` | `76:3286` | `0.25` |
-| `primatives/base-4/0-5` | `76:3264` | `0.5` |
-| `primatives/base-4/0-75` | `76:3333` | `0.75` |
-| `primatives/base-4/1` | `76:3292` | `1` |
-| `primatives/base-4/1-5` | `76:3348` | `1.5` |
-| `primatives/base-4/12` | `76:3262` | `12` |
-| `primatives/base-4/120` | `76:3287` | `120` |
-| `primatives/base-4/14` | `76:3270` | `14` |
-| `primatives/base-4/16` | `76:3316` | `16` |
-| `primatives/base-4/160` | `76:3373` | `160` |
-| `primatives/base-4/18` | `76:3272` | `18` |
-| `primatives/base-4/180` | `76:3289` | `180` |
-| `primatives/base-4/2` | `76:3290` | `2` |
-| `primatives/base-4/200` | `76:3314` | `200` |
-| `primatives/base-4/24` | `76:3301` | `24` |
-| `primatives/base-4/240` | `76:3260` | `240` |
-| `primatives/base-4/28` | `76:3307` | `28` |
-| `primatives/base-4/36` | `76:3369` | `36` |
-| `primatives/base-4/4` | `76:3302` | `4` |
-| `primatives/base-4/48` | `76:3281` | `48` |
-| `primatives/base-4/72` | `76:3261` | `72` |
-| `primatives/base-4/8` | `76:3263` | `8` |
-| `primatives/base-4/96` | `76:3331` | `96` |
-| `primatives/base-4/full` | `76:3257` | `9999` |
-| `primatives/base-5/0` | `76:3335` | `0` |
-| `primatives/base-5/10` | `76:3360` | `10` |
-| `primatives/base-5/100` | `76:3240` | `100` |
-| `primatives/base-5/15` | `76:3265` | `15` |
-| `primatives/base-5/20` | `76:3255` | `20` |
-| `primatives/base-5/25` | `76:3254` | `25` |
-| `primatives/base-5/30` | `76:3251` | `30` |
-| `primatives/base-5/35` | `76:3259` | `35` |
-| `primatives/base-5/40` | `76:3253` | `40` |
-| `primatives/base-5/45` | `76:3250` | `45` |
-| `primatives/base-5/5` | `76:3256` | `5` |
-| `primatives/base-5/50` | `76:3279` | `50` |
-| `primatives/base-5/55` | `76:3248` | `55` |
-| `primatives/base-5/60` | `76:3323` | `60` |
-| `primatives/base-5/65` | `76:3247` | `65` |
-| `primatives/base-5/70` | `76:3245` | `70` |
-| `primatives/base-5/75` | `76:3249` | `75` |
-| `primatives/base-5/80` | `76:3368` | `80` |
-| `primatives/base-5/85` | `76:3244` | `85` |
-| `primatives/base-5/90` | `76:3241` | `90` |
-| `primatives/base-5/95` | `76:3332` | `95` |
-| `primatives/doc-dimensions/FHD Height` | `76:3367` | `1080` |
-| `primatives/doc-dimensions/FHD Width` | `76:3271` | `1920` |
+**Those ten spacing values are the only permitted ones.** No 12, no 20.
+
+### Type
+`type/display/{2xs,xs,sm,md,lg,xl,2xl,3xl,4xl,5xl}/{size,line}` — leading ×0.95
+30/29 · 36/34 · 48/46 · 60/57 · 80/76 · 100/95 · 120/114 · 160/152 · 200/190 · 240/228
+
+`type/body/{2xs,xs,sm,md,lg,xl,2xl}/{size,line}` — leading ×1.5
+12/18 · 14/22 · 16/24 · 18/28 · 20/30 · 24/36 · 28/42
+
+`type/tracking/` normal 0 · slight 0.5 · wide 2 · wider 3
+`font/heading` · `font/text` · `weight/{thin…heavy}` · `opacity/{hidden…full}`
+
+---
+
+## 4. 3. Component (56) — one mode
+
+Aliases Semantic only. Use inside the main component, never on a loose layer. Light/Dark is handled one tier down.
+
+`card/` surface border radius padding title body
+`case-study/` surface eyebrow title lead body tags logo page-number mockup rule frame
+`footer/` logo rule page-number · `footer/inverse/` logo rule page-number
+`slot/` surface label · `meter/` track fill label value radius height
+`star-tile/` surface mark label radius · `heat/` low mid high text
+`logo/` fill/{default,inverse,accent,muted} clear-space height/{sm,md,lg}
+`logo-hamaa/` fill/{default,inverse,accent,muted} · `logo-client/` fill/{default,inverse}
+`bg/` default inverse accent
+
+**Wired:** case-study, footer, slot, logo, logo-hamaa, logo-client — bound on their main components, cascading to ~390 instances.
+**Not yet wired:** card, meter, star-tile, heat (mains on Hospitals Report), bg (main on Gradient & Bks).
+
+---
+
+## 5. 4. Canvas (4)
+
+`slide/width` 1920 · `slide/height` 1080 · `slide/margin-x` 120 · `slide/safe-area` 100
+
+Sits outside the chain. Document constants, deliberately off the spacing scale.
+
+---
+
+## Styles
+
+**1 paint style** — `Brand/Gradient · Event surfaces`, 145°, `#040038` → `#01006E` @55% → `#001AFF`.
+
+**12 text styles**, each bound to the type tokens so the scale cannot drift:
+`Display/Hero` `Display/Title` `Display/Section` `Display/Stat` `Display/Subhead` `Display/Quote`
+`Body/Large` `Body/Default` `Body/Small` `Body/Caption` `Body/Emphasis` `Label/Eyebrow`
+
+**Use the text style, not the raw tokens**, unless nothing fits.
+
+---
+
+## Verified state, 2026-08-08
+
+| Check | Result |
+|---|---|
+| Unset modes | 0 |
+| Tier-direction violations | 0 |
+| Chains unresolvable in any of 12 combinations | 0 |
+| Scope / publishing errors | 0 |
+| References to the deleted collections | 0 |
+| Contrast failures across all 12 combinations | **0** |
+
+## Known gaps
+
+- Purple and yellow `role-tint` / `role-border` / `role-mid` are **derived**, not board-supplied
+- `text/subtle` and `icon/muted` measure 2.51:1 on white — inherited; fine for disabled states, not body text
+- `card`, `meter`, `star-tile`, `heat`, `bg` component tokens exist but their mains are not yet bound
+- Live files still carry ~430 bindings on primitives, chiefly off-scale values (12px gaps, 40px font size) that are design drift rather than token gaps

@@ -9,7 +9,7 @@ AZMX is a leading Saudi digital consultancy, and the parent house for four brand
 
 One-line ethos: deep navy, electric blue, generous white space, serif personality, the chevron as the only recurring graphic device. **Restraint is the luxury.**
 
-For the complete handbook (component specs, slide archetypes, Figma implementation), read `references/design-system.md`. For every color tone, read `references/colors.md`. For the exact live Figma variables (all 233: colors with dark mode, fonts, type scale, spacing, radii, opacity), read `references/figma-tokens.md`. For any HTML email or newsletter, read `references/email-design-system.md` and start from `assets/templates/email-starter-skeleton.html`. For any written copy, follow `references/voice-and-tone.md`. When a deliverable needs imagery, pick from the 242 brand images catalogued in `references/image-library.md` (selection and colour-pairing rules) and `references/image-index.md` (every file with its three concept tags, dominant colour, safe text colour, and direct download link). To convert an image to another colour theme, use the tested prompts in `references/recolor-prompts.md`. For icons, read `references/icons.md`. For any printed A4 document or fillable PDF form, follow `references/pdf-forms.md` — it documents the validated Figma → export → pdf-lib pipeline and the `scripts/build-pdf-form.mjs` tool that stamps form fields at exact coordinates.
+For the complete handbook (component specs, slide archetypes, Figma implementation), read `references/design-system.md`. For every color tone, read `references/colors.md`. **Before touching a Figma file, read `references/design-tokens-usage.md`** — the seven-step guide to using the token system, including which tier to bind to and why the signature colour is not the text colour. For the exact live variables (all 550 across five collections: six palettes, Light/Dark, component and canvas tokens), read `references/figma-tokens.md`. For any HTML email or newsletter, read `references/email-design-system.md` and start from `assets/templates/email-starter-skeleton.html`. For any written copy, follow `references/voice-and-tone.md`. When a deliverable needs imagery, pick from the 242 brand images catalogued in `references/image-library.md` (selection and colour-pairing rules) and `references/image-index.md` (every file with its three concept tags, dominant colour, safe text colour, and direct download link). To convert an image to another colour theme, use the tested prompts in `references/recolor-prompts.md`. For icons, read `references/icons.md`. For any printed A4 document or fillable PDF form, follow `references/pdf-forms.md` — it documents the validated Figma → export → pdf-lib pipeline and the `scripts/build-pdf-form.mjs` tool that stamps form fields at exact coordinates.
 
 For any communication planning, channel ownership, or governance question, read `references/communication-strategy.md`. Before writing a single line of copy, load `references/audiences-and-messaging.md` for the audience and its verbatim core message, then `references/voice-and-tone.md` for AZM X's voice or `references/sub-brand-voices.md` for Colab, Majarah, Clix, and Anatomi. For cadence, weekly themes, optimal posting times, and the nineteen internal initiatives, read `references/editorial-calendar.md`. For ready-made article, social, and English-to-Arabic prompts, use `references/content-prompts.md`.
 
@@ -28,9 +28,28 @@ Images are dark surfaces. Every section except White measures below 0.18 luminan
 
 The two blues have strict roles. Electric is the call-to-attention on light surfaces: eyebrows, key numerals, the one highlighted word. Light Blue plays that role on navy, where Electric fails contrast at small sizes. Never swap them.
 
-Gradient (event surfaces only: covers, dividers, closings): linear 145 degrees, `#040038` to `#001AFF`, mid-stop `#01006E` at 55 percent. Never behind dense body copy.
+Gradient (event surfaces only: covers, dividers, closings): linear 145 degrees, `#040038` to `#001AFF`, mid-stop `#01006E` at 55 percent. Never behind dense body copy. The gradient follows the active palette — an orange deck gets an orange gradient.
 
-Red `#FF2B3C`, Yellow `#FED340`, Green `#22C36F` exist only for semantic RAG data dots. No other secondary color appears on brand surfaces.
+## Six palettes
+
+Blue is the house default. **Five secondary palettes can carry a whole deliverable** when the subject calls for it — the Hospitals Report runs entirely in orange. A deck picks one palette; the accent, the dark ground and the gradient all follow it.
+
+| Palette | Signature | Deep |
+|---|---|---|
+| **Blue** | Electric `#001AFF` | Dark Navy `#040038` |
+| **Orange** | `#F47A48` | `#842C09` |
+| **Green** | `#22C36F` | `#012F02` |
+| **Yellow** | `#FED340` | `#693F02` |
+| **Purple** | `#C68FFF` | `#2E0068` |
+| **Red** | `#FF2B3C` | `#640000` |
+
+Each runs a full twelve-step ramp. **Never mix two palettes on one surface.**
+
+**The signature is a fill colour, not a text colour.** Blue is the exception — Electric is dark, so it reads at 8.1:1 and doubles as the accent text. Every secondary signature is a vivid *light* tone: white on yellow `#FED340` measures 1.44:1. In Figma use `surface/accent` for a fill and `text/accent` when it must be read; the token system picks the right step for each palette.
+
+Red, Yellow and Green also serve as the RAG data dots (`#FF2B3C`, `#FED340`, `#22C36F`). That use is separate from the palettes and unaffected by which palette a deck runs in.
+
+Colab and Majarah have their own greens and purples, and they are **different values**. Never substitute one for the other — load `colab-design` or `majarah-design`.
 
 ## Typography
 
