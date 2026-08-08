@@ -4,6 +4,58 @@ All notable changes to the AZMX Brand Skill.
 
 ---
 
+## v2.0.0 — 2026-08-08
+
+**The design token system.** The Figma variable system was rebuilt from scratch and the entire library migrated onto it. The old three collections — `Colors`, `Fonts`, `Numbers`, 233 variables — were **deleted**. None of those names exist any more, which made `references/figma-tokens.md` wrong rather than merely out of date. Hence the major version.
+
+### The system
+
+550 variables across five collections, with a strict one-way dependency chain and two switches that resolve independently.
+
+```
+1. Primitives   285   hidden, unscoped, never bound to
+1b. Palette      19   six modes: Blue Orange Green Yellow Purple Red
+2. Semantic     186   two modes: Light Dark
+3. Component     56
+4. Canvas         4
+```
+
+A frame carries a palette **and** a theme at once: twelve combinations from one set of bindings, nothing duplicated. Blue resolves to the values already in use, so nothing built before this release changed appearance.
+
+### The correction that drove it
+
+AZM X has **five secondary palettes**, not three RAG colours. Orange carries the Hospitals Report end to end. `SKILL.md` and `references/colors.md` both stated that red, yellow and green existed *"only for semantic RAG data dots"* — that was wrong, and both are rewritten around the six palettes. RAG dots remain a separate, narrower use.
+
+### The trap worth knowing
+
+**A palette's signature is a fill colour, not a text colour.** White on yellow `#FED340` measures **1.44:1**. Blue is the exception because Electric is dark and reads at 8.1:1. `surface/accent` gives the signature; `text/accent` gives the first legible step for whichever palette is active. The token system picks it per palette so nobody has to remember.
+
+### Added
+
+- **`references/design-tokens-usage.md`** — the seven-step guide. Which tier to bind to and why, choosing colour by job rather than appearance, the type ramps, the ten permitted spacing values, icons, the gradient, what is out of bounds, and the sequence for adding a token. **Read this before touching a Figma file.**
+- **`assets/tokens/azmx-tokens.json`** — all 550 tokens as data, aliases preserved as `@references` so the palette and theme structure survives the export rather than being flattened away.
+- **`scripts/tokens-to-css.mjs`** — resolves those aliases into CSS custom properties. Default output carries all twelve combinations driven by `data-palette` and `data-theme` attributes, emitting only what differs from blue/light. `--palette` and `--theme` flatten one combination; `--json` emits resolved values for anything that is not CSS. No dependencies.
+- **`scripts/export-figma-tokens.js`** — regenerates the export from Figma in raw and W3C DTCG (v2025.10) form.
+
+### Changed
+
+- **`references/figma-tokens.md`** — full rewrite. Every collection, every mode, all six ramps, the role anchors, the verified state and the known gaps. Opens with an explicit note that it replaces the 233-variable system, so anyone holding an old reference knows immediately.
+- **`SKILL.md`** — new **Six palettes** section. The gradient note now says it follows the active palette. `design-tokens-usage.md` added to the reading list as required before Figma work.
+- **`references/colors.md`** — the "Secondary / Alert (RAG only)" section rewritten as five full palettes, each with its signature, deep tone and first text-safe step. Deleted variable IDs removed.
+
+### Verified
+
+Zero unset modes, zero tier-direction violations, zero unresolvable alias chains, zero scope errors, zero references to the deleted collections, and **zero contrast failures across all twelve palette-theme combinations**. The lowest measured text pairing anywhere in the system is 4.86:1.
+
+### Known gaps, recorded rather than hidden
+
+- Purple and yellow's `role-tint`, `role-border` and `role-mid` are **derived** at ramp steps 50 / 400 / 600 — the median positions where orange, green and red place their real anchors. They are not palette-board values. Each says so in its Figma description. Replace if official values exist.
+- `text/subtle` and `icon/muted` measure 2.51:1 on white. Inherited from existing designs; fine for disabled states, not for body text.
+- `card`, `meter`, `star-tile`, `heat` and `bg` component tokens exist but their main components are not yet bound.
+- Live files still carry roughly 430 bindings on primitives, chiefly off-scale values — 12px gaps and a 40px font size — which are design drift rather than token gaps.
+
+---
+
 ## v1.4.1 — 2026-07-30
 
 **Majarah gains a visual system.** `majarah-design` is now an installed skill, so two of the four sub-brands have their own visual layer instead of borrowing AZM X's.
