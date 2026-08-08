@@ -162,7 +162,7 @@ Rules, in priority order:
 | 7 | **Multiple accents competing in one chart** — Electric + Jade + Orange together | Destroys the "look here" signal; Duarte's rule is one bright colour per slide `[S]` |
 | 8 | **Improvised severity colours** | Undermines skim-by-colour. Fix the ordinal mapping: Vivid Orange = critical/high · Olive Green = medium · Pale Sky Blue/grey = low `[D]` |
 | 9 | **Numeral without a benchmark** | Reads as decoration, not insight `[D]` |
-| 10 | **One dark ground everywhere** | Uniform flat dark fields read harsh against the neon accent. Rotate Pine, Deep Jade and white across a deck `[S]` |
+| 10 | **One dark ground everywhere** | Uniform flat dark fields read harsh against the neon accent. Rotate the four grounds across a deck — White, Pine, Deep Jade, Electric — set as `02 Semantic` modes, not picked as colours. See `token-system.md` `[S]` |
 | 11 | **Identical motif on every slide** | Treating a generative density system as a static lockup defeats its own premise `[D]` |
 | 12 | **RTL as an afterthought** | See §5 `[D]` |
 

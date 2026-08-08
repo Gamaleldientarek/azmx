@@ -1,5 +1,11 @@
 # Colab — Live Figma Variables
 
+> ⛔ **SUPERSEDED 2026-08-08.** Every collection below — `color 🎨`, `numbers 🔢`, `grids`, `fonts` — has been **deleted** from `Colab Design System`. The variable layer was rebuilt from scratch as five collections with four ground modes.
+>
+> **The current system is `token-system.md`.** Read that for anything you intend to build or bind.
+>
+> This file is kept for one purpose: reading a file that predates the rebuild, or tracing where an old binding used to point. `strings 📝` survives under the name `06 Strings` with its original collection ID (`VariableCollectionId:2:1938`), so bindings to it were never broken.
+
 Extracted from the client's Figma file on 2026-07-26 via the Figma Console MCP Desktop Bridge.
 
 ---

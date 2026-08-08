@@ -1,5 +1,52 @@
 # Changelog
 
+## 4.0.0 — 2026-08-08
+
+**Major.** The variable layer was rebuilt from scratch in the live file. `color 🎨`, `numbers 🔢` and `grids` are **deleted**; five collections replace them, and the deck's grounds are now **variable modes** rather than colours a designer picks. Anything bound to the old collections fails — hence the major bump.
+
+The governing finding is one sentence, and it is the commonest way a token system rots:
+
+> **A token whose name contains a colour is a primitive in disguise.** `background/brand/pine` and `text/brand/electric` cannot be moved by a mode, because moving them would make their names lies. **882 bindings — 11.1% of the deck — sat on tokens like these**, which is why the file had a dark mode that changed almost nothing and broke what it did change.
+
+The test to apply: *can a mode change this token's value without making its name false?* If not, it is a primitive — move it down a tier and bind the consumer to a role.
+
+### Added
+- **`references/token-system.md`** — new reference, and the authority on anything variable-related. The five collections (`01 Primitives` 288 · `02 Semantic` 88 · `03 Component` 65 · `04 Typography` 41 · `05 Canvas` 15, plus `06 Strings`), the one-way dependency chain, and **every semantic role with its measured value and WCAG ratio in all four modes**. Extracted from the live file, not authored
+- **Four grounds, as modes.** `Light` `#FFFFFF` · `Jade` `#103A21` · `Dark` `#011E14` · `Electric` `#34FF67`. A slide sets one mode and every colour on it follows. Two modes could never describe this deck: Light/Dark collapses Pine and Deep Jade into one bucket and has nowhere at all to put Electric
+- **Two independent axes, stated.** `02 Semantic` carries ground; `04 Typography` and `06 Strings` carry language. They never interact — an Arabic slide on pine sets Jade on one and AR on the other. Typography and Canvas alias primitives directly, outside the colour chain, because type and geometry do not change with the ground
+- **The Electric ban is now encoded, not remembered.** `text/accent` resolves to **Pine on light grounds** and Electric on dark. The rule a designer used to have to recall is a property of the token
+- **Constant tokens** — `text/on-dark`, `text/on-light`, `surface/overlay/on-dark`, `surface/overlay/on-light`, `scrim/*`. Mode-aware tokens describe the *slide*; constants describe a *panel*. An element whose parent is a card or a photo must not follow the page ground
+- **`surface/inverse`** — for a deliberate opposite-polarity panel, e.g. a dark card parked on a white slide
+- **The alpha tier** — `surface/overlay/{subtle,soft,medium,strong}` and `decor/wash/*`, because binding a paint to a solid colour variable **destroys its opacity**
+- **Ordinal vocabularies** — `severity/{critical,major,minor,positive,visual}` and `impact/{high,medium,low}`, each aliasing a `status/*` family so the mapping is stated once. **`indicator` is constant across Light, Jade and Dark**: an ordinal scale that changes hue with the ground destroys skim-by-colour and makes two slides incomparable
+- **`05 Canvas`** — grid and slide geometry as variables, so a layout script reads the grid instead of hard-coding it
+- **§12, the seven traps**, each of which cost real rework — ordered by what they cost
+
+### Changed
+- **`SKILL.md`** — the ground rule now reads *four grounds, set as modes*, with the measured deck distribution (Jade 39 · Dark 25 · Light 17 · Electric 2 across 83 slides). Pointer paragraph leads with `token-system.md`. Arabic leading is delivered by `04 Typography`, not the retired `numbers` collection, and **sizes are now stated as identical in EN and AR — only leading and tracking move**
+- **Three anti-pattern rows added** — the colour-named token, reading back a resolved colour, and the four-ground rotation
+- **`references/colors.md` §5** — the `Semantics/*` table is retired and rewritten as a **migration map** to the new roles. It carries the trap explicitly: `Text/OnColor` maps to `text/on-dark`, **not** `text/inverse`
+- **`references/variable-architecture.md`** — scoped down to picker mechanics, which remain correct; its collection layout is marked superseded
+- **`references/layout-archetypes.md`** anti-pattern 10 and **`README.md`** routing rows updated
+
+### Deprecated
+- **`references/figma-tokens.md`** — banner-marked ⛔ superseded. Every collection it documents has been deleted. Kept only for reading a file that predates the rebuild, or tracing where an old binding used to point. `strings 📝` survives as `06 Strings` with its original collection ID, so bindings to it were never broken
+
+### Fixed — in the live file
+- **Text contrast 168 → 0 failures across 2,232 nodes.** Every text role now clears **AA body on its own ground in all four modes**; the worst case in the system is `text/muted` on Light at 4.78:1
+- **~25,000 hop-1 bindings and ~15,000 hop-2 lifts** across `03 · Template Components`, EN and AR
+- **All 83 slides carry an explicit mode**
+- **1,920 translucent paints preserved** through binding in the Arabic deck
+- **517 font sizes repaired** — they had been bound to `size/space/*` instead of `size/font/*`, because both families contain 16, 20, 24 and 40. Matching a font size *by value* picks the wrong family half the time; select by property
+
+### Notes — two constraints that binding cannot fix
+- **Electric fills are invisible on a light ground.** `accent/default` on `surface/page` in Light is **1.34:1**. A chip or marker filled with Electric on a white slide has no perceivable edge — only its Pine label carries it. Where the shape must read, use `border/accent` or invert to a Pine fill
+- **Cards are invisible on a light ground.** `surface/card` and `surface/page` are both `#FFFFFF` in Light (1.00:1) and `border/default` is 1.24:1. A card on white needs `border/strong` (4.78:1), `surface/sunken` behind it, or elevation. This is why the light-ground slides use rules rather than card outlines
+- **`text/disabled` is below 3:1 in every mode. Deliberate** — disabled means unreadable. Nothing in a report deck should carry it
+- **Verify by screenshot, never by re-reading resolved colours.** Figma returns the pre-write value immediately after a binding write or a mode change. This produced three false "0 failures" reports in one session, two of them on regressions, one on a slide that had gone blank
+- **Pass `fileKey` on every `figma_execute` that matters.** The Desktop Bridge follows whichever file is active; during this rebuild one read silently returned AZM X's navy and blue instead of Colab's pine and electric
+- **Still open, and recorded in §14:** page `02 · Design System` has not had hop 2 · ~271 legacy bindings and 47 unmapped electric tints remain on page `03 · Template Components` · slide 14's ground reads as off-palette `#9E948A` from a device mockup
+
 ## 3.2.1 — 2026-07-28
 
 Patch. One measured correction, found while auditing the project's working documents against the skill.
