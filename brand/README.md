@@ -14,8 +14,9 @@ As of v1.4.0 the skill also encodes the AZM X Unified Communication Strategy: fi
 
 - `SKILL.md`: the condensed brand rules the agent loads automatically
 - `references/design-system.md`: the full AZMX Design System handbook (v1.1: chevrons banned as backgrounds)
-- `references/colors.md`: every color tone (primary, blue ramp 50 to 1000, neutrals, RAG, surfaces, text-by-surface)
-- `references/figma-tokens.md`: the complete live Figma variable export, 233 tokens across Colors (with Dark Mode), Fonts, and Numbers (type scale, spacing, radii, opacity)
+- `references/colors.md`: every color tone — the blue ramp 50 to 1000, the five secondary palettes, neutrals, RAG dots, surfaces, text-by-surface
+- `references/design-tokens-usage.md`: **read this before touching a Figma file.** The seven-step guide — which tier to bind to, choosing colour by job, type, spacing, and how to add a token
+- `references/figma-tokens.md`: the complete live Figma variable export, 550 tokens across five collections — Primitives, Palette (six modes), Semantic (Light/Dark), Component, Canvas
 - `references/email-design-system.md`: the AZMX Email Design System v1 (RTL rules, 3-layer fonts, themes, components)
 - `references/voice-and-tone.md`: how AZMX sounds, EN and AR — the Four Dimensions, universal writing principles, the 6-point pre-publish checklist, and the no-AI-tells writing mechanics
 - `references/communication-strategy.md`: the strategy spine — guiding principles, POEM, all seven channels, the RACI matrix, workflows, the three operating rituals, the creative effectiveness scale, and the briefing checklist
@@ -31,6 +32,9 @@ As of v1.4.0 the skill also encodes the AZM X Unified Communication Strategy: fi
 - `scripts/brand-check.py`: an automated brand QA linter. It parses the legal palette out of `references/colors.md` at runtime, then checks deliverables for off-palette colours, non-brand fonts, and off-scale spacing
 - `scripts/build-pdf-form.mjs`: stamps AcroForm fields onto a designed PDF at exact coordinates, with the brand font embedded
 - `scripts/extract-figma-fields.js`: reads the field rectangles out of a Figma design and emits the JSON spec
+- `scripts/tokens-to-css.mjs`: turns the tokens into CSS custom properties. All twelve palette-theme combinations by default, or one flattened combination, or JSON. No dependencies
+- `scripts/export-figma-tokens.js`: regenerates the token export from Figma, in raw and W3C DTCG form
+- `assets/tokens/azmx-tokens.json`: all 550 tokens as data, aliases preserved so the palette and theme structure survives
 - `assets/images/`: 242 AZMX-generated brand images in 8 sections (gradients, abstract blue, and recolored variants)
 - `assets/templates/`: ready-to-fill email skeleton and the full email component showcase
 - `assets/logo/`: the AZMX logo in Colored, Navy Dark, and White SVG variants, plus the chevron favicon
@@ -43,29 +47,46 @@ You need [Claude Code](https://claude.com/claude-code) or any agent that support
 
 ```bash
 git clone https://github.com/Gamaleldientarek/azmx.git
-cp -r azmx/brand ~/.claude/skills/azmx-brand
+cd azmx && ./install.sh brand
 ```
 
 That's it. Next time you ask Claude for anything AZMX-branded, the skill kicks in automatically. You can also invoke it directly with `/azmx-brand`.
 
-To update to the latest version later:
+To update later:
 
 ```bash
-cd azmx && git pull
-cp -r brand ~/.claude/skills/azmx-brand
+cd azmx && git pull && ./install.sh brand
 ```
+
+Use the script rather than `cp -r`. A plain copy cannot remove files deleted upstream, so an old reference survives alongside its replacement — a real risk since v2.0.0 replaced the token reference wholesale. `./install.sh --dry-run` previews without writing.
 
 ## Quick palette reference
 
-| Token | Hex |
-|---|---|
-| Electric | `#001AFF` |
-| Dark Navy | `#040038` |
-| Light Blue | `#5D8FFF` |
-| Blue 50 | `#F0F5FF` |
-| Neutral 900 | `#111927` |
+**Blue is the house default.** Five secondary palettes can each carry a whole deliverable — the Hospitals Report runs entirely in orange. A deck picks one palette and its accent, dark ground and gradient all follow.
 
-Full ramps and usage rules live in `references/colors.md`.
+| Palette | Signature | Deep | Text-safe on white |
+|---|---|---|---|
+| **Blue** | Electric `#001AFF` | Dark Navy `#040038` | `#001AFF` |
+| **Orange** | `#F47A48` | `#842C09` | `#A1502F` |
+| **Green** | `#22C36F` | `#012F02` | `#168049` |
+| **Yellow** | `#FED340` | `#693F02` | `#895F0F` |
+| **Purple** | `#C68FFF` | `#2E0068` | `#7341AD` |
+| **Red** | `#FF2B3C` | `#640000` | `#A81C27` |
+
+Each runs a full twelve-step ramp, 50 to 1000. Never mix two palettes on one surface.
+
+**The signature is a fill colour, not a text colour.** Blue is the exception because Electric is dark. Every secondary signature is a vivid light tone — white on yellow `#FED340` measures 1.44:1 — so text drops to the safe step in the last column. In Figma the tokens handle it: `surface/accent` for a fill, `text/accent` when it must be read.
+
+Supporting tones:
+
+| Token | Hex | Role |
+|---|---|---|
+| Light Blue | `#5D8FFF` | The accent on navy, where Electric fails contrast |
+| Blue 50 | `#F0F5FF` | Quiet light surface, table zebra, panels |
+| Neutral 900 | `#111927` | Body text on light |
+| RAG dots | `#FF2B3C` `#FED340` `#22C36F` | Data only, separate from the palettes |
+
+Full ramps and usage rules live in `references/colors.md`. How to apply them is in `references/design-tokens-usage.md`.
 
 ## Adding images to the library
 
