@@ -1,0 +1,32 @@
+{
+  "name": "azmx",
+  "owner": {
+    "name": "Gamal Eldien",
+    "url": "https://gamaleldien.com"
+  },
+  "metadata": {
+    "description": "Design systems for AZMX and its brands, packaged as Agent Skills."
+  },
+  "plugins": [
+    {
+      "name": "azmx",
+      "displayName": "AZMX Design Systems",
+      "description": "The AZMX brand and communication system, plus the Colab and Majarah design systems. Colors, design tokens, typography, logos, fonts, the email design system, voice and tone, and the PDF form pipeline.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./brand",
+        "./colab",
+        "./majarah"
+      ],
+      "author": {
+        "name": "Gamal Eldien",
+        "url": "https://gamaleldien.com"
+      },
+      "homepage": "https://gamaleldientarek.github.io/azmx/brand/",
+      "repository": "https://github.com/Gamaleldientarek/azmx",
+      "keywords": ["design-system", "brand", "figma", "design-tokens", "azmx", "colab", "majarah"],
+      "category": "design"
+    }
+  ]
+}

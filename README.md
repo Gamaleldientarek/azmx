@@ -28,35 +28,55 @@ Each skill is self-contained and follows the standard Agent Skill layout:
 
 ## Install
 
+Two ways. **The plugin keeps itself up to date; the script does not.**
+
+### As a plugin (recommended)
+
+```
+/plugin marketplace add Gamaleldientarek/azmx
+/plugin install azmx@azmx
+```
+
+That installs all three skills. Claude Code then refreshes them in the background, so a push here reaches everyone without anyone running anything.
+
+Skills invoked from a plugin are namespaced — `/azmx:azmx-brand`, `/azmx:colab-design`, `/azmx:majarah-design`. Automatic invocation is unaffected: ask for anything AZMX-branded and the skill loads on its own, exactly as before.
+
+If you previously installed with `install.sh`, delete the copies first so you are not running two versions:
+
+```bash
+rm -rf ~/.claude/skills/azmx-brand ~/.claude/skills/colab-design ~/.claude/skills/majarah-design
+```
+
+To make a project prompt its collaborators automatically, add this to the project's `.claude/settings.json`:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "azmx": { "source": { "source": "github", "repo": "Gamaleldientarek/azmx" } }
+  },
+  "enabledPlugins": { "azmx@azmx": true }
+}
+```
+
+### With the script
+
+For anyone who would rather not use plugins, or who wants the skills as plain directories they can edit.
+
 ```bash
 git clone https://github.com/Gamaleldientarek/azmx.git
 cd azmx
-./install.sh
+./install.sh              # all three, or: ./install.sh brand
 ```
 
-That installs all three skills into `~/.claude/skills/`. For one only:
+Restart Claude Code afterwards, or run `/doctor`. Confirm with `/azmx-brand`.
+
+**Updating is manual and you have to remember it:**
 
 ```bash
-./install.sh brand
+cd azmx && git pull && ./install.sh
 ```
 
-Restart Claude Code afterwards, or run `/doctor`, so it picks them up. Confirm with `/azmx-brand`.
-
-## Update
-
-Same command. Pull, then re-run:
-
-```bash
-cd azmx
-git pull
-./install.sh
-```
-
-It reports what changed per skill and says `already up to date` when there is nothing to do. To preview without writing anything:
-
-```bash
-./install.sh --dry-run
-```
+It reports what changed per skill and says `already up to date` when there is nothing to do. `./install.sh --dry-run` previews without writing.
 
 **Use the script rather than `cp -r`.** A plain copy leaves behind files that were deleted upstream, so a skill accumulates stale references — a real risk here, since `brand/` v2.0.0 replaced a token reference wholesale. The script uses `rsync --delete`, which removes them. It also skips `.git` and `node_modules`.
 
@@ -64,15 +84,6 @@ Installing somewhere other than `~/.claude/skills`:
 
 ```bash
 CLAUDE_SKILLS_DIR=/path/to/skills ./install.sh
-```
-
-### Manual install
-
-If you would rather not run a script, copy the directory and delete the old one first so nothing stale survives:
-
-```bash
-rm -rf ~/.claude/skills/azmx-brand
-cp -r brand ~/.claude/skills/azmx-brand
 ```
 
 Skill directory names matter — they must match the `name:` field in each `SKILL.md`: `azmx-brand`, `colab-design`, `majarah-design`.
