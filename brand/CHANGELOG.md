@@ -4,6 +4,24 @@ All notable changes to the AZMX Brand Skill.
 
 ---
 
+## v2.0.1 — 2026-08-08
+
+Consistency pass over `SKILL.md`, plus a lockfile that should always have been committed.
+
+### Changed
+
+- **The workflow now opens by fixing the palette.** v2.0.0 added the six-palette section but left the workflow starting at "identify the surface", so the palette got chosen late — after an accent was already placed. It is now step 1: blue unless there is a reason.
+- **"Ask before you color" asks the palette question first.** Its example previously offered a choice between blues, which only makes sense in one of the six palettes. It now offers `surface/accent` and `text/accent`, and states outright that a raw hex is never acceptable where a token exists — a hex cannot follow the palette or the theme, which is the point of the system. The forced-choice exemption changed from "text on navy is always White / Blue 100" to "text on a dark ground is always White or the palette's step 100".
+- **The spacing scale lists 0 and 4.** Layout essentials gave it as 8 through 160; the token system also carries 0 and 4 for hairline cases. 12 and 20 are now named as prohibited, because those two keep reappearing in live files.
+
+### Fixed
+
+- **`scripts/package-lock.json` is committed.** It was `.gitignore`d alongside `node_modules/` — inherited from the standalone repo, before `install.sh` existed. Since `install.sh` uses `rsync --delete`, updating the skill deleted whatever lockfile you had. `package.json` pins `pdf-lib` and `@pdf-lib/fontkit` with carets, so the next `npm install` could resolve different versions — and the PDF form pipeline stamps AcroForm fields at exact coordinates, which is precisely the kind of thing a version bump shifts.
+- Numbering in two ordered lists. The image-selection list had a duplicate `3.` predating this release; the workflow needed renumbering after its new first step.
+
+---
+
+
 ## v2.0.0 — 2026-08-08
 
 **The design token system.** The Figma variable system was rebuilt from scratch and the entire library migrated onto it. The old three collections — `Colors`, `Fonts`, `Numbers`, 233 variables — were **deleted**. None of those names exist any more, which made `references/figma-tokens.md` wrong rather than merely out of date. Hence the major version.
