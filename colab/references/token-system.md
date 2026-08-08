@@ -27,13 +27,13 @@ The second failure was that two modes cannot describe four grounds. The deck rot
 | # | Collection | Modes | Vars | Holds |
 |---|---|---|---|---|
 | **01** | `01 Primitives` | Value | **288** | Raw values. Every hex, every number. Never bound to a node |
-| **02** | `02 Semantic` | **Light · Jade · Dark · Electric** | **88** | Roles. The only tier that knows about grounds |
+| **02** | `02 Semantic` | **Light · Jade · Dark · Electric** | **91** | Roles. The only tier that knows about grounds |
 | **03** | `03 Component` | Value | **65** | Named deck parts. Aliases semantic, one hop, no logic |
 | **04** | `04 Typography` | **EN · AR** | **41** | Family, weight, size, leading, tracking |
 | **05** | `05 Canvas` | Value | **15** | Grid, slide and motif geometry |
 | **06** | `06 Strings` | **EN · AR** | 4 | Footer and chrome copy |
 
-Total **501**. The dependency runs one way and never loops:
+Total **504**. The dependency runs one way and never loops:
 
 ```
 01 Primitives  ──►  02 Semantic  ──►  03 Component  ──►  node
@@ -99,7 +99,7 @@ return broken;   // must be 0
 
 ---
 
-## 5. Tier 2 — Semantic (88)
+## 5. Tier 2 — Semantic (91)
 
 The only tier with four modes. Resolved values below are **measured from the live file**, with WCAG ratios computed against that mode's own `surface/page`.
 
@@ -113,7 +113,7 @@ The only tier with four modes. Resolved values below are **measured from the liv
 | `surface/sunken` | `#F3F4F6` | `#011E14` | `#0D121C` | `#00E93A` |
 | `surface/inverse` | `#103A21` | `#FFFFFF` | `#FFFFFF` | `#011E14` |
 
-`surface/inverse` is for a **deliberate opposite-polarity panel** — a dark card parked on a white slide. It exists because such panels are real in this deck and were the thing that broke automated ground detection. See §12.5.
+`surface/inverse` is for a **deliberate opposite-polarity panel** — a dark card parked on a white slide. It exists because such panels are real in this deck and were the thing that broke automated ground detection. See §12.2.
 
 ### 5.2 Text — every role clears AA body on its own ground
 
@@ -272,7 +272,7 @@ Plus `canvas/page`, `canvas/section`, `canvas/grid`, `canvas/guide` — the colo
 
 ## 9. Constants — the tokens that must NOT flip
 
-Five semantic tokens deliberately hold one value in all four modes. Each exists because something sits on a **local surface**, not on the page ground, and a mode-aware token would follow the wrong parent.
+Eight semantic tokens deliberately hold one value in all four modes. Each exists because something does **not** take its polarity from the page ground.
 
 | Token | Value | Use when |
 |---|---|---|
@@ -281,8 +281,13 @@ Five semantic tokens deliberately hold one value in all four modes. Each exists 
 | `surface/overlay/on-dark` | white @10% | A translucent lift over a known-dark local surface |
 | `surface/overlay/on-light` | black @10% | The same over a known-light one |
 | `scrim/*` | black @40/60/80 | A scrim darkens whatever is under it, always |
+| `brand/logo/electric` | `#34FF67` | The Electric logo colourway |
+| `brand/logo/pine` | `#103A21` | The Pine logo colourway |
+| `brand/logo/white` | `#FFFFFF` | The White logo colourway |
 
-**The rule: mode-aware tokens describe the slide. Constant tokens describe a panel.** If the element's parent is a card, a photo, or an inverse panel — not the page — reach for a constant.
+**The rule: mode-aware tokens describe the slide. Constant tokens describe a panel — or a brand asset.** If the element's parent is a card, a photo, or an inverse panel — not the page — reach for a constant.
+
+⚠️ **The logo is a three-colourway component set, and the colourway must not follow the ground.** The deck picks the variant; the variant then holds its colour. Binding all logo vectors to the ground-responsive `logo/mark` collapses Pine, Electric and White into one colour and destroys the set — the §12.5 flattening trap, in its most expensive form. `brand/logo/*` exists so the three variants survive.
 
 ---
 
@@ -340,7 +345,7 @@ Then override every foreground that fails on the new ground. For Electric that i
 
 ---
 
-## 12. The seven traps
+## 12. The eight traps
 
 Every one of these cost real rework. They are ordered by how expensive they were.
 
@@ -358,7 +363,9 @@ Slides 04, 07 and 16 have white frame fills entirely covered by a dark panel. Re
 
 > **The ground is the largest covering surface, not the frame fill.**
 
-And once a slide is lifted, its ground colour is itself mode-dependent — so re-deriving the mode from the rendered colour is circular and will churn. **Record the intended ground; do not re-detect it after lifting.**
+**But that heuristic fails in the other direction too, and it produced a phantom defect.** Slide 14's largest covering surface is a **phone chassis** at `#9E948A` — 90% of the frame area, off-palette, and pure artwork. It was logged for weeks as "slide 14's ground is off-palette" when the slide was correct all along: frame Pine, mode Jade, renders perfectly.
+
+> **Neither the frame fill nor the largest surface is the ground. The ground is a design decision.** Detection is a way to *draft* the answer on a deck that has none; it is never the authority. Record the intended ground per slide, and once recorded, stop detecting — after lifting, the ground's colour is itself mode-dependent, so re-deriving it is circular and will churn.
 
 ### 12.3 Binding a paint destroys its opacity
 
@@ -376,7 +383,15 @@ Repointing three severity legend swatches to `background/canvas` collapsed all t
 
 See §6. Fix the outlier at instance level.
 
-### 12.7 The bridge can retarget mid-session
+### 12.7 A hidden ancestor exports blank, and every node still reports `visible: true`
+
+A frame inside a hidden **section** exports as a uniform blank PNG. `node.visible`, `opacity`, `blendMode` and all 71 children read perfectly normal, because the frame itself *is* visible — its parent is not.
+
+This reads exactly like "the mode change blanked the slide", which is the most alarming failure in this system and invites an immediate revert of good work. Before diagnosing a blank export, **walk the ancestors and check `visible` on each.** A ~150-byte PNG is the tell: that is a uniform image, not a rendered slide.
+
+Corollary worth knowing: a **hidden section is usually a backup**, and a backup is typically pre-migration — so its nodes are still on the old bindings and do not respond to modes at all. Setting modes on one is a no-op.
+
+### 12.8 The bridge can retarget mid-session
 
 `figma_execute` runs against whichever file the Desktop Bridge is currently pointed at. If the user switches Figma tabs, a read silently returns another file's data — during this rebuild, one query came back with AZM X's navy and blue instead of Colab's pine and electric.
 
@@ -391,7 +406,7 @@ Six predicates. All six passed on 2026-08-08.
 | # | Predicate | Method |
 |---|---|---|
 | 1 | Every primitive is hidden and scoped | script, §4 |
-| 2 | No node binds directly to a primitive colour | walk bindings, assert collection ≠ `01 Primitives` |
+| 2 | No node binds directly to a primitive colour — **except on a specimen sheet**, where documenting a primitive requires binding to it | walk bindings, assert collection ≠ `01 Primitives`, exempting `02 · Design System` brand/type specimen sections |
 | 3 | Every text node clears 4.5:1 against its own ground | compute, per mode |
 | 4 | No text node resolves to the same colour as its parent surface | catches white-on-white |
 | 5 | Every slide carries an explicit `02 Semantic` mode | `explicitVariableModes` non-empty |
@@ -409,7 +424,19 @@ Two are structural and will not be fixed by more binding — they are properties
 
 **Cards are invisible on a Light ground.** `surface/card` and `surface/page` are both `#FFFFFF` in Light — 1.00:1 — and `border/default` at `#E5E7EB` is 1.24:1. A card on a white slide needs `border/strong` (4.78:1), `surface/sunken` behind it, or elevation. This is why the Light-ground slides in the deck use rules rather than card outlines.
 
-**Still open:** page `02 · Design System` has not had hop 2 · ~271 legacy bindings and 47 unmapped electric tints remain on page `03 · Template Components` · slide 14's ground reads as off-palette `#9E948A` from a device mockup and needs a declared mode.
+**Page `03 · Template Components` is done** (2026-08-08). 603 legacy bindings were re-pointed and both verification slides came back **byte-identical**, which is the correct outcome for a colour-preserving hop. The 113 that remain are **all inside `⚠️ Old Slides — legacy, being replaced`** and are deliberately left there: rebinding a deprecated section would be wasted work and would make dead slides look current. Every binding in the live library — Atoms, Molecules, Tables, Slide Chrome, AR Components — is on the new system.
+
+Those 113 are also where the off-palette colours live, and it is worth knowing they are contained: `Alart Error/Border #F5C1DE` pink, `Alart Error/Icon #A31236` crimson, `Alart Warning/Border #FEDF89` yellow, `Base/Primary #40CD94` teal, `Background/Primary Light #EEEFFF` lavender. **Colab has no red, no pink, no purple and no teal.** None of them reach the live library.
+
+**Still open — page `02 · Design System`.** 17,172 nodes, still entirely on legacy remote bindings; it needs hop 1 *and* hop 2. It also needs a decision that the other pages did not, because **it is a specimen sheet, and a specimen must not follow the ground**:
+
+| Section | Correct target |
+|---|---|
+| `Brand / Logo`, `Brand / Shapes`, `Brand / Backgrounds`, `Type Specimens` | **Primitives or `brand/logo/*`.** A swatch labelled Pine Green must read Pine Green in every mode, or the documentation lies about itself |
+| `Deck Components`, `Layout Containers`, `UI · Form Controls`, `UI · Feedback`, `UI · Navigation`, `UI · Buttons` | **Semantic / component**, like any other consumer |
+| `⚠️ Deprecated — retained for legacy instances` | Leave it |
+
+This is the one place where verification predicate #2 ("no node binds directly to a primitive") does **not** apply. Documentation of a primitive binds to that primitive on purpose.
 
 ---
 
