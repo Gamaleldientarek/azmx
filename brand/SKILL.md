@@ -68,7 +68,7 @@ The rightward chevron is the only graphic device, and it is **functional, never 
 
 ## Layout essentials
 
-- 8 px baseline grid. Spacing scale, the only permitted values: 8, 16, 24, 40, 64, 96, 128, 160.
+- 8 px baseline grid. Spacing scale, the only permitted values: 8, 16, 24, 40, 64, 96, 128, 160 — plus 0 and 4 for hairline cases. Never 12, never 20.
 - Left-aligned, top-weighted, asymmetric by default. Only closings are centered.
 - Decoration is exactly three things: chevron, gradient, hairline (1 px rules).
 - One deliberate grid-break per surface signals human craft.
@@ -149,33 +149,37 @@ An image whose concept contradicts the copy is worse than no image. Never pick o
 1. Read the surface's message and search the index for the matching concept tag.
 2. Within those matches, default to `blue/` for general surfaces and `gradient/` for covers, dividers, and closings.
 3. Check the index for the image's dominant colour and safe text colour before laying type over it.
-3. When several images fit, name two or three candidates and let the user choose. Do not silently pick, exactly as with colour tokens.
-4. Never invent or download outside imagery for an AZMX deliverable without saying so first. If nothing in the library fits, say that plainly and ask before sourcing elsewhere.
+4. When several images fit, name two or three candidates and let the user choose. Do not silently pick, exactly as with colour tokens.
+5. Never invent or download outside imagery for an AZMX deliverable without saying so first. If nothing in the library fits, say that plainly and ask before sourcing elsewhere.
 
 Images are dark surfaces: White titles, Blue 100 body, Light Blue eyebrows, and Electric only as a chevron tick or single rule. The `white/` section is the exception, taking Navy text with Electric accents.
 
 ## Ask before you color
 
-Before applying any accent or fill color, confirm the token with the user. Ask a direct question such as:
+**First fix the palette, then the token.** If the deliverable's palette is not already obvious, ask which of the six it runs in — that decision drives every accent, the dark ground and the gradient, so making it late means reworking. Blue unless there is a reason.
 
-> "Which color token should I use here: Primary Electric `#001AFF`, or another token from the palette (Light Blue, Dark Navy, a Blue-ramp step, a neutral)?"
+Then confirm the accent token:
+
+> "Which token should I use here: the palette accent (`surface/accent` for a fill, `text/accent` where it must be read), or a specific step — a neutral, a deep tone, a ramp step?"
 
 Rules for this step:
 
 - Never silently pick an accent color when more than one token could fit. One short question, then proceed.
+- **Never hand-pick a hex when a token exists.** In Figma bind the semantic token; in HTML use the CSS variable from `scripts/tokens-to-css.mjs`. A raw hex cannot follow the palette or the theme.
 - If the user names a token that is not in `references/colors.md`, ask them to share its hex value. Use the value they give, and offer to add it to `references/colors.md` so the palette stays the single source of truth.
-- Skip the question only when the choice is already forced by the system (for example: body text on white is always Neutral 900, text on navy is always White / Blue 100, RAG dots are always Red / Yellow / Green).
+- Skip the question only when the choice is already forced by the system (for example: body text on white is always Neutral 900, text on a dark ground is always White or the palette's step 100, RAG dots are always Red / Yellow / Green).
 
 ## Workflow
 
-1. Identify the surface (navy, white, blue-50, or gradient) and apply its text colors from `references/colors.md`.
-2. Confirm the accent color token with the user (see "Ask before you color" above).
-3. Load the two font families from `assets/fonts.css` for any HTML/web deliverable, or embed the TTF/OTF files for documents.
-4. If the deliverable needs imagery, pick from the image library (see "Use the image library" above). Never substitute generic stock or a placeholder.
-5. Place the correct logo variant for the surface.
-6. Apply one chevron gesture maximum, pointing right.
-7. Ask the user whether they want icons on this deliverable (see "Icons" above). Ask once, before placing the first one. Never decide either way silently — this applies to decks and reports exactly as it applies to product UI.
-8. For emails and newsletters: follow `references/email-design-system.md` (Arabic RTL rules are non-negotiable) and build from the email skeleton template.
-9. For all written copy, in this order: identify the brand and audience and take the verbatim core message from `references/audiences-and-messaging.md`; load the voice — `references/voice-and-tone.md` for AZM X, `references/sub-brand-voices.md` for Colab, Majarah, Clix, or Anatomi — and apply its no-AI-tells mechanics; for an article, a social adaptation, or an English-to-Arabic localization, start from a tested prompt in `references/content-prompts.md`.
-10. Check the guardrails table above before delivering. When in doubt, remove decoration. Restraint is the luxury.
-11. For anything that will be published, run the 6-point pre-publish checklist in `references/voice-and-tone.md` last. Three hashtags maximum, no emojis in copy (the email chip glyph is the one exception), and no CTA unless a genuine next step exists.
+1. **Fix the palette first** — which of the six the deliverable runs in. Blue unless there is a reason. Everything downstream depends on it.
+2. Identify the surface (dark ground, white, palette tint, or gradient) and apply its text colors from `references/colors.md`.
+3. Confirm the accent color token with the user (see "Ask before you color" above). For anything built in Figma, read `references/design-tokens-usage.md` before binding.
+4. Load the two font families from `assets/fonts.css` for any HTML/web deliverable, or embed the TTF/OTF files for documents.
+5. If the deliverable needs imagery, pick from the image library (see "Use the image library" above). Never substitute generic stock or a placeholder.
+6. Place the correct logo variant for the surface.
+7. Apply one chevron gesture maximum, pointing right.
+8. Ask the user whether they want icons on this deliverable (see "Icons" above). Ask once, before placing the first one. Never decide either way silently — this applies to decks and reports exactly as it applies to product UI.
+9. For emails and newsletters: follow `references/email-design-system.md` (Arabic RTL rules are non-negotiable) and build from the email skeleton template.
+10. For all written copy, in this order: identify the brand and audience and take the verbatim core message from `references/audiences-and-messaging.md`; load the voice — `references/voice-and-tone.md` for AZM X, `references/sub-brand-voices.md` for Colab, Majarah, Clix, or Anatomi — and apply its no-AI-tells mechanics; for an article, a social adaptation, or an English-to-Arabic localization, start from a tested prompt in `references/content-prompts.md`.
+11. Check the guardrails table above before delivering. When in doubt, remove decoration. Restraint is the luxury.
+12. For anything that will be published, run the 6-point pre-publish checklist in `references/voice-and-tone.md` last. Three hashtags maximum, no emojis in copy (the email chip glyph is the one exception), and no CTA unless a genuine next step exists.
