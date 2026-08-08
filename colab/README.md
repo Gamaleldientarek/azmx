@@ -27,8 +27,9 @@ SKILL.md                          Entry point — the rules you need on every jo
 references/
   decision-law.md                 Standing client decision law C-01…C-17 + taste profile
   colors.md                       Full ramps, the pairing matrix, verified contrast ratios
-  figma-tokens.md                 Every live Figma variable, exact
-  variable-architecture.md        How the variable layer is governed, scoped and repaired
+  token-system.md                 THE token system — 4 grounds as modes, 5 collections, 7 traps
+  figma-tokens.md                 ⛔ superseded — the retired collections, for reading old files
+  variable-architecture.md        Picker mechanics: scopes, alias repair (layout superseded)
   components.md                   Logo, Shapes, Photo-Effect, slide masters, inventory
   logo-and-shapes.md              Every lockup and shape primitive — files, sizes, usage rules
   layout-archetypes.md            14 slide recipes, vertical anchors, motif construction, pass gate
@@ -118,8 +119,9 @@ Claude Code discovers the skill automatically. No restart needed — the next in
 |---|---|
 | A client decision, or a rule the client can overrule | `references/decision-law.md` |
 | A colour, ramp, or contrast measurement | `references/colors.md` |
-| A Figma variable, style, mode, or token | `references/figma-tokens.md` |
-| How the variable **layer** is governed or repaired | `references/variable-architecture.md` |
+| A Figma variable, a token, a mode, or which ground a slide sits on | `references/token-system.md` |
+| Why a picker shows the wrong tokens, or an alias needs repairing | `references/variable-architecture.md` |
+| Where a *retired* binding used to point (pre-2026-08-08 files) | `references/figma-tokens.md` |
 | A typographic technique with a source or a derivation | `references/editorial-technique.md` |
 | Where an edge goes on a slide — anchors, gates, motif construction | `references/layout-archetypes.md` |
 | A component's anatomy, variants, or legal overrides | `references/components.md` |

@@ -1,6 +1,8 @@
 # Colab — Variable Architecture
 
-How the `color 🎨` collection is organised, why designers could not previously pick a semantic token, and the one API fact that fixes it. Audited and rebuilt 2026-07-27.
+Why designers could not previously pick a semantic token, and the one API fact that fixes it. Audited and rebuilt 2026-07-27.
+
+> ⚠️ **Partly superseded 2026-08-08.** The **mechanics** below are still correct and still the reason the picker behaves as it does — `scopes` vs `hiddenFromPublishing`, alias repair, semantic-vs-primitive layering. The **collection layout** is not: `color 🎨` has been deleted and replaced by five collections with four ground modes. For anything you intend to build or bind, read `token-system.md`.
 
 ---
 

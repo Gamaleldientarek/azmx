@@ -1,6 +1,8 @@
 # Colab — Complete Colour Reference
 
-Every value verified against the live Figma variable collection `color 🎨` on 2026-07-26.
+Every value verified against the live Figma variables on 2026-07-26, and re-verified on 2026-08-08 against `01 Primitives`, which now carries them (`color 🎨` was deleted in the token rebuild — see `token-system.md`).
+
+**These are raw values. Nothing on a slide binds to them directly.** A slide binds to a role in `02 Semantic`, and the role resolves to one of these per ground. Read this file to *understand* a colour; read `token-system.md` to *use* one.
 
 ---
 
@@ -207,9 +209,26 @@ WCAG 2.x relative luminance: `C_lin = C/12.92` if `C ≤ 0.03928` else `((C+0.05
 
 ---
 
-## 5. Semantic tokens
+## 5. Semantic tokens — ⛔ RETIRED, kept as a migration map
 
-`Semantics/*` aliases resolve differently per mode. Light → Dark:
+**None of the `Semantics/*` tokens below exist any more.** They were deleted with `color 🎨` on 2026-08-08. Two things were wrong with them: only two modes, so Pine and Deep Jade collapsed into one bucket and Electric had nowhere to live; and the colour-named ones (`Text/Electric Green`, `Background/Pine Green`) are primitives in disguise — note how they hold the same value in both modes, because their names forbid them from moving.
+
+Where they went:
+
+| Retired | Now bind to | Note |
+|---|---|---|
+| `Text/Black` | `text/primary` | |
+| `Text/Dark Grey` | `text/secondary` | |
+| `Text/Medium Grey` | `text/muted` | |
+| `Text/OnColor` | `text/on-dark` | **not** `text/inverse` — inverse follows the ground and will flip to black |
+| `Text/Electric Green` | `text/accent` | resolves to Pine on light grounds, which is the point |
+| `Text/Pine Green` | `text/accent` | same role, opposite ground |
+| `Background/White` | `surface/page` | |
+| `Background/Card` | `surface/card` | |
+| `Background/Light Grey` | `surface/raised` | |
+| `Background/Pine Green` | `surface/page` on Jade, or `surface/inverse` for a deliberate dark panel on a light slide | |
+
+The original table, for reading a file that predates the rebuild:
 
 | Token | Light | Dark |
 |---|---|---|
