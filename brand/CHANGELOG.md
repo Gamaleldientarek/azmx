@@ -4,6 +4,30 @@ All notable changes to the AZMX Brand Skill.
 
 ---
 
+## v2.1.0 — 2026-08-26
+
+**Presentation transitions.** A deck built as Figma frames can now be turned into a keyboard-driven presentation from a single script, with the settings fixed rather than re-decided each time.
+
+### Added
+
+- **`references/presentation-transitions.md`** — the spec and the reasoning. Space advances, Backspace goes back, slides move on Smart Animate with the Slow spring at 600 ms, and the first frame is set as the flow starting point so the play button opens at the beginning. Each value is argued: 600 ms because below ~400 it reads as a cut and above ~800 the room starts watching the deck instead of the argument.
+- **`scripts/figma-slide-transitions.js`** — runs through the Figma Console MCP against the Desktop Bridge, not node. Takes an explicit ordered list of frame IDs, or auto-discovers 1920×1080 frames and sorts them top-to-bottom then left-to-right, which is how decks are actually laid out. The last slide deliberately gets Backspace only.
+
+### The thing that actually matters
+
+**Smart Animate matches layers by name.** Two slides that both contain a layer called `Headline` tween it; two slides calling it `Headline` and `Title` hard-cut. Where a run of slides should feel continuous, the shared elements need the *same layer name* on both frames. This costs nothing at build time and is the whole difference between a deck that moves and one that flickers — and it is invisible until you press play.
+
+### Four traps the reference records
+
+- `duration` is in **seconds**. 600 ms is `0.6`; passing `600` asks for a ten-minute transition and Figma accepts it.
+- `setReactionsAsync()` is required — assigning to `.reactions` is deprecated and silently does nothing.
+- `setReactionsAsync` **replaces** every reaction on the frame, so the Space and Backspace reactions must go in one array. Calling it twice leaves only the second.
+- `SLOW` is a spring preset. It coexists with an explicit duration in the current build, but that is not guaranteed; the fallback is `EASE_OUT` at the same 0.6.
+
+Validated on the Figma Service Partner certification deck, 19 slides.
+
+---
+
 ## v2.0.1 — 2026-08-08
 
 Consistency pass over `SKILL.md`, plus a lockfile that should always have been committed.
