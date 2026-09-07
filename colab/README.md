@@ -13,10 +13,12 @@ Colab is a bilingual English/Arabic **User Experience Research Lab** operating i
 ## Install
 
 ```bash
-git clone https://github.com/Gamaleldientarek/azmx.git ~/.claude/skills/colab-design
+npx skills@latest add Gamaleldientarek/azmx --skill colab-design -g -a claude-code -y
 ```
 
-Claude Code discovers it automatically. Invoke with `/colab-design`, or just mention Colab, Electric Green, the pixel motif, or the Advanced Presentation grid and it activates on its own.
+Directory page with the command ready to copy: [skills.sh/Gamaleldientarek/azmx/colab-design](https://skills.sh/Gamaleldientarek/azmx/colab-design).
+
+Needs [Node.js](https://nodejs.org). Restart Claude Code afterwards. Invoke with `/colab-design`, or just mention Colab, Electric Green, the pixel motif, or the Advanced Presentation grid and it activates on its own. Using Cursor, Codex or another agent: drop `-a claude-code`. Step-by-step guide for non-technical people: [INSTALL.md](../INSTALL.md).
 
 ---
 
@@ -102,16 +104,17 @@ Ratios are computed with the WCAG 2.x relative-luminance formula, not estimated.
 
 ```bash
 # first install
-git clone https://github.com/Gamaleldientarek/azmx.git ~/.claude/skills/colab-design
+npx skills@latest add Gamaleldientarek/azmx --skill colab-design -g -a claude-code -y
 
 # update to the latest release
-cd ~/.claude/skills/colab-design && git pull
+npx skills@latest update -g
 
-# pin to a specific release
-cd ~/.claude/skills/colab-design && git checkout v3.2.0
+# pin to a specific release: clone, check out its tag, install from the local path
+git clone https://github.com/Gamaleldientarek/azmx.git && cd azmx && git checkout colab-v4.2.0
+npx skills@latest add "$PWD" --skill colab-design -g -a claude-code -y
 ```
 
-Claude Code discovers the skill automatically. No restart needed — the next invocation picks up the change.
+Claude Code discovers the skill automatically after a restart.
 
 ### Where new knowledge goes
 

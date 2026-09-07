@@ -4,6 +4,16 @@ All notable changes to the AZMX Brand Skill.
 
 ---
 
+## v2.1.1 — 2026-09-07
+
+Patch. Distribution only; no brand value changes.
+
+### Changed
+- `README.md`: install is one command through the skills CLI. The install script is gone from the repository.
+- `SKILL.md`: the frontmatter description is now quoted. The unquoted colon in "communication strategy: communication planning" made strict YAML parsers skip the skill, so the skills CLI could not see it.
+
+---
+
 ## v2.1.0 — 2026-08-26
 
 **Presentation transitions.** A deck built as Figma frames can now be turned into a keyboard-driven presentation from a single script, with the settings fixed rather than re-decided each time.

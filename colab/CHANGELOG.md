@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.2.1 — 2026-09-07
+
+Patch. Distribution only.
+
+### Fixed
+- `README.md`: the install command cloned the whole repository into the skill folder, which does not produce a working skill. Replaced with the one-line skills CLI install, and the update and pin instructions to match.
+
+### Changed
+- `SKILL.md`: frontmatter description quoted so strict YAML parsers read it.
+
 ## 4.2.0 — 2026-08-08
 
 Minor. Finishes the migration. **Every live surface in the file is now on the local token system, with zero remote-library dependencies.** The governing finding is a negative one, and it is the reason this release is not larger:

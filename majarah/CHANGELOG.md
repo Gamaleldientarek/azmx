@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.1 — 2026-09-07
+
+Patch. Distribution only.
+
+### Fixed
+- `README.md`: the install command pointed at a URL that does not exist (`azmx/tree/main/majarah.git`). Replaced with the one-line skills CLI install.
+
+### Changed
+- `SKILL.md`: frontmatter description quoted so strict YAML parsers read it.
+
 ## 1.2.0 — 2026-07-30
 
 Closes the two gaps 1.1.0 left open: the commercial fonts were undocumented, and the skill could not see the Arabic spec.

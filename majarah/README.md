@@ -7,11 +7,12 @@ The Majarah design system as an Agent Skill: the eleven-variable palette with a 
 ## Install
 
 ```bash
-git clone https://github.com/Gamaleldientarek/azmx/tree/main/majarah.git \
-  ~/.claude/skills/majarah-design
+npx skills@latest add Gamaleldientarek/azmx --skill majarah-design -g -a claude-code -y
 ```
 
-Then start a new Claude Code session — the skill registers automatically and triggers on Majarah design work.
+Directory page with the command ready to copy: [skills.sh/Gamaleldientarek/azmx/majarah-design](https://skills.sh/Gamaleldientarek/azmx/majarah-design).
+
+Needs [Node.js](https://nodejs.org). Then start a new Claude Code session. The skill registers automatically and triggers on Majarah design work, or call it with `/majarah-design`. Using Cursor, Codex or another agent: drop `-a claude-code`. Step-by-step guide for non-technical people: [INSTALL.md](../INSTALL.md).
 
 ## What's in it
 

@@ -41,24 +41,25 @@ As of v1.4.0 the skill also encodes the AZM X Unified Communication Strategy: fi
 - `assets/fonts/`: Azm X (TTF, English and Arabic) and thmanyah serif display (woff2 for web, OTF for desktop)
 - `assets/fonts.css`: ready-made @font-face rules plus CSS variables for the palette
 
-## Install (for AZMX team members)
+## Install
 
-You need [Claude Code](https://claude.com/claude-code) or any agent that supports Agent Skills.
+One command. It needs [Node.js](https://nodejs.org) and [Claude Code](https://claude.com/claude-code).
 
 ```bash
-git clone https://github.com/Gamaleldientarek/azmx.git
-cd azmx && ./install.sh brand
+npx skills@latest add Gamaleldientarek/azmx --skill azmx-brand -g -a claude-code -y
 ```
 
-That's it. Next time you ask Claude for anything AZMX-branded, the skill kicks in automatically. You can also invoke it directly with `/azmx-brand`.
+Directory page with the command ready to copy: [skills.sh/Gamaleldientarek/azmx/azmx-brand](https://skills.sh/Gamaleldientarek/azmx/azmx-brand).
+
+Restart Claude Code. Next time you ask for anything AZMX-branded the skill loads on its own, or call it directly with `/azmx-brand`.
 
 To update later:
 
 ```bash
-cd azmx && git pull && ./install.sh brand
+npx skills@latest update -g
 ```
 
-Use the script rather than `cp -r`. A plain copy cannot remove files deleted upstream, so an old reference survives alongside its replacement — a real risk since v2.0.0 replaced the token reference wholesale. `./install.sh --dry-run` previews without writing.
+Using Cursor, Codex or another agent: drop `-a claude-code` and the installer detects what is on the machine. Prefer a plugin that updates itself: see the [repository README](../README.md#install). Not comfortable in a terminal: [INSTALL.md](../INSTALL.md) walks through it step by step.
 
 ## Quick palette reference
 
