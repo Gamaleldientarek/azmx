@@ -34,7 +34,15 @@ The skills land in `~/.claude/skills/`. Running a command again over an existing
 npx skills@latest update -g
 ```
 
-**Other agents.** Drop `-a claude-code` and the installer detects what is on the machine (Cursor, Codex, Copilot and others) and asks where to install.
+**Cursor, Codex, Copilot and other tools.** Same command, different `-a` value. The skill lands in `~/.agents/skills/`, which those tools read.
+
+```bash
+npx skills@latest add Gamaleldientarek/azmx-brand -g -a cursor -y
+npx skills@latest add Gamaleldientarek/azmx-brand -g -a codex -y
+npx skills@latest add Gamaleldientarek/azmx-brand -g -a github-copilot -y
+```
+
+Swap `azmx-brand` for `colab-design` or `majarah-design`. To install into every tool on the machine at once, use `-a '*'`. Other accepted names include `gemini-cli`, `opencode` and `windsurf`.
 
 **Not comfortable in a terminal?** [INSTALL.md](./INSTALL.md) walks through it step by step and can be forwarded to anyone.
 

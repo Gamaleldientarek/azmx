@@ -1,6 +1,6 @@
 # Installing the AZMX skills
 
-A step-by-step guide for anyone at AZMX, or working with AZMX, who wants Claude Code to produce work in the AZMX, Colab or Majarah identity. No developer background needed. It takes about five minutes.
+A step-by-step guide for anyone at AZMX, or working with AZMX, who wants Claude Code, Cursor, Codex or GitHub Copilot to produce work in the AZMX, Colab or Majarah identity. No developer background needed. It takes about five minutes.
 
 ## What you get
 
@@ -16,7 +16,7 @@ Three skills. Each one teaches your AI agent one design system, so decks, emails
 
 You need two things on your computer.
 
-1. **Claude Code.** Install it from [claude.com/claude-code](https://claude.com/claude-code) and sign in once.
+1. **An AI coding tool.** [Claude Code](https://claude.com/claude-code), Cursor, Codex or GitHub Copilot, installed and signed in. The commands below are written for Claude Code; the section after Step 3 covers the others.
 2. **Node.js.** The installer runs on it. Download the LTS version from [nodejs.org](https://nodejs.org) and run the installer with the default settings.
 
 To check Node.js is ready, open a terminal (next step) and type `node -v`. A version number such as `v22.11.0` means you are set.
@@ -58,6 +58,18 @@ Close Claude Code and open it again. Type `/azmx-brand`, or the name of the skil
 
 From now on you do not need to call it by name. Ask for an AZMX newsletter, a Colab findings deck or a Majarah event post, and the right skill loads on its own.
 
+## Using Cursor, Codex or Copilot instead
+
+Same commands, with one word changed. Replace `claude-code` with the tool you use:
+
+```
+npx skills@latest add Gamaleldientarek/azmx-brand -g -a cursor -y
+npx skills@latest add Gamaleldientarek/azmx-brand -g -a codex -y
+npx skills@latest add Gamaleldientarek/azmx-brand -g -a github-copilot -y
+```
+
+Swap `azmx-brand` for `colab-design` or `majarah-design` as needed. To install into every tool on your machine in one go, use `-a '*'` in place of the tool name. Then restart the tool.
+
 ## Updating
 
 The skills improve over time. To get the latest version of everything you installed:
@@ -74,7 +86,7 @@ npx skills@latest update -g
 
 **Claude Code does not respond to `/azmx-brand`.** Restart Claude Code, then run `/doctor` inside it. The skills live in a folder called `.claude/skills` inside your home folder. If `azmx-brand` is there, the install worked.
 
-**You use Cursor, Codex, Copilot or another agent.** Remove `-a claude-code` from the command. The installer detects the agents on your machine and asks which to install into.
+**You use Cursor, Codex or Copilot.** See the section above: the command is the same with `-a cursor`, `-a codex` or `-a github-copilot`.
 
 Anything else: reply to whoever sent you this guide.
 
