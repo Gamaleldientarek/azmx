@@ -5,27 +5,86 @@
     "url": "https://gamaleldien.com"
   },
   "metadata": {
-    "description": "Design systems for AZMX and its brands, packaged as Agent Skills."
+    "description": "Design systems for AZMX and its brands, packaged as Agent Skills. One plugin per skill, each from its own repository."
   },
   "plugins": [
     {
-      "name": "azmx",
-      "displayName": "AZMX Design Systems",
-      "description": "The AZMX brand and communication system, plus the Colab and Majarah design systems. Colors, design tokens, typography, logos, fonts, the email design system, voice and tone, and the PDF form pipeline.",
-      "source": "./",
+      "name": "azmx-brand",
+      "description": "The AZMX brand and communication system. Colors, design tokens, typography, logos, fonts, the email design system, voice and tone, the PDF form pipeline, the unified communication strategy.",
+      "source": {
+        "source": "github",
+        "repo": "Gamaleldientarek/azmx-brand"
+      },
       "strict": false,
       "skills": [
-        "./brand",
-        "./colab",
-        "./majarah"
+        "./"
       ],
       "author": {
         "name": "Gamal Eldien",
         "url": "https://gamaleldien.com"
       },
-      "homepage": "https://gamaleldientarek.github.io/azmx/brand/",
-      "repository": "https://github.com/Gamaleldientarek/azmx",
-      "keywords": ["design-system", "brand", "figma", "design-tokens", "azmx", "colab", "majarah"],
+      "repository": "https://github.com/Gamaleldientarek/azmx-brand",
+      "keywords": [
+        "design-system",
+        "brand",
+        "figma",
+        "design-tokens",
+        "azmx",
+        "azmx"
+      ],
+      "category": "design",
+      "homepage": "https://gamaleldientarek.github.io/azmx-brand/"
+    },
+    {
+      "name": "colab-design",
+      "description": "The Colab design system. Palette with verified contrast rules, type scale, the 8-column slide grid, 14 layout archetypes, the pixel and dither graphic language, the four-ground token system, EN/AR build rules.",
+      "source": {
+        "source": "github",
+        "repo": "Gamaleldientarek/colab-design"
+      },
+      "strict": false,
+      "skills": [
+        "./"
+      ],
+      "author": {
+        "name": "Gamal Eldien",
+        "url": "https://gamaleldien.com"
+      },
+      "repository": "https://github.com/Gamaleldientarek/colab-design",
+      "keywords": [
+        "design-system",
+        "brand",
+        "figma",
+        "design-tokens",
+        "azmx",
+        "colab"
+      ],
+      "category": "design"
+    },
+    {
+      "name": "majarah-design",
+      "description": "The Majarah design system. Eleven-variable palette with a measured contrast matrix, the Oswald/Helvetica type system, the 1920x1080 slide grid, twelve layout archetypes, the EN/AR variable architecture.",
+      "source": {
+        "source": "github",
+        "repo": "Gamaleldientarek/majarah-design"
+      },
+      "strict": false,
+      "skills": [
+        "./"
+      ],
+      "author": {
+        "name": "Gamal Eldien",
+        "url": "https://gamaleldien.com"
+      },
+      "repository": "https://github.com/Gamaleldientarek/majarah-design",
+      "keywords": [
+        "design-system",
+        "brand",
+        "figma",
+        "design-tokens",
+        "azmx",
+        "majarah"
+      ],
       "category": "design"
     }
   ]

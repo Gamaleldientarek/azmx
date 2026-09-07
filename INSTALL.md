@@ -33,26 +33,22 @@ A window with a blinking cursor appears. Everything below is typed, or pasted, i
 AZMX brand:
 
 ```
-npx skills@latest add Gamaleldientarek/azmx --skill azmx-brand -g -a claude-code -y
+npx skills@latest add Gamaleldientarek/azmx-brand -g -a claude-code -y
 ```
 
 Colab design:
 
 ```
-npx skills@latest add Gamaleldientarek/azmx --skill colab-design -g -a claude-code -y
+npx skills@latest add Gamaleldientarek/colab-design -g -a claude-code -y
 ```
 
 Majarah design:
 
 ```
-npx skills@latest add Gamaleldientarek/azmx --skill majarah-design -g -a claude-code -y
+npx skills@latest add Gamaleldientarek/majarah-design -g -a claude-code -y
 ```
 
-All three at once:
-
-```
-npx skills@latest add Gamaleldientarek/azmx --skill '*' -g -a claude-code -y
-```
+Want all three? Run the three commands one after the other.
 
 Press Enter. The first run downloads the installer, which can take a minute. It finishes with `Done!`.
 

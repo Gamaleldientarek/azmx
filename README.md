@@ -1,6 +1,6 @@
 # azmx
 
-Design systems for AZMX and its brands, packaged as Agent Skills for [Claude Code](https://claude.com/claude-code) and other AI agents.
+The AZMX design systems as Agent Skills for [Claude Code](https://claude.com/claude-code) and other AI agents. One repository per skill. This one is the hub: the install commands, the guide for non-technical people, and the plugin marketplace.
 
 Maintained by [Gamal Eldien](https://gamaleldien.com).
 
@@ -11,30 +11,24 @@ One command per skill. It needs [Node.js](https://nodejs.org) on the machine, no
 **AZMX brand.** Colors, tokens, typography, logos, fonts, the email design system, voice and tone, the communication strategy.
 
 ```bash
-npx skills@latest add Gamaleldientarek/azmx --skill azmx-brand -g -a claude-code -y
+npx skills@latest add Gamaleldientarek/azmx-brand -g -a claude-code -y
 ```
 
 **Colab design.** Palette with verified contrast rules, type scale, the 8-column slide grid, 14 layout archetypes, the pixel and dither graphic language, EN/AR rules.
 
 ```bash
-npx skills@latest add Gamaleldientarek/azmx --skill colab-design -g -a claude-code -y
+npx skills@latest add Gamaleldientarek/colab-design -g -a claude-code -y
 ```
 
 **Majarah design.** Eleven-variable palette with a measured contrast matrix, the Oswald/Helvetica type system, the 1920×1080 slide grid, twelve layout archetypes, the EN/AR variable architecture.
 
 ```bash
-npx skills@latest add Gamaleldientarek/azmx --skill majarah-design -g -a claude-code -y
-```
-
-**All three at once.**
-
-```bash
-npx skills@latest add Gamaleldientarek/azmx --skill '*' -g -a claude-code -y
+npx skills@latest add Gamaleldientarek/majarah-design -g -a claude-code -y
 ```
 
 Restart Claude Code. From then on, ask for anything AZMX, Colab or Majarah branded and the right skill loads on its own. Each one can also be called directly: `/azmx-brand`, `/colab-design`, `/majarah-design`.
 
-The skills land in `~/.claude/skills/`. Running the command again over an existing install replaces it cleanly, so it doubles as the update path:
+The skills land in `~/.claude/skills/`. Running a command again over an existing install replaces it cleanly. To update everything you installed:
 
 ```bash
 npx skills@latest update -g
@@ -44,22 +38,20 @@ npx skills@latest update -g
 
 **Not comfortable in a terminal?** [INSTALL.md](./INSTALL.md) walks through it step by step and can be forwarded to anyone.
 
-### As a Claude Code plugin
+### As Claude Code plugins
 
 The alternative for Claude Code users who want the skills to keep themselves up to date:
 
 ```
 /plugin marketplace add Gamaleldientarek/azmx
-/plugin install azmx@azmx
+/plugin install azmx-brand@azmx
+/plugin install colab-design@azmx
+/plugin install majarah-design@azmx
 ```
 
-That installs all three skills and refreshes them in the background, so a push here reaches everyone without anyone running anything. Skills installed this way are namespaced: `/azmx:azmx-brand`, `/azmx:colab-design`, `/azmx:majarah-design`. Automatic invocation is unaffected.
+Plugins refresh in the background, so a release in any skill repository reaches everyone without anyone running anything. Automatic invocation is unaffected.
 
-Pick one route. Installing both puts two copies of each skill on the machine. To drop the one-command install in favour of the plugin:
-
-```bash
-npx skills@latest remove azmx-brand colab-design majarah-design -g -y
-```
+Pick one route. Installing both puts two copies of a skill on the machine. If you installed the earlier `azmx@azmx` bundle, uninstall it first with `/plugin uninstall azmx@azmx`.
 
 To make a project prompt its collaborators automatically, add this to the project's `.claude/settings.json`:
 
@@ -68,52 +60,37 @@ To make a project prompt its collaborators automatically, add this to the projec
   "extraKnownMarketplaces": {
     "azmx": { "source": { "source": "github", "repo": "Gamaleldientarek/azmx" } }
   },
-  "enabledPlugins": { "azmx@azmx": true }
+  "enabledPlugins": {
+    "azmx-brand@azmx": true,
+    "colab-design@azmx": true,
+    "majarah-design@azmx": true
+  }
 }
 ```
 
-## Design systems
+## The skills
 
-| Skill | Covers | Source |
-|-------|--------|--------|
-| AZMX Brand | Colors, tokens, typography, logos, fonts, email design system, voice and tone guide, communication strategy | [`brand/`](./brand) |
-| Colab Design | Palette with verified contrast rules, type scale, 8-column slide grid, 14 layout archetypes, pixel/dither graphic language | [`colab/`](./colab) |
-| Majarah Design | Eleven-variable palette with a measured contrast matrix, Oswald/Helvetica type system, 1920×1080 slide grid, twelve layout archetypes, EN/AR variable architecture | [`majarah/`](./majarah) |
+| Skill | Repository | Also |
+|---|---|---|
+| AZMX Brand | [`Gamaleldientarek/azmx-brand`](https://github.com/Gamaleldientarek/azmx-brand) | [Image gallery](https://gamaleldientarek.github.io/azmx-brand/), 242 brand images |
+| Colab Design | [`Gamaleldientarek/colab-design`](https://github.com/Gamaleldientarek/colab-design) | |
+| Majarah Design | [`Gamaleldientarek/majarah-design`](https://github.com/Gamaleldientarek/majarah-design) | |
 
-Each skill also has a page on the skills directory, with the install command ready to copy: [azmx-brand](https://skills.sh/Gamaleldientarek/azmx/azmx-brand), [colab-design](https://skills.sh/Gamaleldientarek/azmx/colab-design), [majarah-design](https://skills.sh/Gamaleldientarek/azmx/majarah-design).
+Each repository is one self-contained skill in the standard Agent Skill layout: `SKILL.md` at the root, `references/` loaded on demand, `assets/` for logos, fonts, icons and images, `scripts/` for build and QA tooling, and a `CHANGELOG.md`.
 
-Each skill is self-contained and follows the standard Agent Skill layout:
+## Frozen assets
 
-```
-<skill>/
-├── SKILL.md        entry point, loaded by the agent
-├── README.md       human-facing overview
-├── CHANGELOG.md    version history
-├── assets/         logos, fonts, icons, images
-├── references/     detailed specs loaded on demand
-└── scripts/        build and QA tooling
-```
+Between 1 August and 7 September 2026 the three skills lived inside this repository, and links of the form `raw.githubusercontent.com/Gamaleldientarek/azmx/main/<skill>/assets/...` were published in that window. The `brand/`, `colab/` and `majarah/` folders here keep those assets, frozen at that date, so every such link keeps resolving. The old gallery address, `gamaleldientarek.github.io/azmx/brand/`, still works for the same reason. New work uses the per-skill repositories above. There is no skill left to install from this repository.
 
 ## History
 
-This repository consolidates three previously separate repositories, merged with
-`git subtree` so their commit history is preserved:
+| Date | Change |
+|---|---|
+| 2026-08-01 | Three skill repositories and one app consolidated here as a monorepo |
+| 2026-09-07 | The app moved back to its own repository. The three skills moved to their own repositories again, with full history. This repository became the hub |
 
-| Was | Now |
-|-----|-----|
-| `Gamaleldientarek/azmx-brand-skill` | [`brand/`](./brand) |
-| `Gamaleldientarek/colab-design-skill` | [`colab/`](./colab) |
-| `Gamaleldientarek/majarah-design-skill` | [`majarah/`](./majarah) |
-
-The original repositories are archived and read-only. Their `raw.githubusercontent.com`
-URLs continue to resolve, so any asset link published before the consolidation still works.
-
-Because `git subtree` grafts prior commits at their original paths, `git log -- brand/`
-shows only post-merge commits. The full history is present. Browse it with
-`git log --full-history`.
+The original repositories from before the consolidation are archived and read-only. Their `raw.githubusercontent.com` URLs continue to resolve, so any asset link published before then still works.
 
 ## Ownership
 
-The AZMX, Colab and Majarah brand systems are the property of AZMX. This repository
-packages them for AI-assisted design work; it does not license the marks or assets for
-reuse.
+The AZMX, Colab and Majarah brand systems are the property of AZMX. This repository and the three skill repositories package them for AI-assisted design work; they do not license the marks or assets for reuse.
