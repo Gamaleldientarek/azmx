@@ -1,0 +1,9 @@
+# The hub has no runtime dependencies. Only the GitHub Actions used by the two
+# workflows need keeping current, and those bumps go through CI as pull requests.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    labels: [dependencies]

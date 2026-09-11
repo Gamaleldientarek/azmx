@@ -1,0 +1,10 @@
+# Every change needs the hub owner. This becomes a requirement once the main
+# ruleset has "Require review from Code Owners" on; until then it routes
+# review requests.
+*                                 @Gamaleldientarek
+
+# The manifest and the frozen folders are the highest-impact paths.
+/.claude-plugin/marketplace.json  @Gamaleldientarek
+/brand/                           @Gamaleldientarek
+/colab/                           @Gamaleldientarek
+/majarah/                         @Gamaleldientarek

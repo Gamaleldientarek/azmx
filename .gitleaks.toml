@@ -1,0 +1,42 @@
+# gitleaks configuration for the AZMX skills hub.
+#
+# Runs in CI via .github/workflows/secret-scan.yml (gitleaks/gitleaks-action@v2)
+# and locally with `gitleaks git .`.
+#
+# Extends the default ruleset. The allowlist only covers values that look like
+# secrets to the entropy heuristics but are public identifiers. Add real leaks
+# to git history rewriting, not to this file.
+
+title = "AZMX skills hub"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Known false positives"
+
+regexes = [
+  # Figma file key of the public token library ("New Direction Library | AZM X").
+  # A file key only identifies a file; access still needs a Figma token. It
+  # appears in the frozen token export and, in history, in the export scripts
+  # that lived here during the monorepo period.
+  '''j8ugBpb1yUUyL8hfb6FHKR''',
+  # Figma file key of the Majarah Library, public in the majarah-design skill
+  # (SKILL.md and references/figma-tokens.md). Same class: identifier, not token.
+  '''AH4vTz[A-Za-z0-9]{16}''',
+  # Subresource-integrity / CSP script hashes in generated HTML.
+  '''sha(?:256|384|512)-[A-Za-z0-9+/]{20,}={0,2}''',
+  # Inline base64 images in generated HTML/markdown.
+  '''data:image/[a-z+.-]+;base64,[A-Za-z0-9+/=]+''',
+]
+
+paths = [
+  # Font binaries and images, frozen.
+  '''^(brand|colab|majarah)/assets/(fonts|images)/''',
+  '''^assets/(fonts|images)/''',
+]
+
+stopwords = [
+  "fileKey",
+  "file_key",
+]

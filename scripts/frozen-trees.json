@@ -1,0 +1,6 @@
+{
+  "_comment": "git tree hashes of the frozen folders as of 2026-09-07. scripts/check-hub.py fails if HEAD's tree for any folder differs. These folders keep links that were published while the skills lived in this repository; they are never edited. Changing a hash here is a deliberate, reviewable act.",
+  "brand": "416917e72a4f6e5ae2118b69a4ffbee4a0377890",
+  "colab": "4ac8a995e28d91cb3644dd5d2541f92295d124d0",
+  "majarah": "4b629f2abb8314a938f629a1d115249f4d00e005"
+}
