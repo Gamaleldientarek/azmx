@@ -29,7 +29,6 @@
         "brand",
         "figma",
         "design-tokens",
-        "azmx",
         "azmx"
       ],
       "category": "design",
@@ -59,7 +58,8 @@
         "azmx",
         "colab"
       ],
-      "category": "design"
+      "category": "design",
+      "homepage": "https://github.com/Gamaleldientarek/colab-design"
     },
     {
       "name": "majarah-design",
@@ -85,7 +85,8 @@
         "azmx",
         "majarah"
       ],
-      "category": "design"
+      "category": "design",
+      "homepage": "https://github.com/Gamaleldientarek/majarah-design"
     }
   ]
 }

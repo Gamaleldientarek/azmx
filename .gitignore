@@ -2,3 +2,21 @@
 node_modules/
 __pycache__/
 *.pyc
+
+# Agent scratch output
+.claude/
+.auto-claude/
+.worktrees/
+
+# Secrets and credentials. Nothing in this repository needs one.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+*-credentials.json
+*-service-account*.json
+.npmrc

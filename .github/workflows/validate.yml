@@ -1,0 +1,31 @@
+name: Validate hub
+
+# Three things can silently break this repository without anyone touching it:
+# a skill repository moves or renames its manifest, a link in the guides dies,
+# or someone edits a folder that is supposed to be frozen. scripts/check-hub.py
+# checks all three. It runs on every push and pull request, and once a week so
+# drift in the other repositories surfaces without a commit here.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check manifest, links and frozen folders
+        run: python3 scripts/check-hub.py
